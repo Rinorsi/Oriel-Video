@@ -3,9 +3,9 @@
 
 usage: python promo/prep.py all   (or one step: sky | render-heroes | walls | heroes | data)
  sky           : render the four sky loops -> public/promo2/sky
- render-heroes : render the hero effects at 1080p -> public/promo2/hero/<id>.mp4
+ render-heroes : render the featured effects at 1080p -> public/promo2/hero/<id>.mp4
  walls         : build the wall page videos (tiles of gallery previews) -> public/promo2/wall/*.mp4
- heroes        : normal + slow 1280x720 clips, detect where the transition happens -> promo/heroes.meta.json
+ heroes        : normal (+ slow for transitions) 1280x720 clips, find where the transition happens -> promo/heroes.meta.json
  data          : write src/promo/promo2.data.json
 Put your own music at public/promo2/audio/bgm.mp3.
 """
@@ -51,7 +51,13 @@ OTHERS = [
 ]
 for i, _ in OTHERS: assert i in man, i
 
-HEROES = ['portal', 't2-lava-rise', 'mcd-t-portal-whiteout', 'cute-creeper-rush', 'dim-overworld-to-nether']
+HEROES = ['cute-creeper-rush', 't2-end-portal', 'cute-slime-splat', 't2-enderman-stare', 't2-villager-hmm', 't2-lava-rise', 't2-pickaxe-break', 'mcd-t-chest-beam']
+SHOWS = [
+    ('mcd-kit-title-text', '地下城风格'), ('mcd-s-boss-intro', '地下城风格'), ('mcd-s-results', '地下城风格'), ('mcd-s-level-up', '地下城风格'),
+    ('item-craft-table', '物品动画'), ('item-furnace', '物品动画'), ('item-enchanting', '物品动画'), ('item-smithing', '物品动画'),
+    ('soc-triple', '点赞关注'),
+]
+for i, _ in SHOWS: assert i in man, i
 
 W, H, COLS, TW, TH, CELL_H = 1280, 720, 5, 256, 144, 240
 
@@ -106,17 +112,20 @@ def _unused_frames_gray(path):
 
 def cmd_heroes():
     meta = {}
-    for i in HEROES:
+    for i in HEROES + [x for x, _ in SHOWS]:
         src = os.path.join(STUDIO, 'public', 'promo2', 'hero', i + '.mp4')
         n_out = os.path.join(PUB, 'hero', i + '_n.mp4'); s_out = os.path.join(PUB, 'hero', i + '_s.mp4')
         ff(['-i', src, '-vf', 'scale=1280:720:flags=bicubic', '-an', '-c:v', 'libx264', '-crf', '17', '-pix_fmt', 'yuv420p', '-r', '30', n_out])
-        ff(['-i', n_out, '-vf', 'framerate=fps=60:interp_start=0:interp_end=255:scene=100,setpts=2*PTS,fps=30', '-an', '-c:v', 'libx264', '-crf', '17', '-pix_fmt', 'yuv420p', s_out])
         g = frames_gray(n_out)
-        dA = np.abs(g - g[0]).mean(axis=(1, 2)); dB = np.abs(g - g[-1]).mean(axis=(1, 2))
-        thr = 3.0
-        a_end = int(np.argmax(dA > thr)) if (dA > thr).any() else 0
-        b_start = len(g) - int(np.argmax(dB[::-1] > thr)) if (dB > thr).any() else len(g)
-        meta[i] = {'frames': len(g), 'transStart': a_end, 'transEnd': b_start}
+        if i in HEROES:
+            ff(['-i', n_out, '-vf', 'framerate=fps=60:interp_start=0:interp_end=255:scene=100,setpts=2*PTS,fps=30', '-an', '-c:v', 'libx264', '-crf', '17', '-pix_fmt', 'yuv420p', s_out])
+            dA = np.abs(g - g[0]).mean(axis=(1, 2)); dB = np.abs(g - g[-1]).mean(axis=(1, 2))
+            thr = 3.0
+            a_end = int(np.argmax(dA > thr)) if (dA > thr).any() else 0
+            b_start = len(g) - int(np.argmax(dB[::-1] > thr)) if (dB > thr).any() else len(g)
+            meta[i] = {'frames': len(g), 'transStart': a_end, 'transEnd': b_start}
+        else:
+            meta[i] = {'frames': len(g)}
         print(i, meta[i])
     json.dump(meta, open(os.path.join(HERE, 'heroes.meta.json'), 'w'), indent=1)
 
@@ -127,6 +136,7 @@ def cmd_data():
     data = {
         'totals': {'all': len(man), 'transitions': 59, 'others': len(man) - 59, 'alpha': sum(1 for v in man.values() if v.get('alpha'))},
         'heroes': [{**item(i), **heroes_meta[i]} for i in HEROES],
+        'shows': [{**item(i), **heroes_meta[i], 'tag': t} for i, t in SHOWS],
         'pages': [[item(i) for i in ids] for ids in pages],
         'others': [{**item(i), 'tag': t} for i, t in OTHERS],
     }
@@ -138,15 +148,16 @@ def run(cmd):
     r = subprocess.run(cmd, cwd=STUDIO, shell=True)
     if r.returncode: raise SystemExit('failed: ' + cmd)
 
+def cmd_render_heroes():
+    os.makedirs(os.path.join(PUB, 'hero'), exist_ok=True)
+    for i in HEROES + [x for x, _ in SHOWS]:
+        if os.path.exists(os.path.join(PUB, 'hero', i + '.mp4')): continue
+        run(f'npx remotion render src/entry-all.tsx fx-{i} public/promo2/hero/{i}.mp4 --codec=h264 --crf=16 --muted')
+
 def cmd_sky():
     os.makedirs(os.path.join(PUB, 'sky'), exist_ok=True)
     for k in ('dawn', 'noon', 'dusk', 'night'):
         run(f'npx remotion render src/index.ts Loop-{k} public/promo2/sky/Loop-{k}.mp4 --codec=h264 --muted')
-
-def cmd_render_heroes():
-    os.makedirs(os.path.join(PUB, 'hero'), exist_ok=True)
-    for i in HEROES:
-        run(f'npx remotion render src/entry-all.tsx fx-{i} public/promo2/hero/{i}.mp4 --codec=h264 --crf=16 --muted')
 
 STEPS = {'sky': cmd_sky, 'render-heroes': cmd_render_heroes, 'walls': cmd_walls, 'heroes': cmd_heroes, 'data': cmd_data}
 if sys.argv[1] == 'all':

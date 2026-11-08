@@ -1,27 +1,69 @@
 {
- "portal": {
-  "frames": 82,
+ "cute-creeper-rush": {
+  "frames": 100,
   "transStart": 12,
-  "transEnd": 62
+  "transEnd": 72
+ },
+ "t2-end-portal": {
+  "frames": 106,
+  "transStart": 12,
+  "transEnd": 76
+ },
+ "cute-slime-splat": {
+  "frames": 100,
+  "transStart": 12,
+  "transEnd": 76
+ },
+ "t2-enderman-stare": {
+  "frames": 106,
+  "transStart": 12,
+  "transEnd": 79
+ },
+ "t2-villager-hmm": {
+  "frames": 106,
+  "transStart": 12,
+  "transEnd": 81
  },
  "t2-lava-rise": {
   "frames": 100,
   "transStart": 12,
   "transEnd": 73
  },
- "mcd-t-portal-whiteout": {
-  "frames": 118,
-  "transStart": 21,
-  "transEnd": 96
- },
- "cute-creeper-rush": {
+ "t2-pickaxe-break": {
   "frames": 100,
   "transStart": 12,
-  "transEnd": 72
+  "transEnd": 80
  },
- "dim-overworld-to-nether": {
-  "frames": 210,
-  "transStart": 40,
-  "transEnd": 150
+ "mcd-t-chest-beam": {
+  "frames": 100,
+  "transStart": 11,
+  "transEnd": 80
+ },
+ "mcd-kit-title-text": {
+  "frames": 240
+ },
+ "mcd-s-boss-intro": {
+  "frames": 180
+ },
+ "mcd-s-results": {
+  "frames": 180
+ },
+ "mcd-s-level-up": {
+  "frames": 150
+ },
+ "item-craft-table": {
+  "frames": 150
+ },
+ "item-furnace": {
+  "frames": 160
+ },
+ "item-enchanting": {
+  "frames": 200
+ },
+ "item-smithing": {
+  "frames": 190
+ },
+ "soc-triple": {
+  "frames": 240
  }
 }

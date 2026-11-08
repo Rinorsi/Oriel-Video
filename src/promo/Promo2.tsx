@@ -2,18 +2,19 @@ import type {CSSProperties, FC, ReactNode} from 'react';
 import {AbsoluteFill, Audio, Freeze, OffthreadVideo, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
 import {McdEndCard, McdLEmbers} from '../lib';
 import {PIXEL_FONT} from '../mc/fonts';
-import {block} from '../mc/assets';
-import {FPS, MC, EASE, clamp01, textShadowColor} from '../mc/theme';
+import {block, tex} from '../mc/assets';
+import {MC, EASE, clamp01, textShadowColor} from '../mc/theme';
 import {YouyikuIntro} from './YouyikuIntro';
 import data from './promo2.data.json';
 
 /**
- * 优易库宣传片（无配音版）。
+ * 优易库宣传片（无配音版，约 4 分钟）。
  * 画面分三层，一眼能分清谁是谁：
  *   1. 外层：随时间走完一天的像素天空（日出 → 正午 → 日落 → 夜晚），是这支视频自己的风格；
  *   2. 中间：像素风的石砖框，框里**只放被演示的效果**（转场、效果墙、用法示意）；
  *   3. 框下：木牌字幕牌，写效果名、说明、当前是镜头 A / 转场 / 镜头 B、是否慢放。
  * 视频自己的换场一律是「屏幕开关机」（框内上下收拢 / 展开），不用库里的任何转场，避免混淆。
+ * 框内的说明界面（统计、用法）全部用游戏自己的 GUI 做：库存面板、槽位、物品图标、聊天栏、提示框。
  */
 
 /* ------------------------------ layout ------------------------------ */
@@ -23,7 +24,7 @@ const SCREEN = {w: 1280, h: 720};
 const PLAQUE = {x: 300, y: 812, w: 1320, h: 238};
 
 const shadow = (c: string, px = 3) => `${px}px ${px}px 0 ${textShadowColor(c)}`;
-const GROUP_COLOR: Record<string, string> = {经典: MC.white, 末地系: '#C99BFF', 跳转: MC.aqua, 维度: '#FF8A3D', 可爱: '#FF8FC0', 地下城: MC.gold};
+const GROUP_COLOR: Record<string, string> = {经典: MC.white, 末地系: '#C99BFF', 跳转: MC.aqua, 维度: '#FF8A3D', 可爱: '#FF8FC0', 地下城: MC.gold, 地下城风格: MC.gold, 物品动画: MC.green, 点赞关注: '#FF8FC0'};
 const TAG_COLOR: Record<string, string> = {场景: MC.green, 地下城: MC.gold, 点赞关注: '#FF8FC0', 地图: MC.aqua, 物品: '#C99BFF', 信息: MC.white, 氛围: '#8FB8FF', 套件: '#FF8A3D', 片头: MC.yellow};
 
 /* ------------------------------ timeline ------------------------------ */
@@ -32,18 +33,43 @@ const HERO_LEAD = 14;
 const HERO_HOLD = 18;
 const HERO_TAIL = 14;
 const heroPlan = data.heroes.map((h) => {
-  const slow = h.id !== 'dim-overworld-to-nether';
   const n = h.frames;
-  const len = HERO_LEAD + n + (slow ? HERO_HOLD + 2 * n : 0) + HERO_TAIL;
-  return {...h, slow, n, len};
+  return {...h, n, len: HERO_LEAD + n + HERO_HOLD + 2 * n + HERO_TAIL};
 });
+const SHOW_TAIL = 30;
+const showPlan = data.shows.map((h) => ({...h, n: h.frames, len: HERO_LEAD + h.frames + SHOW_TAIL}));
 
 const HERO_BLURB: Record<string, string> = {
-  portal: '紫色漩涡从中心扩散，吞没画面，再收缩露出 B 镜头。',
-  't2-lava-rise': '熔岩从底部涌上淹没画面，冷却成黑曜石后退去。',
-  'mcd-t-portal-whiteout': '传送门漩涡把画面吞成一片白，再淡出到下一个镜头。',
-  'cute-creeper-rush': '一整屏苦力怕冲脸，搞笑又好认的节奏点转场。',
-  'dim-overworld-to-nether': '从主世界走进传送门，来到下界，附带地点标题。',
+  'cute-creeper-rush': '一整屏苦力怕蹦出来，挨个鼓胀闪白，一声爆炸切到下一镜。',
+  't2-end-portal': '末地传送门的 12 只眼睛逐个亮起，星点涌出吞没画面。',
+  'cute-slime-splat': '绿色史莱姆从上方流下糊满屏幕，再被压扁、分裂散开。',
+  't2-enderman-stare': '黑暗里亮起两只紫色的眼睛，末影人死死盯着你。',
+  't2-villager-hmm': '一排排村民挤满屏幕，齐刷刷点头，再转身走开。',
+  't2-lava-rise': '熔岩从底部翻涌而上淹没画面，退去后冷却成黑曜石。',
+  't2-pickaxe-break': '铁镐连凿四下，裂纹爬满画面，最后碎成石块飞散。',
+  'mcd-t-chest-beam': '宝箱掀盖，品红光柱冲出，扩满屏幕后切到下一镜。',
+};
+const SHOW_NAME: Record<string, string> = {
+  'mcd-kit-title-text': '地下城风格标题字',
+  'mcd-s-boss-intro': 'Boss 登场',
+  'mcd-s-results': '关卡结算页',
+  'mcd-s-level-up': '升级特效',
+  'item-craft-table': '合成台',
+  'item-furnace': '熔炉烧炼',
+  'item-enchanting': '附魔台',
+  'item-smithing': '锻造台升级',
+  'soc-triple': '一键三连',
+};
+const SHOW_BLURB: Record<string, string> = {
+  'mcd-kit-title-text': '压黑硬切、像素错位拼合、逐字下落……六种标题字出现方式。',
+  'mcd-s-boss-intro': '紫色能量聚拢，十字闪光炸开，Boss 现身，血条从左拉满。',
+  'mcd-s-results': '压黑后淡入结算页，击败数滚动，统计卡逐个翻出。',
+  'mcd-s-level-up': '紫色螺旋光柱托起，金色「升级！」砸下，等级徽章亮起。',
+  'item-craft-table': '材料飞进合成格，箭头走满，成品砸出来。',
+  'item-furnace': '生铁和煤炭落入熔炉，火焰点燃，铁锭带着经验球弹出。',
+  'item-enchanting': '符文飘向附魔台，选中后旋入钻石剑，紫光炸开。',
+  'item-smithing': '铁锤三下砸在铁砧上，炸出一把下界合金剑。',
+  'soc-triple': '点赞、投币、收藏依次亮起，聚成能量球后全屏爆发。',
 };
 
 const INTRO = 150;
@@ -55,6 +81,7 @@ const OUTRO = 150;
 type Sec =
   | {kind: 'what'; from: number; dur: number}
   | {kind: 'hero'; from: number; dur: number; idx: number}
+  | {kind: 'show'; from: number; dur: number; idx: number}
   | {kind: 'wall'; from: number; dur: number; idx: number}
   | {kind: 'others'; from: number; dur: number}
   | {kind: 'how'; from: number; dur: number; idx: number}
@@ -68,8 +95,9 @@ const SECS: Sec[] = [];
     t += s.dur;
   };
   push({kind: 'what', dur: WHAT});
-  heroPlan.forEach((h, idx) => push({kind: 'hero', dur: h.len, idx}));
   data.pages.forEach((_, idx) => push({kind: 'wall', dur: WALL, idx}));
+  heroPlan.forEach((h, idx) => push({kind: 'hero', dur: h.len, idx}));
+  showPlan.forEach((h, idx) => push({kind: 'show', dur: h.len, idx}));
   push({kind: 'others', dur: WALL});
   for (let idx = 0; idx < 4; idx++) push({kind: 'how', dur: HOW, idx});
   push({kind: 'outro', dur: OUTRO});
@@ -95,10 +123,9 @@ const Sky: FC = () => {
         const ramp = (x0: number, x1: number, y0: number, y1: number) => interpolate(f, [x0, x1], [y0, y1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
         const fi = i === 0 ? 1 : ramp(a - XFADE / 2, a + XFADE / 2, 0, 1);
         const fo = i + 1 < SKIES.length ? ramp(b - XFADE / 2, b + XFADE / 2, 1, 0) : 1;
-        const o = fi * fo;
         return (
           <Sequence key={k} from={from} durationInFrames={end - from}>
-            <AbsoluteFill style={{opacity: o}}>
+            <AbsoluteFill style={{opacity: fi * fo}}>
               <OffthreadVideo src={staticFile(`promo2/sky/Loop-${k}.mp4`)} muted />
             </AbsoluteFill>
           </Sequence>
@@ -143,20 +170,58 @@ const StageFrame: FC<{tab: string; children: ReactNode}> = ({tab, children}) => 
     <Stud x={OUT.w - 18} y={2} />
     <Stud x={2} y={OUT.h - 18} />
     <Stud x={OUT.w - 18} y={OUT.h - 18} />
-    <div style={{position: 'absolute', left: 60, top: -18, padding: '4px 20px 6px', background: '#1b1020', boxShadow: '0 0 0 4px #2a1745, 0 0 0 8px #0b0614', fontFamily: PIXEL_FONT, fontSize: 24, color: '#d9b8ff', textShadow: shadow('#d9b8ff', 2)}}>{tab}</div>
+    <div style={{position: 'absolute', left: 60, top: -18, padding: '4px 20px 6px', background: '#100010', boxShadow: 'inset 3px 3px 0 #5000ff, inset -3px -3px 0 #28007f, 0 0 0 3px #100010', fontFamily: PIXEL_FONT, fontSize: 24, color: '#fff', textShadow: shadow('#ffffff', 2)}}>{tab}</div>
   </div>
 );
 
 const Plaque: FC<{children: ReactNode}> = ({children}) => (
   <div style={{position: 'absolute', left: PLAQUE.x, top: PLAQUE.y, width: PLAQUE.w, height: PLAQUE.h, filter: 'drop-shadow(0 8px 0 rgba(0,0,0,0.4))'}}>
     <div style={{position: 'absolute', inset: 0, clipPath: stair(12), ...tile('dark_oak_planks', 64), boxShadow: 'inset 0 0 0 4px #0d0805, inset 0 0 0 8px rgba(255,255,255,0.14)'}} />
-    <div style={{position: 'absolute', left: 16, top: 16, right: 16, bottom: 16, background: 'rgba(16,11,8,0.9)', boxShadow: 'inset 0 0 0 4px #000, inset 0 0 0 8px rgba(255,200,120,0.12)'}} />
+    <div style={{position: 'absolute', left: 16, top: 16, right: 16, bottom: 16, background: 'rgba(16,11,8,0.92)', boxShadow: 'inset 0 0 0 4px #000, inset 0 0 0 8px rgba(255,200,120,0.1)'}} />
     <div style={{position: 'absolute', left: 44, top: 30, right: 44, bottom: 28}}>{children}</div>
   </div>
 );
 
-const Chip: FC<{c: string; children: ReactNode; size?: number; solid?: boolean}> = ({c, children, size = 24, solid}) => (
-  <span style={{display: 'inline-block', padding: '2px 14px 4px', fontFamily: PIXEL_FONT, fontSize: size, lineHeight: 1.2, color: solid ? '#140c06' : c, background: solid ? c : 'rgba(0,0,0,0.45)', boxShadow: `inset 0 0 0 3px ${c}`, textShadow: solid ? undefined : shadow(c, 2)}}>{children}</span>
+/* ------------------------------ Minecraft GUI parts ------------------------------ */
+
+/** Item tooltip look: near-black with the purple frame. Colour only goes on the text. */
+const Chip: FC<{c: string; children: ReactNode; size?: number; solid?: boolean}> = ({c, children, size = 24, solid}) =>
+  solid ? (
+    <span style={{display: 'inline-block', padding: '2px 14px 4px', fontFamily: PIXEL_FONT, fontSize: size, lineHeight: 1.2, color: '#1a1008', background: c, boxShadow: 'inset 3px 3px 0 rgba(255,255,255,0.55), inset -3px -3px 0 rgba(0,0,0,0.35), 0 0 0 3px #000'}}>{children}</span>
+  ) : (
+    <span style={{display: 'inline-block', padding: '2px 14px 4px', fontFamily: PIXEL_FONT, fontSize: size, lineHeight: 1.2, color: c, background: 'rgba(16,0,16,0.94)', boxShadow: 'inset 3px 3px 0 #5000ff, inset -3px -3px 0 #28007f, 0 0 0 3px #100010', textShadow: shadow(c, 2)}}>{children}</span>
+  );
+
+/** The grey inventory panel. Text on it is dark grey with no shadow, like container titles. */
+const McPanel: FC<{style?: CSSProperties; children?: ReactNode}> = ({style, children}) => (
+  <div style={{position: 'absolute', background: '#c6c6c6', boxShadow: 'inset 4px 4px 0 #fff, inset -4px -4px 0 #555, 0 0 0 4px #000', ...style}}>{children}</div>
+);
+
+/** An inventory slot (the game's own 18x18 sprite) holding an item icon. */
+const McSlot: FC<{size: number; icon?: string; count?: string; style?: CSSProperties}> = ({size, icon, count, style}) => (
+  <div style={{position: 'absolute', width: size, height: size, backgroundImage: `url(${tex('gui/sprites/container/slot.png')})`, backgroundSize: '100% 100%', imageRendering: 'pixelated', ...style}}>
+    {icon && <img src={icon} style={{position: 'absolute', left: size / 18, top: size / 18, width: (size * 16) / 18, height: (size * 16) / 18, imageRendering: 'pixelated'}} />}
+    {count && <div style={{position: 'absolute', right: 6, bottom: 0, fontFamily: PIXEL_FONT, fontSize: Math.round(size / 3 / 12) * 12 || 24, color: '#fff', textShadow: shadow('#ffffff', 4)}}>{count}</div>}
+  </div>
+);
+
+/** A recessed text well, like the dark inset behind slot names. */
+const Well: FC<{style?: CSSProperties; children?: ReactNode}> = ({style, children}) => (
+  <div style={{position: 'absolute', background: '#373737', boxShadow: 'inset 4px 4px 0 #1c1c1c, inset -4px -4px 0 #fff', ...style}}>{children}</div>
+);
+
+const McButton: FC<{children: ReactNode; size?: number; hot?: boolean}> = ({children, size = 36, hot}) => (
+  <span style={{display: 'inline-block', padding: '10px 30px 14px', fontFamily: PIXEL_FONT, fontSize: size, color: hot ? '#ffffa0' : '#fff', textShadow: shadow('#ffffff', 3), background: '#7c7c7c', boxShadow: 'inset 4px 4px 0 #bdbdbd, inset -4px -4px 0 #3b3b3b, 0 0 0 4px #000'}}>{children}</span>
+);
+
+const item = (n: string) => tex(`item/${n}.png`);
+
+/** The game's options background: dirt, tiled and dimmed. */
+const DirtBg: FC<{children?: ReactNode}> = ({children}) => (
+  <AbsoluteFill style={{...tile('dirt', 64)}}>
+    <AbsoluteFill style={{background: 'rgba(0,0,0,0.62)'}} />
+    {children}
+  </AbsoluteFill>
 );
 
 /* ------------------------------ CRT on/off (the video's own scene change) ------------------------------ */
@@ -183,8 +248,6 @@ const Cap: FC<{dur: number; children: ReactNode}> = ({dur, children}) => {
   return <div style={{position: 'absolute', inset: 0, opacity: o, transform: `translateY(${(1 - p) * 14}px)`}}>{children}</div>;
 };
 
-/* ------------------------------ plaque layouts ------------------------------ */
-
 const Cap1: FC<{chips?: ReactNode; title: string; blurb: string; right?: ReactNode; titleColor?: string}> = ({chips, title, blurb, right, titleColor = MC.gold}) => (
   <div style={{display: 'flex', height: '100%', gap: 36}}>
     <div style={{flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
@@ -192,7 +255,7 @@ const Cap1: FC<{chips?: ReactNode; title: string; blurb: string; right?: ReactNo
       <div style={{fontFamily: PIXEL_FONT, fontSize: 36, lineHeight: 1.4, color: '#efe9de', marginTop: 10, maxHeight: 104, overflow: 'hidden'}}>{blurb}</div>
     </div>
     <div style={{width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 16}}>
-      {chips && <div style={{display: 'flex', gap: 10, flexWrap: 'wrap'}}>{chips}</div>}
+      {chips && <div style={{display: 'flex', gap: 12, flexWrap: 'wrap'}}>{chips}</div>}
       {right}
     </div>
   </div>
@@ -200,34 +263,37 @@ const Cap1: FC<{chips?: ReactNode; title: string; blurb: string; right?: ReactNo
 
 /* ------------------------------ screens ------------------------------ */
 
-const Panel: FC<{edge?: string; style?: CSSProperties; children?: ReactNode}> = ({edge = MC.gray, style, children}) => (
-  <div style={{position: 'absolute', background: 'rgba(14,10,18,0.92)', boxShadow: `inset 0 0 0 4px ${edge}, inset 0 0 0 8px rgba(255,255,255,0.06), 0 0 0 4px #000`, ...style}}>{children}</div>
-);
-
 const countTo = (f: number, to: number, a: number, d = 40) => Math.round(to * EASE.out(clamp01((f - a) / d)));
 
 const WhatScreen: FC = () => {
   const f = useCurrentFrame();
-  const cards = [
-    {n: data.totals.all, label: '个效果', c: MC.gold, at: 14},
-    {n: data.totals.transitions, label: '个转场', c: MC.aqua, at: 34},
-    {n: data.totals.alpha, label: '个可导出透明层', c: '#FF8FC0', at: 54},
+  const cols = [
+    {n: data.totals.all, label: '个效果', icon: item('nether_star'), at: 14},
+    {n: data.totals.transitions, label: '个转场', icon: item('ender_pearl'), at: 34},
+    {n: data.totals.alpha, label: '个可导出透明层', icon: tex('block/glass.png'), at: 54},
   ];
+  const panelIn = EASE.back(clamp01(f / 14));
   return (
-    <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 40%, #2a1745 0%, #120a1e 70%)'}}>
-      <McdLEmbers />
-      <div style={{position: 'absolute', left: 0, right: 0, top: 96, textAlign: 'center', fontFamily: PIXEL_FONT, fontSize: 48, color: MC.white, textShadow: shadow(MC.white, 3), opacity: EASE.out(clamp01((f - 4) / 12))}}>这个库里有</div>
-      {cards.map((c, i) => {
-        const p = EASE.back(clamp01((f - c.at) / 14));
-        return (
-          <Panel key={c.label} edge={c.c} style={{left: 60 + i * 400, top: 220, width: 360, height: 340, transform: `scale(${p})`, opacity: p, transformOrigin: '50% 60%'}}>
-            <div style={{position: 'absolute', left: 0, right: 0, top: 56, textAlign: 'center', fontFamily: PIXEL_FONT, fontSize: 144, lineHeight: 1, color: c.c, textShadow: shadow(c.c, 8)}}>{countTo(f, c.n, c.at + 6)}</div>
-            <div style={{position: 'absolute', left: 16, right: 16, top: 232, textAlign: 'center', fontFamily: PIXEL_FONT, fontSize: 36, lineHeight: 1.3, color: MC.white, textShadow: shadow(MC.white, 3)}}>{c.label}</div>
-          </Panel>
-        );
-      })}
-      <div style={{position: 'absolute', left: 0, right: 0, bottom: 70, textAlign: 'center', fontFamily: PIXEL_FONT, fontSize: 36, color: '#d9b8ff', textShadow: shadow('#d9b8ff', 3), opacity: EASE.out(clamp01((f - 90) / 16))}}>Minecraft 风格 · Minecraft 地下城风格</div>
-    </AbsoluteFill>
+    <DirtBg>
+      <McPanel style={{left: 140, top: 90, width: 1000, height: 540, transform: `scale(${panelIn})`, opacity: panelIn}}>
+        <div style={{position: 'absolute', left: 36, top: 26, fontFamily: PIXEL_FONT, fontSize: 36, color: '#404040'}}>优易库</div>
+        {cols.map((c, i) => {
+          const p = EASE.back(clamp01((f - c.at) / 14));
+          const x = 124 + i * 292;
+          return (
+            <div key={c.label} style={{position: 'absolute', left: x - 40, top: 90, width: 252, height: 410, opacity: p, transform: `scale(${p})`, transformOrigin: '50% 40%'}}>
+              <McSlot size={168} icon={c.icon} style={{left: 42, top: 0}} />
+              <Well style={{left: 0, top: 196, width: 252, height: 100}}>
+                <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: PIXEL_FONT, fontSize: 72, lineHeight: 1, color: '#fff', textShadow: shadow('#ffffff', 6)}}>{countTo(f, c.n, c.at + 6)}</div>
+              </Well>
+              <div style={{position: 'absolute', left: 0, right: 0, top: 316, textAlign: 'center', fontFamily: PIXEL_FONT, fontSize: 36, lineHeight: 1.3, color: '#404040'}}>{c.label}</div>
+            </div>
+          );
+        })}
+        <div style={{position: 'absolute', left: 0, right: 0, bottom: 28, textAlign: 'center', fontFamily: PIXEL_FONT, fontSize: 24, color: '#555', opacity: clamp01((f - 90) / 16)}}>Minecraft 风格 · Minecraft 地下城风格</div>
+      </McPanel>
+      <div style={{position: 'absolute', left: 1180, top: 130, width: 80, textAlign: 'center'}} />
+    </DirtBg>
   );
 };
 
@@ -236,26 +302,19 @@ const Vid: FC<{src: string}> = ({src}) => <OffthreadVideo src={staticFile(src)} 
 type HeroPlan = (typeof heroPlan)[number];
 
 const phaseAt = (h: HeroPlan, f: number): {label: string; speed: string; pos: number} | null => {
-  // pos = progress through the demo (0..1) for the legend bar; label = A / transition / B
   const n = h.n;
   const a = HERO_LEAD;
-  const normal = f >= a && f < a + n;
   const slowStart = a + n + HERO_HOLD;
-  const slow = h.slow && f >= slowStart && f < slowStart + 2 * n;
   let local: number | null = null;
   let speed = '';
-  if (normal) {
+  if (f >= a && f < a + n) {
     local = f - a;
     speed = '正常速度';
-  } else if (slow) {
+  } else if (f >= slowStart && f < slowStart + 2 * n) {
     local = (f - slowStart) / 2;
     speed = '慢放 ×0.5';
-  } else if (f >= a + n && f < slowStart) {
+  } else if (f >= a + n) {
     local = n - 1;
-    speed = '';
-  } else if (f >= slowStart + 2 * n) {
-    local = n - 1;
-    speed = '';
   }
   if (local === null) return null;
   const label = local < h.transStart ? '镜头 A' : local <= h.transEnd ? '转场' : '镜头 B';
@@ -274,23 +333,19 @@ const HeroScreen: FC<{h: HeroPlan}> = ({h}) => {
       <Sequence from={HERO_LEAD} durationInFrames={n}>
         <Vid src={`promo2/hero/${h.id}_n.mp4`} />
       </Sequence>
-      <Sequence from={HERO_LEAD + n} durationInFrames={h.slow ? HERO_HOLD : HERO_TAIL + 10}>
+      <Sequence from={HERO_LEAD + n} durationInFrames={HERO_HOLD}>
         <Freeze frame={n - 1}>
           <Vid src={`promo2/hero/${h.id}_n.mp4`} />
         </Freeze>
       </Sequence>
-      {h.slow && (
-        <>
-          <Sequence from={slowStart} durationInFrames={2 * n}>
-            <Vid src={`promo2/hero/${h.id}_s.mp4`} />
-          </Sequence>
-          <Sequence from={slowStart + 2 * n} durationInFrames={HERO_TAIL + 10}>
-            <Freeze frame={2 * n - 1}>
-              <Vid src={`promo2/hero/${h.id}_s.mp4`} />
-            </Freeze>
-          </Sequence>
-        </>
-      )}
+      <Sequence from={slowStart} durationInFrames={2 * n}>
+        <Vid src={`promo2/hero/${h.id}_s.mp4`} />
+      </Sequence>
+      <Sequence from={slowStart + 2 * n} durationInFrames={HERO_TAIL + 10}>
+        <Freeze frame={2 * n - 1}>
+          <Vid src={`promo2/hero/${h.id}_s.mp4`} />
+        </Freeze>
+      </Sequence>
       {ph && (
         <>
           <div style={{position: 'absolute', left: 24, top: 24, transform: `scale(${pulse})`, transformOrigin: '0 0'}}>
@@ -306,6 +361,21 @@ const HeroScreen: FC<{h: HeroPlan}> = ({h}) => {
     </AbsoluteFill>
   );
 };
+
+type ShowPlan = (typeof showPlan)[number];
+
+const ShowScreen: FC<{h: ShowPlan}> = ({h}) => (
+  <AbsoluteFill style={{background: '#000'}}>
+    <Sequence from={HERO_LEAD} durationInFrames={h.n}>
+      <Vid src={`promo2/hero/${h.id}_n.mp4`} />
+    </Sequence>
+    <Sequence from={HERO_LEAD + h.n} durationInFrames={SHOW_TAIL + 10}>
+      <Freeze frame={h.n - 1}>
+        <Vid src={`promo2/hero/${h.id}_n.mp4`} />
+      </Freeze>
+    </Sequence>
+  </AbsoluteFill>
+);
 
 const LegendBar: FC<{h: HeroPlan; f: number}> = ({h, f}) => {
   const ph = phaseAt(h, f);
@@ -383,76 +453,81 @@ const OthersScreen: FC = () => {
 
 /* ------------------------------ how to ------------------------------ */
 
-const STEPS = ['交给 AI', '说想法', '渲染'];
+const STEPS = ['下载 Skill', '说想法', '渲染'];
 const StepBar: FC<{current: number}> = ({current}) => (
-  <div style={{position: 'absolute', left: 0, right: 0, top: 36, display: 'flex', justifyContent: 'center', gap: 56}}>
+  <div style={{position: 'absolute', left: 0, right: 0, top: 36, display: 'flex', justifyContent: 'center', gap: 28}}>
     {STEPS.map((s, i) => {
       const on = i === current;
       const done = i < current;
-      const c = on ? MC.gold : done ? MC.green : MC.gray;
       return (
-        <div key={s} style={{display: 'flex', alignItems: 'center', gap: 14, opacity: on ? 1 : 0.55}}>
-          <div style={{width: 56, height: 56, border: `4px solid ${c}`, background: 'rgba(0,0,0,0.5)', transform: 'rotate(45deg)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <span style={{transform: 'rotate(-45deg)', fontFamily: PIXEL_FONT, fontSize: 36, color: c}}>{done ? '✓' : i + 1}</span>
-          </div>
-          <span style={{fontFamily: PIXEL_FONT, fontSize: 36, color: c, textShadow: shadow(c, 3)}}>{s}</span>
+        <div key={s} style={{opacity: on ? 1 : done ? 0.85 : 0.5}}>
+          <McButton hot={on}>{done ? '✓ ' : `${i + 1} `}{s}</McButton>
         </div>
       );
     })}
   </div>
 );
 
-const HowBg: FC<{children: ReactNode}> = ({children}) => (
-  <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 40%, #241438 0%, #0f0a18 75%)'}}>{children}</AbsoluteFill>
-);
-
 const HowScreen: FC<{idx: number}> = ({idx}) => {
   const f = useCurrentFrame();
   if (idx === 0) {
     const bob = Math.sin(f / 6) * 6;
-    const files = [
-      {name: 'AI使用手册.md', note: '怎么用库拼一集视频', y: 220, at: 6},
-      {name: 'catalog.json', note: '全部效果的机器可读目录', y: 410, at: 18},
+    const p = EASE.back(clamp01((f - 6) / 14));
+    const bits = [
+      {t: '使用手册', icon: item('written_book'), at: 22},
+      {t: '效果目录', icon: item('filled_map'), at: 32},
+      {t: '全部源码', icon: item('diamond_pickaxe'), at: 42},
     ];
     return (
-      <HowBg>
+      <DirtBg>
         <StepBar current={0} />
-        {files.map((c) => {
-          const p = EASE.back(clamp01((f - c.at) / 14));
-          return (
-            <Panel key={c.name} edge={MC.aqua} style={{left: 110, top: c.y, width: 560, height: 140, transform: `scale(${p})`, opacity: p}}>
-              <div style={{position: 'absolute', left: 32, top: 26, fontFamily: PIXEL_FONT, fontSize: 36, color: MC.aqua, textShadow: shadow(MC.aqua, 3)}}>{c.name}</div>
-              <div style={{position: 'absolute', left: 32, top: 82, fontFamily: PIXEL_FONT, fontSize: 24, color: MC.gray}}>{c.note}</div>
-            </Panel>
-          );
-        })}
-        <div style={{position: 'absolute', left: 700, top: 330, fontFamily: PIXEL_FONT, fontSize: 72, color: MC.gold, opacity: clamp01((f - 40) / 10)}}>→</div>
-        <Panel edge={MC.purple} style={{left: 810, top: 240 + bob, width: 360, height: 240}}>
-          <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: PIXEL_FONT, fontSize: 132, color: MC.purple, textShadow: shadow(MC.purple, 8)}}>AI</div>
-        </Panel>
-      </HowBg>
+        <McPanel style={{left: 90, top: 150, width: 780, height: 440, opacity: p, transform: `scale(${p})`}}>
+          <McSlot size={150} icon={item('enchanted_book')} style={{left: 40, top: 40}} />
+          <div style={{position: 'absolute', left: 224, top: 44, fontFamily: PIXEL_FONT, fontSize: 60, color: '#404040'}}>优易库 Skill</div>
+          <div style={{position: 'absolute', left: 224, top: 124, fontFamily: PIXEL_FONT, fontSize: 24, color: '#555'}}>作者：云诺羲 Rinorsi</div>
+          <div style={{position: 'absolute', left: 40, right: 40, top: 232, height: 2, background: '#8b8b8b'}} />
+          <div style={{position: 'absolute', left: 40, top: 260, fontFamily: PIXEL_FONT, fontSize: 36, color: '#404040'}}>里面自带：</div>
+          {bits.map((b, i) => {
+            const q = EASE.back(clamp01((f - b.at) / 12));
+            return (
+              <div key={b.t} style={{position: 'absolute', left: 40 + i * 240, top: 320, width: 220, opacity: q, transform: `scale(${q})`, transformOrigin: '0 50%'}}>
+                <McSlot size={72} icon={b.icon} style={{left: 0, top: 0}} />
+                <div style={{position: 'absolute', left: 88, top: 18, fontFamily: PIXEL_FONT, fontSize: 24, color: '#404040'}}>{b.t}</div>
+              </div>
+            );
+          })}
+        </McPanel>
+        <div style={{position: 'absolute', left: 892, top: 330, fontFamily: PIXEL_FONT, fontSize: 96, color: '#fff', textShadow: shadow('#ffffff', 6), opacity: clamp01((f - 52) / 10)}}>→</div>
+        <McPanel style={{left: 1010, top: 220 + bob, width: 200, height: 280}}>
+          <McSlot size={140} icon={item('nether_star')} style={{left: 30, top: 34}} />
+          <div style={{position: 'absolute', left: 0, right: 0, top: 200, textAlign: 'center', fontFamily: PIXEL_FONT, fontSize: 60, color: '#404040'}}>AI</div>
+        </McPanel>
+      </DirtBg>
     );
   }
   if (idx === 1) {
-    const msg = '来一期下界探险：开场传送门白闪，中间 Boss 登场，最后放结算页';
+    const msg = '来一期下界探险：开场末地传送门，中间 Boss 登场，最后放结算页';
     const nChars = Math.min(msg.length, Math.floor(Math.max(0, f - 6) * 0.6));
+    const reply = f > 58;
     const chips = [
-      {t: '传送门白闪', c: MC.aqua, at: 62},
-      {t: 'Boss 登场', c: MC.red, at: 76},
-      {t: '结算页', c: MC.gold, at: 90},
+      {t: '末地传送门', c: '#C99BFF', at: 66},
+      {t: 'Boss 登场', c: MC.red, at: 80},
+      {t: '结算页', c: MC.gold, at: 94},
     ];
     return (
-      <HowBg>
+      <DirtBg>
         <StepBar current={1} />
-        <Panel edge={MC.gray} style={{left: 100, top: 190, width: 1080, height: 230}}>
-          <div style={{position: 'absolute', left: 36, top: 24, fontFamily: PIXEL_FONT, fontSize: 24, color: MC.gray}}>你</div>
-          <div style={{position: 'absolute', left: 36, top: 64, right: 36, fontFamily: PIXEL_FONT, fontSize: 36, lineHeight: 1.5, color: MC.white, textShadow: shadow(MC.white, 3)}}>
+        <div style={{position: 'absolute', left: 60, right: 60, top: 190, background: 'rgba(0,0,0,0.55)', padding: '22px 28px 26px'}}>
+          <div style={{fontFamily: PIXEL_FONT, fontSize: 36, lineHeight: 1.5, color: '#fff', textShadow: shadow('#ffffff', 3)}}>
+            {'<你> '}
             {msg.slice(0, nChars)}
-            <span style={{opacity: f % 12 < 6 ? 1 : 0}}>▌</span>
+            <span style={{opacity: f % 12 < 6 ? 1 : 0}}>_</span>
           </div>
-        </Panel>
-        <div style={{position: 'absolute', left: 100, top: 470, fontFamily: PIXEL_FONT, fontSize: 24, color: MC.gray, opacity: clamp01((f - 56) / 8)}}>AI 从目录里挑出：</div>
-        <div style={{position: 'absolute', left: 100, top: 520, display: 'flex', gap: 28}}>
+          {reply && (
+            <div style={{fontFamily: PIXEL_FONT, fontSize: 36, lineHeight: 1.5, color: '#fff', textShadow: shadow('#ffffff', 3), marginTop: 10}}>{'<AI> 好的，我从效果目录里选了：'}</div>
+          )}
+        </div>
+        <div style={{position: 'absolute', left: 60, top: 440, display: 'flex', gap: 28}}>
           {chips.map((c) => {
             const p = EASE.back(clamp01((f - c.at) / 12));
             return (
@@ -462,25 +537,24 @@ const HowScreen: FC<{idx: number}> = ({idx}) => {
             );
           })}
         </div>
-      </HowBg>
+      </DirtBg>
     );
   }
   if (idx === 2) {
     const prog = clamp01((f - 16) / 70);
     const done = prog >= 1;
     return (
-      <HowBg>
+      <DirtBg>
         <StepBar current={2} />
-        <Panel edge={MC.green} style={{left: 100, top: 230, width: 1080, height: 300}}>
-          <div style={{position: 'absolute', left: 40, top: 34, fontFamily: PIXEL_FONT, fontSize: 36, color: MC.green, textShadow: shadow(MC.green, 3)}}>$ npx remotion render 我的视频</div>
-          <div style={{position: 'absolute', left: 40, right: 40, top: 110, display: 'flex', gap: 4}}>
-            {Array.from({length: 24}, (_, i) => (
-              <div key={i} style={{flex: 1, height: 44, background: i < Math.round(prog * 24) ? MC.green : 'rgba(255,255,255,0.12)'}} />
-            ))}
+        <div style={{position: 'absolute', left: 90, top: 190, width: 1100, height: 320, background: 'rgba(16,0,16,0.94)', boxShadow: 'inset 4px 4px 0 #5000ff, inset -4px -4px 0 #28007f, 0 0 0 4px #100010'}}>
+          <div style={{position: 'absolute', left: 44, top: 36, fontFamily: PIXEL_FONT, fontSize: 36, color: MC.green, textShadow: shadow(MC.green, 3)}}>/render 我的视频</div>
+          {/* experience-bar style progress */}
+          <div style={{position: 'absolute', left: 44, right: 44, top: 120, height: 36, background: '#1a1a1a', boxShadow: 'inset 4px 4px 0 #000, inset -4px -4px 0 #444, 0 0 0 4px #000'}}>
+            <div style={{position: 'absolute', left: 4, top: 4, bottom: 4, width: `calc(${prog * 100}% - 8px)`, background: '#80ff20', boxShadow: 'inset 0 4px 0 #c8ff90, inset 0 -4px 0 #3c8a0c'}} />
           </div>
-          <div style={{position: 'absolute', left: 40, top: 190, fontFamily: PIXEL_FONT, fontSize: 36, color: done ? MC.gold : MC.gray, textShadow: done ? shadow(MC.gold, 3) : undefined}}>{done ? '✓ 视频已生成' : `渲染中 ${Math.round(prog * 100)}%`}</div>
-        </Panel>
-      </HowBg>
+          <div style={{position: 'absolute', left: 44, top: 200, fontFamily: PIXEL_FONT, fontSize: 36, color: done ? MC.gold : '#aaa', textShadow: done ? shadow(MC.gold, 3) : undefined}}>{done ? '视频已生成！' : `渲染中 ${Math.round(prog * 100)}%`}</div>
+        </div>
+      </DirtBg>
     );
   }
   const p = EASE.out(clamp01(f / 16));
@@ -488,16 +562,16 @@ const HowScreen: FC<{idx: number}> = ({idx}) => {
     <AbsoluteFill style={{backgroundColor: '#2b2b33', backgroundImage: 'linear-gradient(45deg,#3a3a45 25%,transparent 25%,transparent 75%,#3a3a45 75%),linear-gradient(45deg,#3a3a45 25%,transparent 25%,transparent 75%,#3a3a45 75%)', backgroundSize: '64px 64px', backgroundPosition: '0 0,32px 32px'}}>
       <AbsoluteFill style={{background: 'rgba(0,0,0,0.4)'}} />
       <McdLEmbers />
-      <div style={{position: 'absolute', left: 0, right: 0, top: 190, textAlign: 'center', opacity: p, transform: `translateY(${(1 - p) * 24}px)`}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 170, textAlign: 'center', opacity: p, transform: `translateY(${(1 - p) * 24}px)`}}>
         <div style={{fontFamily: PIXEL_FONT, fontSize: 84, color: MC.aqua, textShadow: shadow(MC.aqua, 6)}}>导出透明层</div>
-        <div style={{fontFamily: PIXEL_FONT, fontSize: 36, color: MC.gray, marginTop: 12}}>ProRes 4444 · .mov</div>
+        <div style={{fontFamily: PIXEL_FONT, fontSize: 36, color: '#ddd', textShadow: shadow('#dddddd', 3), marginTop: 12}}>ProRes 4444 · .mov</div>
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 460, display: 'flex', justifyContent: 'center', gap: 36}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 440, display: 'flex', justifyContent: 'center', gap: 40}}>
         {['剪映', '其他剪辑软件'].map((a, i) => {
           const q = EASE.back(clamp01((f - 36 - i * 12) / 12));
           return (
             <div key={a} style={{transform: `scale(${q})`, opacity: q}}>
-              <Chip c={MC.gold} size={48}>拖进 {a}</Chip>
+              <McButton size={48}>拖进 {a}</McButton>
             </div>
           );
         })}
@@ -507,8 +581,8 @@ const HowScreen: FC<{idx: number}> = ({idx}) => {
 };
 
 const HOW_CAP = [
-  {title: '第一步：把手册交给 AI', blurb: '库里有《AI 使用手册》和效果目录，丢给 AI，它就知道怎么用。'},
-  {title: '第二步：用大白话说想法', blurb: '比如「开场传送门白闪，最后放结算页」，AI 自己挑效果、排时间轴。'},
+  {title: '第一步：下载优易库 Skill', blurb: '直接下载我们的 Skill 就能用，手册、目录和源码都在里面。'},
+  {title: '第二步：用大白话说想法', blurb: '比如「开场末地传送门，最后放结算页」，AI 自己挑效果、排时间轴。'},
   {title: '第三步：一键渲染成视频', blurb: '一条命令渲染出视频，不会写代码也没关系，让 AI 来跑。'},
   {title: '也可以只拿效果', blurb: '任何效果都能导出透明层 .mov，拖进剪映，直接叠在你的素材上。'},
 ];
@@ -517,14 +591,18 @@ const HOW_CAP = [
 
 const SecPlaque: FC<{s: Sec}> = ({s}) => {
   const f = useCurrentFrame();
-  const local = f;
   if (s.kind === 'what') {
     return (
       <Cap1
         chips={<Chip c={MC.gold}>优易库</Chip>}
         title="Minecraft 转场与特效库"
-        blurb="转场、地下城风格、标题卡、地图旅程、点赞三连……做 Minecraft 视频要用的动效都在这里。"
-        right={<Chip c={MC.aqua} size={24}>带 Minecraft 原版音效</Chip>}
+        blurb="转场、地下城风格、标题卡、合成熔炼……都在这里。先看全部转场。"
+        right={
+          <>
+            <Chip c={MC.aqua} size={24}>带 Minecraft 原版音效</Chip>
+            <Chip c={MC.white} size={24}>作者：云诺羲 Rinorsi</Chip>
+          </>
+        }
       />
     );
   }
@@ -534,14 +612,30 @@ const SecPlaque: FC<{s: Sec}> = ({s}) => {
       <Cap1
         chips={
           <>
-            <Chip c={MC.gold} solid>{`${String(s.idx + 1).padStart(2, '0')} / ${String(heroPlan.length).padStart(2, '0')}`}</Chip>
+            <Chip c={MC.gold}>{`${String(s.idx + 1).padStart(2, '0')} / ${String(heroPlan.length).padStart(2, '0')}`}</Chip>
             <Chip c={GROUP_COLOR[h.group] ?? MC.white}>{h.group}</Chip>
             {h.alpha && <Chip c={MC.green}>可导出透明层</Chip>}
           </>
         }
         title={h.name}
         blurb={HERO_BLURB[h.id] ?? h.blurb}
-        right={<LegendBar h={h} f={local} />}
+        right={<LegendBar h={h} f={f} />}
+      />
+    );
+  }
+  if (s.kind === 'show') {
+    const h = showPlan[s.idx];
+    return (
+      <Cap1
+        chips={
+          <>
+            <Chip c={MC.gold}>{`${String(s.idx + 1).padStart(2, '0')} / ${String(showPlan.length).padStart(2, '0')}`}</Chip>
+            <Chip c={GROUP_COLOR[h.tag] ?? MC.white}>{h.tag}</Chip>
+            {h.alpha && <Chip c={MC.green}>可导出透明层</Chip>}
+          </>
+        }
+        title={SHOW_NAME[h.id] ?? h.name}
+        blurb={SHOW_BLURB[h.id] ?? h.blurb}
       />
     );
   }
@@ -549,7 +643,7 @@ const SecPlaque: FC<{s: Sec}> = ({s}) => {
     const start = data.pages.slice(0, s.idx).reduce((a, p) => a + p.length, 0);
     return (
       <Cap1
-        chips={<Chip c={MC.gold} solid>{`第 ${s.idx + 1} / ${data.pages.length} 页`}</Chip>}
+        chips={<Chip c={MC.gold}>{`第 ${s.idx + 1} / ${data.pages.length} 页`}</Chip>}
         title="全部 59 个转场"
         blurb="按风格排列，每一格都是真实效果在循环播放。"
         right={
@@ -568,21 +662,21 @@ const SecPlaque: FC<{s: Sec}> = ({s}) => {
   if (s.kind === 'others') {
     return (
       <Cap1
-        chips={<Chip c={MC.aqua} solid>不止转场</Chip>}
+        chips={<Chip c={MC.aqua}>不止这些</Chip>}
         title={`还有 ${data.totals.others} 个其他效果`}
-        blurb="Boss 登场、结算页、地图旅程、点赞三连、章节卡、雨雪雷暴……这里是其中一部分。"
+        blurb="地图旅程、章节卡、字幕条、雨雪雷暴、片头片尾……这里是其中一部分。"
         right={<Chip c={MC.green} size={24}>{`共 ${data.totals.all} 个 · ${data.totals.alpha} 个带透明层`}</Chip>}
       />
     );
   }
   if (s.kind === 'how') {
     const c = HOW_CAP[s.idx];
-    return <Cap1 chips={<Chip c={MC.green} solid>怎么用</Chip>} title={c.title} blurb={c.blurb} titleColor={MC.aqua} />;
+    return <Cap1 chips={<Chip c={MC.green}>怎么用</Chip>} title={c.title} blurb={c.blurb} titleColor={MC.aqua} />;
   }
   return null;
 };
 
-const TABS: Record<Sec['kind'], string> = {what: '优易库', hero: '演示画面', wall: '转场总览', others: '更多效果', how: '用法', outro: ''};
+const TABS: Record<Sec['kind'], string> = {what: '优易库', hero: '转场精选', show: '不止转场', wall: '转场总览', others: '更多效果', how: '用法', outro: ''};
 
 const Stage: FC = () => {
   const f = useCurrentFrame();
@@ -603,6 +697,7 @@ const Stage: FC = () => {
 const Screen: FC<{s: Sec}> = ({s}) => {
   if (s.kind === 'what') return <WhatScreen />;
   if (s.kind === 'hero') return <HeroScreen h={heroPlan[s.idx]} />;
+  if (s.kind === 'show') return <ShowScreen h={showPlan[s.idx]} />;
   if (s.kind === 'wall') return <WallScreen idx={s.idx} />;
   if (s.kind === 'others') return <OthersScreen />;
   if (s.kind === 'how') return <HowScreen idx={s.idx} />;
@@ -618,9 +713,7 @@ const SecScene: FC<{s: Sec}> = ({s}) => (
     </StageFrame>
     <Plaque>
       <Cap dur={s.dur}>
-        <Sequence from={0}>
-          <SecPlaque s={s} />
-        </Sequence>
+        <SecPlaque s={s} />
       </Cap>
     </Plaque>
   </AbsoluteFill>
@@ -631,7 +724,6 @@ const SecScene: FC<{s: Sec}> = ({s}) => (
 export const Promo2: FC = () => {
   const f = useCurrentFrame();
   const vol = interpolate(f, [0, 45, PROMO2_FRAMES - 150, PROMO2_FRAMES - 6], [0, 0.9, 0.9, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const outroFrom = STAGE_END;
   return (
     <AbsoluteFill style={{background: '#000'}}>
       <Audio src={staticFile('promo2/audio/bgm.mp3')} volume={vol} />
@@ -642,7 +734,7 @@ export const Promo2: FC = () => {
         </FadeOut>
       </Sequence>
       <Stage />
-      <Sequence from={outroFrom} durationInFrames={OUTRO}>
+      <Sequence from={STAGE_END} durationInFrames={OUTRO}>
         <OutroCard />
       </Sequence>
     </AbsoluteFill>
@@ -651,16 +743,14 @@ export const Promo2: FC = () => {
 
 const FadeOut: FC<{at: number; len: number; children: ReactNode}> = ({at, len, children}) => {
   const f = useCurrentFrame();
-  const o = 1 - clamp01((f - at) / len);
-  return <AbsoluteFill style={{opacity: o}}>{children}</AbsoluteFill>;
+  return <AbsoluteFill style={{opacity: 1 - clamp01((f - at) / len)}}>{children}</AbsoluteFill>;
 };
 
 const OutroCard: FC = () => {
   const f = useCurrentFrame();
-  const o = clamp01(f / 16);
   return (
-    <AbsoluteFill style={{opacity: o}}>
-      <McdEndCard bg kicker="Minecraft 转场 · 特效 · 动画库" title="优易库" thanks="感谢观看" link={`${data.totals.all} 个效果 · ${data.totals.transitions} 个转场 · ${data.totals.alpha} 个透明层`} studios={[]} note="" />
+    <AbsoluteFill style={{opacity: clamp01(f / 16)}}>
+      <McdEndCard bg kicker="Minecraft 转场 · 特效 · 动画库" title="优易库" thanks="感谢观看" link="直接下载优易库 Skill，让 AI 帮你用" studios={['作者：云诺羲 Rinorsi']} note="用了优易库的转场和效果，欢迎在视频里留个署名（不强制）" />
     </AbsoluteFill>
   );
 };

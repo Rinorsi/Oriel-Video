@@ -5,6 +5,10 @@ Minecraft / Minecraft 地下城风格的**转场、特效、标题卡、信息�
 
 源码就是素材：每个效果都是一个 React 组件，所有文字、颜色、时间点都是 props，改参数就能换内容，所以很适合交给 AI 来改、来拼。
 
+作者：**云诺羲 Rinorsi** · 爱发电：<https://afdian.com/a/Rinorsi> · B 站：<https://b23.tv/hjUvs0c>
+
+免费使用。如果你的视频里用到了优易库的转场或效果，欢迎保留署名「优易库 · 云诺羲 Rinorsi」，不强制，但留个名字我会很开心。
+
 ## 能做什么
 
 | 类型 | 例子 |
@@ -52,6 +56,17 @@ npm run fx -- export <效果id> --alpha     # 输出 ProRes 4444 的 .mov
 ### 自己写
 
 从 `src/lib/examples/episode.tsx` 复制一集完整示例开始，所有组件都从 `src/lib` 引用。
+
+### 打包成 Skill，让 AI 直接用
+
+`skill/youyiku-video/` 是给 AI 用的 Skill 源文件。构建下载包：
+
+```bash
+git commit -a            # 打包的是已提交的内容
+npm run skill:build      # 生成 out/skill/youyiku-video/（含 assets/youyiku-kit.zip）
+```
+
+装上 Skill 后，AI 会用 `scripts/bootstrap.py` 解压工程、安装依赖，再按手册和效果目录帮你拼视频。
 
 ## 目录
 
