@@ -67,15 +67,20 @@ docs/           使用手册、目录、视觉方法
 
 ## 宣传片是怎么做的
 
-宣传片本身就是用这个库做的，源码在 `src/promo/`：
+宣传片（无配音，约 2 分钟）本身就是用这个库做的，源码在 `src/promo/`。画面分三层，一眼能分清谁是谁：
 
-- 台词稿 `promo/script.v2.json` → `promo/tts.py` 用微软中文女声合成配音。
-- `promo/align.py` 用 Whisper 识别配音拿到字级时间戳，并和台词稿逐句比对，保证读出来的就是稿子。
-- 对齐后的时间轴写进 `src/promo/timeline.json`，字幕和镜头切换都按它走。
-- 画面用库里的效果预渲染成片段（`npm run promo:clips`），再由 `Promo` 合成统一拼接。
+- **外层**：随时间走完一天的像素天空（日出 → 正午 → 日落 → 夜晚），是视频自己的风格。
+- **中间**：像素风的石砖框，框里只放被演示的效果。每个主打转场先正常速度播一遍，再慢放一遍，并标出「镜头 A / 转场 / 镜头 B」。
+- **框下**：木牌字幕牌，写效果名、说明和速度。
+
+视频自己的换场用「屏幕开关机」，不使用库里的任何转场，避免和被演示的转场混在一起。中间有按页展示的 59 个转场总览墙，每一格都是真实效果在循环播放。
 
 ```bash
-npm run promo     # 渲染宣传片（需要先准备 public/promo/ 下的片段和音频）
+npm run setup                 # 提取贴图
+npm run fx -- previews all    # 生成画廊预览（gallery/）
+npm run promo:prep            # 准备天空、主打转场、总览墙和数据（需要 ffmpeg 和 python + numpy）
+# 把你的背景音乐放到 public/promo2/audio/bgm.mp3
+npm run promo                 # 渲染成片 out/promo.mp4
 ```
 
-BGM 和配音文件不在仓库里，需要自行准备。
+`promo/prep.py` 里的 `HEROES` 是主打转场，改这个列表就能换。BGM 和中间素材不在仓库里，需要自行准备。

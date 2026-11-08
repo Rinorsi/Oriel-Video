@@ -11,8 +11,8 @@
     "typecheck": "tsc --noEmit",
     "fx": "node scripts/fx.mjs",
     "catalog": "node scripts/catalog.mjs",
-    "promo:clips": "node scripts/promo-clips.mjs public/promo/clips",
-    "promo": "remotion render src/index.ts Promo out/promo.mp4"
+    "promo:prep": "python promo/prep.py all",
+    "promo": "remotion render src/index.ts Promo2 out/promo.mp4"
   },
   "dependencies": {
     "@remotion/cli": "4.0.484",

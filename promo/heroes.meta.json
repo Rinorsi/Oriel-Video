@@ -1,0 +1,27 @@
+{
+ "portal": {
+  "frames": 82,
+  "transStart": 12,
+  "transEnd": 62
+ },
+ "t2-lava-rise": {
+  "frames": 100,
+  "transStart": 12,
+  "transEnd": 73
+ },
+ "mcd-t-portal-whiteout": {
+  "frames": 118,
+  "transStart": 21,
+  "transEnd": 96
+ },
+ "cute-creeper-rush": {
+  "frames": 100,
+  "transStart": 12,
+  "transEnd": 72
+ },
+ "dim-overworld-to-nether": {
+  "frames": 210,
+  "transStart": 40,
+  "transEnd": 150
+ }
+}
