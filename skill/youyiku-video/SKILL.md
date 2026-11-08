@@ -15,7 +15,7 @@ Minecraft 风格的转场与特效动画库，Remotion（React）工程。画廊
 2. 工程里先读 `docs/AI使用手册.md`；用 `src/lib/catalog.json` 查效果（id、导出名、时长、是否可叠加、用途、真实 props 和示例，直接 grep）；从 `src/lib/examples/episode.tsx` 复制起步。props 和时长以这几个文件为准，不要凭记忆写。
 3. 用户的录屏放 `public/footage/`，在 `src/Root.tsx` 注册合成（根合成要用 `withFonts` 包一层），渲染：`npx remotion render src/index.ts <合成ID> out/my.mp4`。
 4. 只要效果、不用 Remotion 拼整集：`npm run fx -- export <效果id> --alpha` 导出 ProRes 4444 透明层 `.mov`，用户拖进剪映 / Premiere 叠在素材上。
-5. 想让用户先挑效果：`npm run fx -- previews all`（耗时较长）生成 `gallery/index.html`。
+5. 让用户先看看有哪些效果：`npm run dev` 打开 Remotion Studio（浏览器预览，左侧列出全部合成，可拖动时间轴、改 props 实时看）；示例合成用 `npx remotion studio src/lib-entry.tsx`。想要带封面的效果总览网页，运行 `npm run fx -- previews all` 生成 `gallery/index.html`（耗时较长，包里没有预生成）。
 
 ## 选效果时
 
