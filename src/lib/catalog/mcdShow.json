@@ -1,0 +1,1574 @@
+[
+  {
+    "id": "mcd-s-victory-banner",
+    "name": "胜利横幅 · 月桂倒计时",
+    "kind": "overlay",
+    "category": "展示动效",
+    "export": "McdVictoryBanner",
+    "frames": 160,
+    "overlayReady": true,
+    "blurb": "屏幕上方居中：金色“胜利！”从大到小砸入，银灰月桂向两侧展开，白色像素数字逐秒倒数，顶部压暗渐变托住字，结尾整体淡出。",
+    "usage": "打赢一关/完成一个阶段的收尾点；倒计时数字可换成章节编号、剩余秒数或“第 N 期”。bg=false 时只有顶部压暗渐变和文字，直接叠在素材上。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "from",
+        "type": "number",
+        "default": "5",
+        "desc": "倒计时起始数字，每 tick 帧减 1，减到 1 停住"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'胜利！'",
+        "desc": "金色主标题"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'任务结束…'",
+        "desc": "数字下方的白色小字"
+      },
+      {
+        "name": "tick",
+        "type": "number",
+        "default": "26",
+        "desc": "每个倒计时数字停留的帧数"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={160}>\n    <McdVictoryBanner from={5} title=\"胜利！\" sub=\"任务结束…\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/victory.tsx"
+  },
+  {
+    "id": "mcd-s-results",
+    "name": "结算页 · 压黑转场",
+    "kind": "card",
+    "category": "展示动效",
+    "export": "McdResults",
+    "frames": 180,
+    "overlayReady": false,
+    "blurb": "关卡画面压黑 0.5s、黑场停 0.5s，整页淡入：金色菱形框头像+月桂+等级徽章，击败数滚动，四格深色统计卡逐个数字滚动，右下金框宝箱抖动并闪星，最后淡黑收尾。",
+    "usage": "视频结尾的数据总结（时长、素材数、版本号）或一个阶段完成后的“成绩单”。整屏卡：开头压黑、结尾淡黑都是不透明黑场，bg=false 时仍带半透明暗蓝蒙版；bg=true 额外画模糊的夜林场景。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "level",
+        "type": "number",
+        "default": "6",
+        "desc": "等级徽章数字，下一等级文案为 level+1"
+      },
+      {
+        "name": "stage",
+        "type": "string",
+        "default": "'恭喜过关'",
+        "desc": "顶部金色小标题"
+      },
+      {
+        "name": "mission",
+        "type": "string",
+        "default": "'苦力怕森林'",
+        "desc": "白色大标题"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'vrvylive'",
+        "desc": "头像下方的玩家名"
+      },
+      {
+        "name": "kills",
+        "type": "number",
+        "default": "568",
+        "desc": "主数字，会从 0 滚动到该值"
+      },
+      {
+        "name": "unit",
+        "type": "string",
+        "default": "'击败敌人'",
+        "desc": "主数字下方的说明"
+      },
+      {
+        "name": "stats",
+        "type": "[string, number, string][]",
+        "default": "[['已开启宝箱',100,'%'],['击败怪物',97,'%'],['受到伤害',1576,''],['倒下的玩家',0,'']]",
+        "desc": "四格统计卡 [标签, 数值, 后缀]，数值滚动显示"
+      },
+      {
+        "name": "summary",
+        "type": "string",
+        "default": "'任务汇总'",
+        "desc": "统计区上方的小标题"
+      },
+      {
+        "name": "nextLabel",
+        "type": "string",
+        "default": "'下一等级'",
+        "desc": "右侧“下一等级：N”的文字部分"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={180}>\n    <McdResults level={6} stage=\"恭喜过关\" mission=\"苦力怕森林\" name=\"vrvylive\" kills={568} unit=\"击败敌人\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/results.tsx"
+  },
+  {
+    "id": "mcd-s-chest-reveal",
+    "name": "开箱展示 · 品红光柱",
+    "kind": "scene",
+    "category": "展示动效",
+    "export": "McdChestReveal",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "紫眼金属宝箱落地后抖动蓄力，箱盖翻开的 4 帧内品红光柱（白核）冲天、像素粒子上喷，约 1.2s 后深色面板里的稀有度菱形框物品卡弹出。",
+    "usage": "揭晓“新功能/新素材/成品”的悬念节点；item/name/rarity 换成要展示的东西。bg=false 时无场景，宝箱和物品卡直接叠在素材上（物品卡出现时会压暗素材）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "item",
+        "type": "string",
+        "default": "'trident'",
+        "desc": "物品贴图 id（如 trident、bow、diamond_sword）"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'雷鸣三叉戟'",
+        "desc": "物品卡上的名称"
+      },
+      {
+        "name": "rarity",
+        "type": "'common' | 'rare' | 'unique'",
+        "default": "'unique'",
+        "desc": "稀有度，决定菱形框颜色与光效：common 白 / rare 绿 / unique 橙"
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "default": "'古老的海中神兵，被闪电祝福过的锋刃。'",
+        "desc": "物品描述"
+      },
+      {
+        "name": "power",
+        "type": "number",
+        "default": "12",
+        "desc": "物品卡上的威力数字"
+      },
+      {
+        "name": "button",
+        "type": "string",
+        "default": "'回到营地'",
+        "desc": "物品卡底部按钮文字"
+      },
+      {
+        "name": "openAt",
+        "type": "number",
+        "default": "66",
+        "desc": "箱盖翻开（光柱爆发）的帧；物品卡在其后 36 帧弹出"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={180}>\n    <McdChestReveal item=\"diamond_sword\" name=\"寒焰之刃\" rarity=\"rare\" desc=\"霜与火交织的刃，斩过之处留下灼痕。\" power={21} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/chest.tsx"
+  },
+  {
+    "id": "mcd-s-loot-rarity",
+    "name": "稀有度光柱 · 白绿橙",
+    "kind": "scene",
+    "category": "展示动效",
+    "export": "McdLootRarity",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "三件掉落物依次落地：同稀有度色光柱 4 帧冲起，地面光斑与像素尘土，物品悬浮摇摆，下方深色名称卡带 COMMON / RARE / UNIQUE 标签。",
+    "usage": "展示“获得了什么”：战利品盘点、素材分级、版本更新里的新物品列表。固定三个落点（左/中/右），items 需要给 3 项。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "items",
+        "type": "{item: string; name: string; rarity: 'common' | 'rare' | 'unique'; power: number}[]",
+        "default": "[{item:'iron_sword',name:'铁剑',rarity:'common',power:8},{item:'bow',name:'猎手之弓',rarity:'rare',power:21},{item:'golden_sword',name:'炽炎裂刃',rarity:'unique',power:37}]",
+        "desc": "三件掉落物：物品贴图 id、名称、稀有度、威力数字；按顺序落在左/中/右"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={180}>\n    <McdLootRarity\n      items={[\n        {item: 'iron_sword', name: '铁剑', rarity: 'common', power: 8},\n        {item: 'bow', name: '猎手之弓', rarity: 'rare', power: 21},\n        {item: 'golden_sword', name: '炽炎裂刃', rarity: 'unique', power: 37},\n      ]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/loot.tsx"
+  },
+  {
+    "id": "mcd-s-boss-intro",
+    "name": "Boss 登场 · 血条拉满",
+    "kind": "scene",
+    "category": "展示动效",
+    "export": "McdBossIntro",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "紫色能量向中心聚拢，金色像素十字闪光 + 十字碎片炸开（无圆环），红石染色的铁傀儡现身；顶部居中细红条从左拉满、白尾缓冲，中上出现金色标题与白字目标，随后一次受击白尾追赶。",
+    "usage": "介绍“最终 Boss/核心难点”的登场；血条可当作进度条的出场动画；objective 换成视频里的任务点。Boss 外形固定为红石傀儡（铁傀儡贴图染色）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'红石傀儡'",
+        "desc": "血条左上方的 Boss 名字"
+      },
+      {
+        "name": "objective",
+        "type": "string",
+        "default": "'击败红石傀儡'",
+        "desc": "中上方白色大字目标"
+      },
+      {
+        "name": "heading",
+        "type": "string",
+        "default": "'新目标'",
+        "desc": "目标上方的金色小标题"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={180}>\n    <McdBossIntro name=\"红石傀儡\" objective=\"击败红石傀儡\" heading=\"新目标\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/boss.tsx"
+  },
+  {
+    "id": "mcd-s-boss-defeat",
+    "name": "Boss 被击败 · 光柱白闪",
+    "kind": "scene",
+    "category": "展示动效",
+    "export": "McdBossDefeat",
+    "frames": 160,
+    "overlayReady": true,
+    "blurb": "Boss 闪白爆散，品红光柱在原地升起并带虚线菱形符文；金色火星沿弧线铺出小路，主角沿小路走进光柱，约 0.7s 画面泛白至全白后淡出。",
+    "usage": "章节结束、通关、解锁下一部分的转场：白闪全白那一刻（约第 124–130 帧）可以直接切到下一镜头。bg=false 时无场景，全白闪仍会盖住下层素材。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "objective",
+        "type": "string",
+        "default": "'跟随小路'",
+        "desc": "左上区域白字目标"
+      },
+      {
+        "name": "heading",
+        "type": "string",
+        "default": "'新目标'",
+        "desc": "目标上方的金色小标题"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={160}>\n    <McdBossDefeat objective=\"跟随小路\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/boss.tsx"
+  },
+  {
+    "id": "mcd-s-death",
+    "name": "死亡画面 · 猩红晕影",
+    "kind": "overlay",
+    "category": "展示动效",
+    "export": "McdDeathScreen",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "先是边缘红晕随心跳脉动，一击后猩红径向晕影合拢，暗色菱形框的白色像素骷髅砸下，白字“你死了”，右上“剩余生命 ×3→×2”跳减，结尾复活淡回。",
+    "usage": "搞笑翻车/失败/Bug 的反转镜头；cause 一行可改成吐槽文案。bg=false 时只有红晕和文字（没有把素材褪成蓝灰的调色），bg=true 才会画夜林场景并压暗去色。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "text",
+        "type": "string",
+        "default": "'你死了'",
+        "desc": "主文字"
+      },
+      {
+        "name": "cause",
+        "type": "string",
+        "default": "'被红石傀儡击败'",
+        "desc": "主文字下方的小字（死因/吐槽）"
+      },
+      {
+        "name": "lives",
+        "type": "number",
+        "default": "3",
+        "desc": "起始剩余生命，约第 46 帧减 1"
+      },
+      {
+        "name": "livesLabel",
+        "type": "string",
+        "default": "'剩余生命'",
+        "desc": "右上角计数上方的文字"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdDeathScreen text=\"你死了\" cause=\"被苦力怕炸飞\" lives={3} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/death.tsx"
+  },
+  {
+    "id": "mcd-s-level-up",
+    "name": "升级特效 · 紫色螺旋光",
+    "kind": "scene",
+    "category": "展示动效",
+    "export": "McdLevelUp",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "经验条满格闪白，英雄脚下十字闪光，紫白方块粒子沿双螺旋缠绕上升、紫色光柱托起，金色“升级！”砸下，右侧紫边六边形等级徽章翻牌 6→7 并迸出金紫火花。",
+    "usage": "版本号/等级/订阅数里程碑、技能解锁；level 改成要展示的数字，title/sub 改文案。画面中央固定有一个英雄立绘（zuri 皮肤），没有素材主角时建议把它当作站位参考。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "level",
+        "type": "number",
+        "default": "7",
+        "desc": "翻牌前的等级，翻牌后显示 level+1"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'升级！'",
+        "desc": "金色大标题"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'获得 1 点附魔点'",
+        "desc": "标题下的灰色小字"
+      },
+      {
+        "name": "xpLabel",
+        "type": "string",
+        "default": "'经验'",
+        "desc": "经验条上方的文字"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdLevelUp level={7} title=\"升级！\" sub=\"获得 1 点附魔点\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/levelup.tsx"
+  },
+  {
+    "id": "mcd-s-souls-collect",
+    "name": "灵魂吸取 · 计数跳动",
+    "kind": "overlay",
+    "category": "展示动效",
+    "export": "McdSoulsCollect",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "三只怪物（真实苦力怕/骷髅/僵尸贴图，红色描边）被击杀后迸出白色小鬼脸灵魂，拖着青蓝像素尾迹沿弧线飞向右上角，每抵达一只计数加一并弹跳闪光。",
+    "usage": "统计数字递增的叙事：订阅数、下载量、击杀数、收集进度。三只怪物位置固定在画面中下部，计数面板固定在右上角。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "start",
+        "type": "number",
+        "default": "27",
+        "desc": "计数器起始值，每抵达一个灵魂 +1"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "'灵魂'",
+        "desc": "计数面板下方的文字"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdSoulsCollect start={27} label=\"灵魂\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/souls.tsx"
+  },
+  {
+    "id": "mcd-s-emerald-collect",
+    "name": "绿宝石吸取 · 计数跳动",
+    "kind": "overlay",
+    "category": "展示动效",
+    "export": "McdEmeraldCollect",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "怪物倒下后真实绿宝石贴图弹出落地、旋转，再带着绿色像素尾迹成串飞向右上角的绿宝石计数器，每颗抵达计数跳动并闪光。",
+    "usage": "金币/积分/打赏/奖励到账的视觉；计数器的图标和数字可作为“收入/积分”展示。每颗绿宝石让计数 +3。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "start",
+        "type": "number",
+        "default": "109",
+        "desc": "计数器起始值，每抵达一颗绿宝石 +3"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "'绿宝石'",
+        "desc": "计数面板下方的文字"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdEmeraldCollect start={109} label=\"绿宝石\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/souls.tsx"
+  },
+  {
+    "id": "mcd-s-objective",
+    "name": "目标更新 · 划掉旧目标",
+    "kind": "overlay",
+    "category": "展示动效",
+    "export": "McdObjective",
+    "frames": 140,
+    "overlayReady": true,
+    "blurb": "右上角压暗渐变从顶部落下，金色区域名 + 白色旧目标；旧目标被白线划掉、打绿色对勾后上滑退出，新目标从下方升入原位，同时画面上方居中浮出金色小标题与白色大字新目标。",
+    "usage": "教程步骤切换、挑战下一阶段提示、章节任务更新字幕。右上角槽位与居中公告同时出现。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "area",
+        "type": "string",
+        "default": "'无名王国'",
+        "desc": "右上角金色副标（区域/章节名）"
+      },
+      {
+        "name": "oldText",
+        "type": "string",
+        "default": "'击败守卫的骷髅'",
+        "desc": "被划掉的旧目标"
+      },
+      {
+        "name": "newText",
+        "type": "string",
+        "default": "'抵达死灵法师之墓'",
+        "desc": "新目标（右上角和居中公告都用它）"
+      },
+      {
+        "name": "heading",
+        "type": "string",
+        "default": "'新目标'",
+        "desc": "居中公告上方的金色小标题"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={140}>\n    <McdObjective area=\"无名王国\" oldText=\"击败守卫的骷髅\" newText=\"抵达死灵法师之墓\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/objective.tsx"
+  },
+  {
+    "id": "mcd-s-location-card",
+    "name": "地名标签 · 正在前往",
+    "kind": "overlay",
+    "category": "展示动效",
+    "export": "McdLocationLabel",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "左下角方块图标框（循环换贴图）+ “正在前往”小字 + 金橙色地名，右上角金色骷髅难度徽章；自下而上淡入，结尾淡出。",
+    "usage": "每个新场景/章节/地图开头的“我们现在在哪”小标签，叠在转场后的第一个镜头上。blocks 换成该地点的代表方块。bg=true 才画带景深的沙漠场景。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "place",
+        "type": "string",
+        "default": "'苦力怕森林'",
+        "desc": "金橙色地名"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'正在前往'",
+        "desc": "地名上方的小字"
+      },
+      {
+        "name": "blocks",
+        "type": "string[]",
+        "default": "['stone','cobblestone','magma','redstone_block','netherrack']",
+        "desc": "图标框里循环的方块贴图 id 列表"
+      },
+      {
+        "name": "swap",
+        "type": "number",
+        "default": "18",
+        "desc": "换一次图标的间隔帧数"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdLocationLabel place=\"苦力怕森林\" sub=\"正在前往\" blocks={['stone', 'cobblestone', 'magma']} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/location.tsx"
+  },
+  {
+    "id": "mcd-s-location-card-big",
+    "name": "大字地名卡",
+    "kind": "title",
+    "category": "展示动效",
+    "export": "McdLocationBig",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "黑色横带从中线展开，两侧金线，金字地名先像素错位 3 帧再拼成清晰金字（四角像素括号，金色火星上飘），下方骷髅徽章与章节难度，结尾横带收拢。",
+    "usage": "章节标题卡、地图/维度切换、“第 N 期”片头；比小标签更强调仪式感。横带是半透明黑底（82%），叠在素材上仍能看到画面。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "place",
+        "type": "string",
+        "default": "'苦力怕森林'",
+        "desc": "金字大地名"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'正在前往'",
+        "desc": "上方金线中间的小字"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "default": "'第三章 · 难度 III'",
+        "desc": "下方骷髅徽章旁的章节/难度文字"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdLocationBig place=\"红石矿山\" sub=\"正在前往\" tag=\"第四章 · 难度 IV\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/location.tsx"
+  },
+  {
+    "id": "mcd-s-item-showcase",
+    "name": "物品展示 · 旋转体素大图",
+    "kind": "card",
+    "category": "展示动效",
+    "export": "McdItemShowcase",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "真实物品贴图叠成体素厚片，在稀有度色菱形舞台上快速自转后减速停住并轻摆悬浮；右侧等级+稀有度标签、大字名称、伤害行、三条属性条依次升起，三个附魔菱形槽逐个点亮。",
+    "usage": "展示武器/新物品/礼物/周边的详情页：左侧大图 + 右侧参数。bg=true 才画红棕界面底；bg=false 时菱形舞台和文字直接叠在素材上。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "item",
+        "type": "string",
+        "default": "'diamond_sword'",
+        "desc": "物品贴图 id（diamond_sword、bow、netherite_axe…）"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'寒焰之刃'",
+        "desc": "大字名称"
+      },
+      {
+        "name": "rarity",
+        "type": "'common' | 'rare' | 'unique'",
+        "default": "'unique'",
+        "desc": "稀有度，决定菱形舞台、光效和标签颜色"
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "default": "'霜与火交织的刃，斩过之处留下灼痕。'",
+        "desc": "描述文字"
+      },
+      {
+        "name": "damage",
+        "type": "string",
+        "default": "'24-40 近战伤害'",
+        "desc": "伤害行文字"
+      },
+      {
+        "name": "level",
+        "type": "number",
+        "default": "7",
+        "desc": "物品等级数字"
+      },
+      {
+        "name": "stats",
+        "type": "[string, number][]",
+        "default": "[['威力',0.74],['速度',0.38],['范围',0.52]]",
+        "desc": "三条属性条 [标签, 0..1 的填充比例]"
+      },
+      {
+        "name": "enchantLabel",
+        "type": "string",
+        "default": "'附魔'",
+        "desc": "附魔区标题"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={180}>\n    <McdItemShowcase item=\"diamond_sword\" name=\"寒焰之刃\" rarity=\"unique\" damage=\"24-40 近战伤害\" level={7} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/itemshowcase.tsx"
+  },
+  {
+    "id": "mcd-s-world-map-select",
+    "name": "世界地图选关",
+    "kind": "scene",
+    "category": "展示动效",
+    "export": "McdWorldMap",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "金色六边形骷髅节点逐个弹出、虚线小路在节点间生长，选中节点放大并推近镜头，右侧弹出任务威胁面板（I–VII 难度条逐级点亮、战力、战利品槽、开始按钮）。",
+    "usage": "路线图/章节目录/功能规划：用节点表示阶段，选中节点展开详情。bg=true 才画米色羊皮纸等距沙盘；bg=false 只有节点、小路和面板，可叠在你自己的地图图片上。节点位置固定为 6 个。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "places",
+        "type": "string[]",
+        "default": "['苦力怕森林','沼泽湿地','沙漠神殿','红石矿山','冰封之巅','黑曜尖塔']",
+        "desc": "六个节点的名称，按从左到右的顺序"
+      },
+      {
+        "name": "selected",
+        "type": "number",
+        "default": "3",
+        "desc": "被选中的节点序号（0 起）"
+      },
+      {
+        "name": "panelTitle",
+        "type": "string",
+        "default": "选中节点的名称",
+        "desc": "右侧面板标题"
+      },
+      {
+        "name": "button",
+        "type": "string",
+        "default": "'开始任务'",
+        "desc": "面板底部按钮文字"
+      },
+      {
+        "name": "power",
+        "type": "number",
+        "default": "143",
+        "desc": "“你的战力”数字"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={180}>\n    <McdWorldMap selected={3} places={['苦力怕森林', '沼泽湿地', '沙漠神殿', '红石矿山', '冰封之巅', '黑曜尖塔']} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd2/worldmap.tsx"
+  },
+  {
+    "id": "mcd-c-title-scramble",
+    "name": "预告片标题卡 · 像素错位",
+    "kind": "title",
+    "category": "标题卡/片头片尾",
+    "export": "McdTitleScramble",
+    "frames": 150,
+    "overlayReady": false,
+    "blurb": "硬切纯黑，金色大字先以像素错位乱码出现 3 帧，随即拼合，伴随火星与碎屑方块喷出，慢速推近，最后分级压暗收尾。",
+    "usage": "每期视频开头/章节开头的标题卡。整屏卡：bg=true 画纯黑马赛克底（本示例）；bg=false 只留字和火星，可叠在素材上（但结尾的压暗是内容淡出，不是黑场）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'地底迷城'",
+        "desc": "标题文字（中英文均可，自动按宽度取整数像素字号）"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'整合包冒险 · 第 1 集'",
+        "desc": "标题下的小字"
+      },
+      {
+        "name": "look",
+        "type": "'gold' | 'logo' | 'stone' | 'white' | 'silver'",
+        "default": "'gold'",
+        "desc": "字面材质：金 / 橙红 Logo / 灰石 / 白 / 银"
+      },
+      {
+        "name": "maxW",
+        "type": "number",
+        "default": "1500",
+        "desc": "标题最大宽度（px）"
+      },
+      {
+        "name": "at",
+        "type": "number",
+        "default": "4",
+        "desc": "标题出现（错位乱码开始）的帧"
+      },
+      {
+        "name": "hold",
+        "type": "number",
+        "default": "112",
+        "desc": "开始压暗淡出的帧"
+      },
+      {
+        "name": "cjkRows",
+        "type": "number",
+        "default": "24",
+        "desc": "中文字形网格行数，越小越像体素"
+      },
+      {
+        "name": "depth",
+        "type": "number",
+        "default": "2",
+        "desc": "字的立体挤出厚度（艺术像素）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  <Sequence from={10} durationInFrames={150}>\n    <McdTitleScramble bg title=\"地底迷城\" subtitle=\"整合包冒险 · 第 1 集\" look=\"gold\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/titleScramble.tsx"
+  },
+  {
+    "id": "mcd-c-title-voxel-assemble",
+    "name": "方块拼合 Logo",
+    "kind": "title",
+    "category": "标题卡/片头片尾",
+    "export": "McdVoxelLogo",
+    "frames": 180,
+    "overlayReady": false,
+    "blurb": "标题由一堆真实金块贴图的方块从四面翻滚飞来，逐个锁进字形并轻微挤压回弹，随后一道光扫掠过；Logo 带轻微 3D 摇摆，最后方块散落。",
+    "usage": "频道/系列/整合包 Logo 的片头出场；tint 换成 stone/ember 得到石砖或熔岩质感。整屏卡：bg=true 画纯黑底；bg=false 方块和火星直接叠在素材上。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "text",
+        "type": "string",
+        "default": "'地底迷城'",
+        "desc": "Logo 文字"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'方块拼合 · 第 1 季'",
+        "desc": "Logo 下方的小字"
+      },
+      {
+        "name": "cube",
+        "type": "number",
+        "default": "26",
+        "desc": "方块最大边长（px，自动按宽度缩小）"
+      },
+      {
+        "name": "maxW",
+        "type": "number",
+        "default": "1560",
+        "desc": "Logo 最大宽度（px）"
+      },
+      {
+        "name": "cjkRows",
+        "type": "number",
+        "default": "16",
+        "desc": "中文字形网格行数，越小方块越大"
+      },
+      {
+        "name": "start",
+        "type": "number",
+        "default": "6",
+        "desc": "方块开始飞入的帧"
+      },
+      {
+        "name": "exit",
+        "type": "number",
+        "default": "150",
+        "desc": "方块开始散落的帧"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "7",
+        "desc": "随机种子（飞入轨迹）"
+      },
+      {
+        "name": "tint",
+        "type": "'gold' | 'stone' | 'ember'",
+        "default": "'gold'",
+        "desc": "方块材质组：金块 / 石砖 / 熔岩"
+      },
+      {
+        "name": "debris",
+        "type": "number",
+        "default": "14",
+        "desc": "额外散落的碎块数量"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={180}>\n    <McdVoxelLogo text=\"地底迷城\" sub=\"方块拼合 · 第 1 季\" tint=\"gold\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/voxelLogo.tsx"
+  },
+  {
+    "id": "mcd-c-end-card",
+    "name": "终卡 · 四角括号",
+    "kind": "card",
+    "category": "标题卡/片头片尾",
+    "export": "McdEndCard",
+    "frames": 210,
+    "overlayReady": false,
+    "blurb": "暗底马赛克 + 底部暖光，四角像素括号与细框线从角落生长；灰石小标题、橙金 Logo 两侧带花括号、金字“感谢观看”、链接与制作组一行，火星持续上飘，最后分级压暗。",
+    "usage": "每期视频最后 5–7 秒的终卡，也可放在片尾滚动之后。整屏卡：bg=true 画暗底和暖光（本示例）；bg=false 只留括号、文字和火星，叠在画面上。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "kicker",
+        "type": "string",
+        "default": "'我的世界 · 冒险日志'",
+        "desc": "灰石小标题（Logo 上方）"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'地底迷城'",
+        "desc": "橙金 Logo 文字"
+      },
+      {
+        "name": "thanks",
+        "type": "string",
+        "default": "'感谢观看'",
+        "desc": "金字感谢语"
+      },
+      {
+        "name": "link",
+        "type": "string",
+        "default": "'订阅频道，不错过下一期更新'",
+        "desc": "感谢语下的链接/号召文案"
+      },
+      {
+        "name": "studios",
+        "type": "string[]",
+        "default": "['Oriel 工作室','地下城风格素材库']",
+        "desc": "底部制作组名称，用竖线隔开"
+      },
+      {
+        "name": "note",
+        "type": "string",
+        "default": "'© 2026 Oriel Studio · 部分画面为后期合成'",
+        "desc": "最底部免责/版权小字"
+      },
+      {
+        "name": "exit",
+        "type": "number",
+        "default": "186",
+        "desc": "开始压暗淡出的帧"
+      },
+      {
+        "name": "cjkRows",
+        "type": "number",
+        "default": "28",
+        "desc": "中文字形网格行数"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  <Sequence from={10} durationInFrames={210}>\n    <McdEndCard bg kicker=\"我的世界 · 冒险日志\" title=\"地底迷城\" thanks=\"感谢观看\" studios={['Oriel 工作室', '地下城风格素材库']} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/endCard.tsx"
+  },
+  {
+    "id": "mcd-c-chapter-card",
+    "name": "章节卡 · 六边形翻牌",
+    "kind": "title",
+    "category": "标题卡/片头片尾",
+    "export": "McdChapterCard",
+    "frames": 120,
+    "overlayReady": true,
+    "blurb": "场景被压暗，中间一条黑色横幅（金色上下边线）：六边形背面翻过来露出章节序号，章节名硬阴影大字、金色分割线、一行副标题依次出现。cut 硬切进出，slide 为 45° 斜边横向划入再向右划出。",
+    "usage": "视频分章节时的章节标题。cut 适合紧凑快节奏，slide 更舒展。bg=false 只含压暗和横幅，直接叠在素材上；bg=true 额外画一个群系场景（biome）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "n",
+        "type": "number",
+        "default": "3",
+        "desc": "章节序号（六边形里的数字）"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "'CHAPTER'",
+        "desc": "六边形里序号上方的小字"
+      },
+      {
+        "name": "chapterWord",
+        "type": "string",
+        "default": "`第 ${n} 章`",
+        "desc": "金色章节词；不传时自动用“第 n 章”"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'苦力怕森林'",
+        "desc": "章节名大字"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'夜幕降临，林中传来熟悉的嘶嘶声'",
+        "desc": "分割线下的副标题"
+      },
+      {
+        "name": "mode",
+        "type": "'cut' | 'slide'",
+        "default": "'cut'",
+        "desc": "进出方式：'cut' 硬切 / 'slide' 横向划入划出"
+      },
+      {
+        "name": "biome",
+        "type": "'forest-day' | 'forest-night' | 'desert' | 'nether' | 'end' | 'snow' | 'world-map' | 'camp'",
+        "default": "'forest-night'",
+        "desc": "仅 bg=true 时使用的场景群系"
+      },
+      {
+        "name": "exit",
+        "type": "number",
+        "default": "96（mode='slide' 时 94）",
+        "desc": "横幅离场的帧"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={120}>\n    <McdChapterCard n={3} name=\"苦力怕森林\" sub=\"夜幕降临，林中传来熟悉的嘶嘶声\" mode=\"cut\" />\n  </Sequence>\n  <Sequence from={130} durationInFrames={120}>\n    <McdChapterCard n={4} name=\"红石矿山\" sub=\"深入地底，机关与熔岩在等你\" mode=\"slide\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/chapterCard.tsx"
+  },
+  {
+    "id": "mcd-c-new-mission",
+    "name": "新任务解锁面板",
+    "kind": "card",
+    "category": "标题卡/片头片尾",
+    "export": "McdNewMission",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "右下角弹出斜切深色面板，金色“新任务解锁”；三个灰色上锁的六边形节点依次点亮成金色并带像素十字闪光，数字滚动到 3，绿色按钮被按下后面板收走。bg=true 时同时在世界地图上冒出一个金色任务节点。",
+    "usage": "展示整合包/地图的新内容、新关卡、新章节解锁；pos=\"center\" 变成画面中间的大号版本（见 McdNewMissionCenter）。bg=false 是透明面板，叠在任意素材上。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'新任务解锁'",
+        "desc": "面板标题（金字）"
+      },
+      {
+        "name": "countLabel",
+        "type": "string",
+        "default": "'个新任务'",
+        "desc": "滚动数字后面的文字"
+      },
+      {
+        "name": "icons",
+        "type": "string[]",
+        "default": "['diamond_sword','bow','iron_pickaxe']",
+        "desc": "每个解锁节点里的物品贴图 id，节点数 = 数组长度"
+      },
+      {
+        "name": "button",
+        "type": "string",
+        "default": "'查看下一个'",
+        "desc": "绿色按钮文字"
+      },
+      {
+        "name": "pos",
+        "type": "'corner' | 'center'",
+        "default": "'corner'",
+        "desc": "面板位置：'corner' 右下角 / 'center' 画面中间（放大）"
+      },
+      {
+        "name": "nodeName",
+        "type": "string",
+        "default": "'红石矿山'",
+        "desc": "仅 bg=true：地图上冒出的节点名称"
+      },
+      {
+        "name": "nodeAt",
+        "type": "[number, number]",
+        "default": "[560, 300]（center 时 [250, 520]）",
+        "desc": "仅 bg=true：地图节点位置 [x, y]（px）"
+      },
+      {
+        "name": "exit",
+        "type": "number",
+        "default": "118",
+        "desc": "面板离场的帧"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdNewMission title=\"新任务解锁\" icons={['diamond_sword', 'bow', 'iron_pickaxe']} countLabel=\"个新任务\" button=\"查看下一个\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/newMission.tsx"
+  },
+  {
+    "id": "mcd-c-new-mission-center",
+    "name": "新任务解锁面板 · 居中",
+    "kind": "card",
+    "category": "标题卡/片头片尾",
+    "export": "McdNewMissionCenter",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "画面压暗，中间弹出放大的新任务面板，节点依次解锁、数字滚动、按钮按下后收起。",
+    "usage": "需要强调“这是重点新内容”时用居中版；右下角版见 McdNewMission。默认带 4 个物品节点。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'新任务解锁'",
+        "desc": "面板标题（金字）"
+      },
+      {
+        "name": "countLabel",
+        "type": "string",
+        "default": "'个新任务'",
+        "desc": "滚动数字后面的文字"
+      },
+      {
+        "name": "icons",
+        "type": "string[]",
+        "default": "['golden_apple','diamond','ender_pearl','experience_bottle']",
+        "desc": "每个解锁节点里的物品贴图 id，节点数 = 数组长度"
+      },
+      {
+        "name": "button",
+        "type": "string",
+        "default": "'查看下一个'",
+        "desc": "绿色按钮文字"
+      },
+      {
+        "name": "nodeName",
+        "type": "string",
+        "default": "'沙漠神殿'",
+        "desc": "仅 bg=true：地图上冒出的节点名称"
+      },
+      {
+        "name": "nodeAt",
+        "type": "[number, number]",
+        "default": "[250, 520]",
+        "desc": "仅 bg=true：地图节点位置 [x, y]（px）"
+      },
+      {
+        "name": "exit",
+        "type": "number",
+        "default": "118",
+        "desc": "面板离场的帧"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdNewMissionCenter icons={['golden_apple', 'diamond', 'ender_pearl', 'experience_bottle']} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/newMission.tsx"
+  },
+  {
+    "id": "mcd-c-presents",
+    "name": "制作组呈现开场",
+    "kind": "title",
+    "category": "标题卡/片头片尾",
+    "export": "McdPresents",
+    "frames": 150,
+    "overlayReady": false,
+    "blurb": "黑场里一行白色小字以像素乱码逐字拼出“某某出品”，随后龟裂灰石大 Logo 硬切出现（两帧微闪、碎石火星迸出），慢速推近，分级压暗。",
+    "usage": "视频最开头的制作组署名 + 系列 Logo，节奏像官方预告片的 FROM THE CREATORS OF。整屏卡：bg=true 画纯黑底（本示例）；bg=false 文字和火星可叠在素材上，但 Logo 出现的两帧白闪仍会盖住整屏。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "lead",
+        "type": "string",
+        "default": "'Oriel 工作室 出品'",
+        "desc": "上方白色小字"
+      },
+      {
+        "name": "logo",
+        "type": "string",
+        "default": "'地底迷城'",
+        "desc": "灰石大 Logo 文字"
+      },
+      {
+        "name": "tagline",
+        "type": "string",
+        "default": "'模组整合包冒险系列'",
+        "desc": "Logo 下的银灰小字"
+      },
+      {
+        "name": "maxW",
+        "type": "number",
+        "default": "1420",
+        "desc": "Logo 最大宽度（px）"
+      },
+      {
+        "name": "cjkRows",
+        "type": "number",
+        "default": "32",
+        "desc": "中文字形网格行数"
+      },
+      {
+        "name": "logoAt",
+        "type": "number",
+        "default": "50",
+        "desc": "Logo 硬切出现的帧"
+      },
+      {
+        "name": "exit",
+        "type": "number",
+        "default": "124",
+        "desc": "开始压暗淡出的帧"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  <Sequence from={10} durationInFrames={150}>\n    <McdPresents bg lead=\"Oriel 工作室 出品\" logo=\"地底迷城\" tagline=\"模组整合包冒险系列\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/presents.tsx"
+  },
+  {
+    "id": "mcd-c-series-title",
+    "name": "系列标题 · 第 N 期",
+    "kind": "title",
+    "category": "标题卡/片头片尾",
+    "export": "McdSeriesTitle",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "左上角压暗渐变上，金色六边形期数徽章弹出，金色分割线从徽章长出，大标题从左划入（硬阴影粗字），副标题淡入；停留时分割线上每 2 秒有一道光掠过，最后向左滑出。",
+    "usage": "每期视频开头在画面左上放系列名+期数，直接叠在实机画面上；exit=-1 可一直停留（光掠每 60 帧循环）。bg=true 额外画一个群系场景。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "ep",
+        "type": "number",
+        "default": "5",
+        "desc": "期数（自动补成两位）"
+      },
+      {
+        "name": "epLabel",
+        "type": "string",
+        "default": "'EP'",
+        "desc": "徽章里期数上方的小字"
+      },
+      {
+        "name": "kicker",
+        "type": "string",
+        "default": "'生存系列 · 第二季'",
+        "desc": "大标题上方的金色小字（系列名/季）"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'沉入地牢深处'",
+        "desc": "大标题"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'我们在红石矿山找到了失落的神器'",
+        "desc": "副标题"
+      },
+      {
+        "name": "exit",
+        "type": "number",
+        "default": "124",
+        "desc": "向左滑出的帧；-1 = 一直停留"
+      },
+      {
+        "name": "biome",
+        "type": "'forest-day' | 'forest-night' | 'desert' | 'nether' | 'end' | 'snow' | 'world-map' | 'camp'",
+        "default": "'forest-day'",
+        "desc": "仅 bg=true 时使用的场景群系"
+      },
+      {
+        "name": "cjkRows",
+        "type": "number",
+        "default": "28",
+        "desc": "中文字形网格行数"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdSeriesTitle ep={5} kicker=\"生存系列 · 第二季\" title=\"沉入地牢深处\" subtitle=\"我们在红石矿山找到了失落的神器\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/seriesTitle.tsx"
+  },
+  {
+    "id": "mcd-c-subtitle-bar",
+    "name": "底部字幕条 · 说话人名牌",
+    "kind": "overlay",
+    "category": "标题卡/片头片尾",
+    "export": "McdSubtitleBar",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "底部升起斜切黑色字幕条；每句逐字打出白色粗字+硬阴影，左侧六边形头像（真实皮肤/村民/苦力怕）和彩色名牌，旁白句无头像；句末金色三角闪烁，句间 4 级淡切。",
+    "usage": "剧情向/解说向视频的对话和旁白字幕。总时长 ≈ first + 句数 × perLine + 12，按句数自行设置 Sequence 长度。bg=true 额外画群系场景和底部渐变。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "lines",
+        "type": "{who?: string; text: string; skin?: string; tone?: 'gold' | 'cyan' | 'green' | 'purple' | 'red' | 'white'}[]",
+        "default": "3 句示例对话（旁白 / 史蒂夫 / 村民）",
+        "desc": "字幕数组；skin 可为 steve/alex/村民 villager/creeper/enderman 等（不填则无头像），tone 决定名牌与头像框颜色，who 不填则无名牌"
+      },
+      {
+        "name": "perLine",
+        "type": "number",
+        "default": "52",
+        "desc": "每句占用的帧数（含打字、停留和淡切）"
+      },
+      {
+        "name": "first",
+        "type": "number",
+        "default": "10",
+        "desc": "第一句开始的帧"
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "default": "50",
+        "desc": "字幕字号（px）"
+      },
+      {
+        "name": "biome",
+        "type": "'forest-day' | 'forest-night' | 'desert' | 'nether' | 'end' | 'snow' | 'world-map' | 'camp'",
+        "default": "'forest-night'",
+        "desc": "仅 bg=true 时使用的场景群系"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={180}>\n    <McdSubtitleBar\n      perLine={52}\n      lines={[\n        {who: '旁白', text: '夜幕降临，苦力怕森林里传来了熟悉的嘶嘶声。', tone: 'gold'},\n        {who: '史蒂夫', skin: 'steve', text: '别慌，先把火把插到那面石墙上。', tone: 'cyan'},\n        {who: '村民', skin: 'villager', text: '嗯……绿宝石？我可以拿东西跟你换。', tone: 'green'},\n      ]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/subtitleBar.tsx"
+  },
+  {
+    "id": "mcd-c-credits",
+    "name": "片尾滚动 · 金职位白名字",
+    "kind": "card",
+    "category": "标题卡/片头片尾",
+    "export": "McdCredits",
+    "frames": 240,
+    "overlayReady": false,
+    "blurb": "中间一条暗带上自下而上滚动制作名单：金色分组标题 + 金色分割线，职位金色小字（右对齐）与名字白字（左对齐）分居中线两侧；名单淡出、画面压暗后四角括号终卡拼出金字“感谢观看”，火星上飘。",
+    "usage": "视频最后的制作人员名单；换 groups 即可用到自己的团队。整屏卡：bg=true 画夜林航拍场景；bg=false 叠在任意画面上，但终卡阶段会压一层 86% 的暗色。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "groups",
+        "type": "{head: string; rows: [string, string][]}[]",
+        "default": "[{head:'制作团队',rows:[['导演 · 剪辑','小明'],…]},{head:'模组与资源',rows:[…]}]",
+        "desc": "名单分组：分组标题 + [职位, 名字] 行"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": "6",
+        "desc": "滚动速度（px/帧）"
+      },
+      {
+        "name": "startY",
+        "type": "number",
+        "default": "960",
+        "desc": "第一组标题的起始 y（px）"
+      },
+      {
+        "name": "thanks",
+        "type": "string",
+        "default": "'感谢观看'",
+        "desc": "终卡金字"
+      },
+      {
+        "name": "thanksSub",
+        "type": "string",
+        "default": "'我们下一期再见'",
+        "desc": "终卡小字"
+      },
+      {
+        "name": "endAt",
+        "type": "number",
+        "default": "186",
+        "desc": "名单让位给终卡的帧"
+      },
+      {
+        "name": "biome",
+        "type": "'forest-day' | 'forest-night' | 'desert' | 'nether' | 'end' | 'snow' | 'world-map' | 'camp'",
+        "default": "'forest-night'",
+        "desc": "仅 bg=true 时使用的场景群系"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={240}>\n    <McdCredits\n      speed={6}\n      thanks=\"感谢观看\"\n      groups={[\n        {head: '制作团队', rows: [['导演 · 剪辑', '小明'], ['视频后期', '阿花'], ['配乐', '墨竹']]},\n        {head: '模组与资源', rows: [['整合包', 'Oriel 工作室'], ['材质包', '像素工坊']]},\n      ]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/credits.tsx"
+  },
+  {
+    "id": "mcd-c-day-title",
+    "name": "日期标题 · 第 N 天 · 黄昏",
+    "kind": "title",
+    "category": "标题卡/片头片尾",
+    "export": "McdDayTitle",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "六边形天数徽章像翻页日历一样从 day-1 翻到 day，“第 N 天”白色大字从左划入，右侧金线 + 太阳/月亮图标 + 彩色时段词滑入；bg=true 时还有分级天空色罩、方块太阳落向地平线、金色斜射光束。",
+    "usage": "生存/整合包系列每天开头的日期标题；time 可切 dawn/noon/dusk/night。bg=false 只有一条横向光带、火星和文字（带半透明暗带），叠在实机画面上。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制效果自带的背景（场景/黑底）；false 时透明，可叠在素材上"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上效果自带的音效；传 false 静音"
+      },
+      {
+        "name": "day",
+        "type": "number",
+        "default": "3",
+        "desc": "天数（徽章从 day-1 翻到 day）"
+      },
+      {
+        "name": "dayWord",
+        "type": "string",
+        "default": "`第 ${day} 天`",
+        "desc": "大字；不传时自动用“第 N 天”"
+      },
+      {
+        "name": "time",
+        "type": "'dawn' | 'noon' | 'dusk' | 'night'",
+        "default": "'dusk'",
+        "desc": "时段：决定天空色、太阳/月亮和默认时段词（黎明/正午/黄昏/深夜）"
+      },
+      {
+        "name": "timeWord",
+        "type": "string",
+        "default": "随 time（黄昏等）",
+        "desc": "自定义时段词"
+      },
+      {
+        "name": "dayLabel",
+        "type": "string",
+        "default": "'DAY'",
+        "desc": "徽章里数字上方的小字"
+      },
+      {
+        "name": "exit",
+        "type": "number",
+        "default": "122",
+        "desc": "开始淡出的帧"
+      },
+      {
+        "name": "cjkRows",
+        "type": "number",
+        "default": "32",
+        "desc": "中文字形网格行数"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材（视频 / 图片 / 背景组件） */}\n  <Sequence from={10} durationInFrames={150}>\n    <McdDayTitle day={3} time=\"dusk\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd4/dayTitle.tsx"
+  }
+]

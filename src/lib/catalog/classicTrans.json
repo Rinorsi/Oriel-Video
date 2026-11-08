@@ -1,0 +1,1730 @@
+[
+  {
+    "id": "mosaic",
+    "name": "方块马赛克",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tMosaic",
+    "frames": 36,
+    "mode": "cut",
+    "bStart": 12,
+    "overlayReady": true,
+    "blurb": "一格格方块纹理从中心向外弹出盖住画面，再反向弹开。",
+    "usage": "两个场景之间的标准转场，节奏明快。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=12,B 的第 0 帧在过渡第 12 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 36 帧。",
+    "tags": [
+      "像素",
+      "章节切换",
+      "方块"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tMosaic.frames, C: ShotA},\n    {dur: tMosaic.frames - tMosaic.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tMosaic]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "push",
+    "name": "推拉",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tPush",
+    "frames": 24,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "A 画面向左推出，B 画面从右推入，带绿色边线。",
+    "usage": "同一话题下的连续镜头，快节奏切换。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 24 帧。",
+    "tags": [
+      "平移",
+      "快切"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tPush.frames, C: ShotA},\n    {dur: tPush.frames - tPush.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tPush]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "zoom",
+    "name": "缩放穿越",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tZoom",
+    "frames": 28,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "A 画面放大虚化穿过，B 画面从小变大落定，中间一层光。",
+    "usage": "进入新地点、新话题，有\"冲进去\"的感觉。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 28 帧。",
+    "tags": [
+      "冲击",
+      "进入"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tZoom.frames, C: ShotA},\n    {dur: tZoom.frames - tZoom.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tZoom]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "curtain",
+    "name": "石砖幕布",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tCurtain",
+    "frames": 40,
+    "mode": "cut",
+    "bStart": 14,
+    "overlayReady": true,
+    "blurb": "两扇石砖幕布从左右合拢，撞出火花，再向两边拉开。",
+    "usage": "章节切换、片头片尾，比较庄重。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=14,B 的第 0 帧在过渡第 14 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 40 帧。",
+    "tags": [
+      "厚重",
+      "章节切换"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tCurtain.frames, C: ShotA},\n    {dur: tCurtain.frames - tCurtain.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tCurtain]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "loading",
+    "name": "加载界面",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tLoading",
+    "frames": 48,
+    "mode": "cut",
+    "bStart": 18,
+    "overlayReady": true,
+    "blurb": "泥土背景加进度条和\"正在加载地形…\"，复刻游戏加载屏。",
+    "usage": "地点切换、读档、时间跳转的玩梗转场。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=18,B 的第 0 帧在过渡第 18 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 48 帧。",
+    "tags": [
+      "游戏感",
+      "等待"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tLoading.frames, C: ShotA},\n    {dur: tLoading.frames - tLoading.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tLoading]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "tnt",
+    "name": "TNT 爆破",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tTnt",
+    "frames": 30,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "画面抖动升温，闪白后爆炸序列帧盖过，B 画面带余震落定。",
+    "usage": "高潮点、反转、开战。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 30 帧。",
+    "tags": [
+      "爆炸",
+      "高潮",
+      "震屏"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tTnt.frames, C: ShotA},\n    {dur: tTnt.frames - tTnt.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tTnt]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "portal",
+    "name": "下界传送门",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tPortal",
+    "frames": 42,
+    "mode": "cut",
+    "bStart": 15,
+    "overlayReady": true,
+    "blurb": "紫色像素漩涡从中心扩散吞没画面，再向中心收缩露出 B。",
+    "usage": "换地点、换世界线、回忆与现实切换。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=15,B 的第 0 帧在过渡第 15 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 42 帧。",
+    "tags": [
+      "传送",
+      "像素"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tPortal.frames, C: ShotA},\n    {dur: tPortal.frames - tPortal.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tPortal]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "sweep",
+    "name": "方块纹理扫落",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tSweep",
+    "frames": 34,
+    "mode": "cut",
+    "bStart": 11,
+    "overlayReady": true,
+    "blurb": "十二列方块纹理从上向下依次落满，再向下扫出。",
+    "usage": "换章节、换话题，有分栏的节奏感。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=11,B 的第 0 帧在过渡第 11 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 34 帧。",
+    "tags": [
+      "方块",
+      "落下"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tSweep.frames, C: ShotA},\n    {dur: tSweep.frames - tSweep.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tSweep]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "glitch",
+    "name": "末影错位",
+    "kind": "transition",
+    "category": "transition",
+    "export": "tGlitch",
+    "frames": 26,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "画面切成横条左右错位，带紫青色故障条，换成 B。",
+    "usage": "末地、异常、反常事件。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 26 帧。",
+    "tags": [
+      "故障",
+      "紫青"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + tGlitch.frames, C: ShotA},\n    {dur: tGlitch.frames - tGlitch.bStart + 20, C: ShotB},\n  ]}\n  transitions={[tGlitch]}\n/>",
+    "source": "src/reel/transitions.tsx"
+  },
+  {
+    "id": "cute-creeper-rush",
+    "name": "苦力怕冲脸",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteCreeperRush",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "一排排圆滚滚的苦力怕脸从底部蹦上来挤满整个画面，然后从左下到右上依次点燃：一个个鼓胀、抖动、越来越快地闪白，最后从中心向外炸成绿色像素碎屑和烟团，露出下一个画面。",
+    "usage": "搞笑或节奏点转场、章节切换、梗点；与爆炸/惊吓相关的内容前后都很合适。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "苦力怕",
+      "爆炸",
+      "转场",
+      "像素",
+      "搞笑"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteCreeperRush.frames, C: ShotA},\n    {dur: cuteCreeperRush.frames - cuteCreeperRush.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteCreeperRush]}\n/>",
+    "source": "src/gallery/fx/cute/creeperRush.tsx"
+  },
+  {
+    "id": "cute-block-rain",
+    "name": "方块雨",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteBlockRain",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "草方块、钻石块、金块、红石、青金石块像俄罗斯方块一样一列列落下，每块落地都挤压回弹、扬起一小撮灰尘；堆满全屏后整排闪白消行、整堆下蹲，随后由中心向外弹开，带着碎屑和烟尘露出下一个画面。",
+    "usage": "搜集/建造/合成类内容的转场，或者节奏明快的章节切换。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "方块",
+      "俄罗斯方块",
+      "堆叠",
+      "转场",
+      "像素"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteBlockRain.frames, C: ShotA},\n    {dur: cuteBlockRain.frames - cuteBlockRain.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteBlockRain]}\n/>",
+    "source": "src/gallery/fx/cute/blockRain.tsx"
+  },
+  {
+    "id": "cute-cloud-push",
+    "name": "云朵推开",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteCloudPush",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "一排排扁平像素云（有的带笑脸）压着蓝天条带从左右两侧挤进来盖满画面，太阳和彩虹探出头，然后一阵风（白色风线）把整片天空吹向右边，露出下一个画面。",
+    "usage": "日出/天气/轻松治愈段落的转场，或者从一天切到另一天、从地面飞向天空。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "云",
+      "彩虹",
+      "太阳",
+      "天空",
+      "转场",
+      "像素"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteCloudPush.frames, C: ShotA},\n    {dur: cuteCloudPush.frames - cuteCloudPush.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteCloudPush]}\n/>",
+    "source": "src/gallery/fx/cute/cloudPush.tsx"
+  },
+  {
+    "id": "cute-slime-splat",
+    "name": "史莱姆糊脸",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteSlimeSplat",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "绿色史莱姆从屏幕上方一块块流下来糊满全屏（里面有气泡和高光，果冻般抖动），中间弹出一只原版史莱姆；随后它被压扁、分裂成四只小史莱姆弹飞，整片黏液碎成方块从中心向外一格格掉落，露出下一个画面。",
+    "usage": "搞怪/沙雕转场、史莱姆或沼泽相关内容，或者需要“糊脸”式强冲击的切换。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "史莱姆",
+      "果冻",
+      "气泡",
+      "转场",
+      "像素",
+      "搞笑"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteSlimeSplat.frames, C: ShotA},\n    {dur: cuteSlimeSplat.frames - cuteSlimeSplat.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteSlimeSplat]}\n/>",
+    "source": "src/gallery/fx/cute/slimeSplat.tsx"
+  },
+  {
+    "id": "cute-heart-wave",
+    "name": "爱心像素波",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteHeartWave",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "16×9 的粉色方砖，每块一颗像素爱心，从画面中心按菱形波纹一层层弹出来铺满，正中一颗大红心；铺满后整屏“砰砰”跳两下（格子闪烁），然后爱心由中心向外飞散、方砖逐格缩没，露出下一个画面。",
+    "usage": "感谢/告白/治愈内容、点赞关注段落，或者想要甜甜的强节奏转场时。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "爱心",
+      "粉色",
+      "菱形波",
+      "转场",
+      "像素",
+      "告白"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteHeartWave.frames, C: ShotA},\n    {dur: cuteHeartWave.frames - cuteHeartWave.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteHeartWave]}\n/>",
+    "source": "src/gallery/fx/cute/heartWave.tsx"
+  },
+  {
+    "id": "cute-polaroid",
+    "name": "拍立得翻页",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cutePolaroid",
+    "frames": 66,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "取景框对焦，快门闪白（像素十字光芒 + 格子闪烁），画面缩成一张贴着胶带的拍立得飘向右上角；下一张拍立得从左下角滑入、显影，再放大铺满全屏。",
+    "usage": "回忆、相册、旅行/建筑展示、截图集，或者一个场景定格后切到下一个场景。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 66 帧。",
+    "tags": [
+      "可爱",
+      "拍立得",
+      "相机",
+      "照片",
+      "转场",
+      "回忆",
+      "相册"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cutePolaroid.frames, C: ShotA},\n    {dur: cutePolaroid.frames - cutePolaroid.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cutePolaroid]}\n/>",
+    "source": "src/gallery/fx/cute/polaroid.tsx"
+  },
+  {
+    "id": "cute-star-flip",
+    "name": "星星卷帘",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteStarFlip",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "12×7 的糖果色星星卡片按对角线一排排翻出来铺满屏幕，铺满后格子沿对角线闪白并再换一轮颜色翻一遍，最后随机侧翻消失（带彩色碎屑），露出下一个画面。",
+    "usage": "章节切换、清单/收集类内容、抽卡或翻牌的玩法段落。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "星星",
+      "翻牌",
+      "网格",
+      "卡片",
+      "转场",
+      "糖果色"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteStarFlip.frames, C: ShotA},\n    {dur: cuteStarFlip.frames - cuteStarFlip.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteStarFlip]}\n/>",
+    "source": "src/gallery/fx/cute/starFlip.tsx"
+  },
+  {
+    "id": "cute-chest-pop",
+    "name": "箱子弹出",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteChestPop",
+    "frames": 66,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "一个原版贴图的箱子从画面底部蹦上来掀开盖子，旧画面缩小旋转着被吸进箱子里；盖子合上并扬起灰尘、剧烈抖动，然后猛地弹开，钻石、金苹果、附魔书、剑等原版物品贴图喷泉般冲出，新画面从箱子里弹出来放大到全屏。",
+    "usage": "开箱/掉落/收藏/背包类内容的转场，或者“装起来再拿出来”的整理、盘点、整合包切换。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 66 帧。",
+    "tags": [
+      "可爱",
+      "箱子",
+      "宝箱",
+      "物品",
+      "收纳",
+      "转场",
+      "像素",
+      "原版贴图"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteChestPop.frames, C: ShotA},\n    {dur: cuteChestPop.frames - cuteChestPop.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteChestPop]}\n/>",
+    "source": "src/gallery/fx/cute/chestPop.tsx"
+  },
+  {
+    "id": "cute-item-wheel",
+    "name": "苹果转盘",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteItemWheel",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "以一个大苹果为中心，四圈苹果、钻石、书、剑、爱心、南瓜依次冒出来，反向旋转着放大，直到把屏幕撑满；然后一根时钟指针（起点一个十字光芒）顺时针扫过，把整个转盘一格格擦掉，露出下一个画面。",
+    "usage": "物品盘点、合成配方、抽奖/转盘玩法，或者想要“一个接一个”撑满画面的节奏感转场。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "苹果",
+      "转盘",
+      "物品",
+      "旋转",
+      "转场",
+      "像素"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteItemWheel.frames, C: ShotA},\n    {dur: cuteItemWheel.frames - cuteItemWheel.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteItemWheel]}\n/>",
+    "source": "src/gallery/fx/cute/itemWheel.tsx"
+  },
+  {
+    "id": "cute-animal-dash",
+    "name": "猪猪冲刺",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteAnimalDash",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "六条跑道上的原版贴图的小猪、小鸡、绵羊从左右交替冲进来，身后拖着彩色尘土条带，挤满画面原地蹦几下，然后一起冲向另一侧，把画面带走。",
+    "usage": "农场/生存/动物主题，或者节奏轻快的“冲过去”式转场、冲刺/赶路的段落。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "小猪",
+      "小鸡",
+      "绵羊",
+      "动物",
+      "冲刺",
+      "尘土",
+      "转场",
+      "像素"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteAnimalDash.frames, C: ShotA},\n    {dur: cuteAnimalDash.frames - cuteAnimalDash.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteAnimalDash]}\n/>",
+    "source": "src/gallery/fx/cute/animalDash.tsx"
+  },
+  {
+    "id": "cute-food-frame",
+    "name": "水果拼盘",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteFoodFrame",
+    "frames": 56,
+    "mode": "cut",
+    "bStart": 22,
+    "overlayReady": true,
+    "blurb": "红白格野餐布像相框一样从四周向中间合拢，每个盘子随布边扫过依次蹦出原版贴图的苹果、胡萝卜、西瓜片、南瓜派、面包，一圈圈向中心收紧；画面铺满后抖一抖，再从中心打开，盘子一圈圈弹走。",
+    "usage": "美食/农场/生存做饭段落，或者想要“摆盘 → 开饭”式节奏的转场。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=22,B 的第 0 帧在过渡第 22 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 56 帧。",
+    "tags": [
+      "可爱",
+      "水果",
+      "食物",
+      "西瓜",
+      "南瓜",
+      "萝卜",
+      "野餐",
+      "转场",
+      "像素"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteFoodFrame.frames, C: ShotA},\n    {dur: cuteFoodFrame.frames - cuteFoodFrame.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteFoodFrame]}\n/>",
+    "source": "src/gallery/fx/cute/foodFrame.tsx"
+  },
+  {
+    "id": "cute-rainbow-sweep",
+    "name": "彩虹条带",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteRainbowSweep",
+    "frames": 48,
+    "mode": "cut",
+    "bStart": 18,
+    "overlayReady": true,
+    "blurb": "七条描边加高光的胖胶囊彩虹条带，每条带着一颗星星，依次斜着扫进画面铺满，一道白色高光划过，然后条带按顺序冲出画面，露出下一个画面。",
+    "usage": "最通用的可爱风转场，适合章节切换、片头片尾、节奏点，几乎不挑内容。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=18,B 的第 0 帧在过渡第 18 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 48 帧。",
+    "tags": [
+      "可爱",
+      "彩虹",
+      "条带",
+      "扫光",
+      "斜切",
+      "转场",
+      "糖果色"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteRainbowSweep.frames, C: ShotA},\n    {dur: cuteRainbowSweep.frames - cuteRainbowSweep.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteRainbowSweep]}\n/>",
+    "source": "src/gallery/fx/cute/rainbowSweep.tsx"
+  },
+  {
+    "id": "cute-bubble-pop",
+    "name": "气泡爆开",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteBubblePop",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "一层波浪水面从底部涨起，大大小小描边的肥皂泡漂满屏幕；随后泡泡一个接一个破开成方块碎片，每次破裂都在水膜上撕开一个越来越大的像素方洞，直到整片水膜裂光，露出下一个画面。",
+    "usage": "水下/海洋/清洁/轻松治愈的段落，或者想要清新、爽快的连续破裂节奏转场。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "可爱",
+      "气泡",
+      "泡泡",
+      "水",
+      "清新",
+      "转场",
+      "像素"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteBubblePop.frames, C: ShotA},\n    {dur: cuteBubblePop.frames - cuteBubblePop.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteBubblePop]}\n/>",
+    "source": "src/gallery/fx/cute/bubblePop.tsx"
+  },
+  {
+    "id": "cute-ribbon-curtain",
+    "name": "门帘扯开",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteRibbonCurtain",
+    "frames": 54,
+    "mode": "cut",
+    "bStart": 21,
+    "overlayReady": true,
+    "blurb": "十六条糖果色燕尾彩带从金色挂杆上一条条砸下来挂满整个画面，轻轻摇晃；一阵风（白色风线 + 彩色碎屑）把它们从中间向左右两边卷拢、推出画面，露出下一个画面。",
+    "usage": "开场、揭晓、舞台感的“拉开帘子”转场，适合新内容登场、公布结果、片头。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=21,B 的第 0 帧在过渡第 21 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 54 帧。",
+    "tags": [
+      "可爱",
+      "门帘",
+      "彩带",
+      "布条",
+      "幕布",
+      "转场",
+      "糖果色"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteRibbonCurtain.frames, C: ShotA},\n    {dur: cuteRibbonCurtain.frames - cuteRibbonCurtain.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteRibbonCurtain]}\n/>",
+    "source": "src/gallery/fx/cute/ribbonCurtain.tsx"
+  },
+  {
+    "id": "cute-dice-flip",
+    "name": "骰子翻面",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteDiceFlip",
+    "frames": 44,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "整个画面变成一块圆角骰子面（深色描边、白色高光边、四角骰子点），先蹲一下再跳起来向前翻 90 度落到下一面，落地带过冲和挤压，落地时底边扬起灰尘、四角崩出碎屑。",
+    "usage": "章节切换、“下一个/下一期”的翻页，抽卡、随机、游戏类内容尤其合适。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 44 帧。",
+    "tags": [
+      "可爱",
+      "骰子",
+      "立方体",
+      "翻转",
+      "3D",
+      "转场",
+      "像素"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteDiceFlip.frames, C: ShotA},\n    {dur: cuteDiceFlip.frames - cuteDiceFlip.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteDiceFlip]}\n/>",
+    "source": "src/gallery/fx/cute/diceFlip.tsx"
+  },
+  {
+    "id": "cute-heart-iris",
+    "name": "像素爱心框",
+    "kind": "transition",
+    "category": "cute",
+    "export": "cuteHeartIris",
+    "frames": 54,
+    "mode": "cut",
+    "bStart": 21,
+    "overlayReady": true,
+    "blurb": "粉色波点画框带着白边和描边，从四周向中心收成一个像素爱心形的洞，洞在中心变成一颗砰砰跳的红心（十字光芒 + 格子闪烁）并炸出爱心，然后爱心形的洞再张开、变大，把画框整个吃掉，露出下一个画面。",
+    "usage": "感谢/告白/恋爱氛围，或者聚焦主体（收缩）再展开新场景的“虹膜”式转场。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=21,B 的第 0 帧在过渡第 21 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 54 帧。",
+    "tags": [
+      "可爱",
+      "爱心",
+      "遮罩",
+      "收缩",
+      "粉色",
+      "转场",
+      "像素",
+      "告白"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + cuteHeartIris.frames, C: ShotA},\n    {dur: cuteHeartIris.frames - cuteHeartIris.bStart + 20, C: ShotB},\n  ]}\n  transitions={[cuteHeartIris]}\n/>",
+    "source": "src/gallery/fx/cute/heartIris.tsx"
+  },
+  {
+    "id": "t2-end-portal",
+    "name": "末地传送门",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2EndPortal",
+    "frames": 66,
+    "mode": "cut",
+    "bStart": 27,
+    "overlayReady": true,
+    "blurb": "画面变暗，末地传送门框的 12 只眼睛逐个亮起，紫青星点涌出吞没整个画面，再从中心裂开散去，露出下一幕。",
+    "usage": "进入末地 / 异世界 / 神秘章节、穿越类剧情的转场。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=27,B 的第 0 帧在过渡第 27 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 66 帧。",
+    "tags": [
+      "末地",
+      "传送门",
+      "星空",
+      "质感",
+      "章节切换",
+      "神秘"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2EndPortal.frames, C: ShotA},\n    {dur: t2EndPortal.frames - t2EndPortal.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2EndPortal]}\n/>",
+    "source": "src/gallery/fx/trans2/endPortal.tsx"
+  },
+  {
+    "id": "t2-enchant-veil",
+    "name": "附魔光幕",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2EnchantVeil",
+    "frames": 50,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "一道带附魔光斑纹理的紫色斜光幕从左扫到右，幕上有标准银河字母符文滚动，前缘迸出符文和星光粒子，光幕过后是下一幕。",
+    "usage": "附魔 / 魔法 / 神秘道具出场，或需要华丽感的章节切换。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 50 帧。",
+    "tags": [
+      "附魔",
+      "符文",
+      "光幕",
+      "紫色",
+      "质感",
+      "扫过"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2EnchantVeil.frames, C: ShotA},\n    {dur: t2EnchantVeil.frames - t2EnchantVeil.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2EnchantVeil]}\n/>",
+    "source": "src/gallery/fx/trans2/enchantVeil.tsx"
+  },
+  {
+    "id": "t2-lava-rise",
+    "name": "熔岩涌上",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2LavaRise",
+    "frames": 60,
+    "mode": "cut",
+    "bStart": 24,
+    "overlayReady": true,
+    "blurb": "真贴图的像素熔岩从底部翻涌而上，顶部气泡鼓起破裂、火星飞溅，淹没画面；退去时表面冷却成带发光裂纹的黑曜石硬壳。",
+    "usage": "进入下界 / 熔岩洞穴 / 高温、危险、爆发类场景的转场。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=24,B 的第 0 帧在过渡第 24 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 60 帧。",
+    "tags": [
+      "熔岩",
+      "下界",
+      "火焰",
+      "质感",
+      "像素",
+      "章节切换"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2LavaRise.frames, C: ShotA},\n    {dur: t2LavaRise.frames - t2LavaRise.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2LavaRise]}\n/>",
+    "source": "src/gallery/fx/trans2/lavaRise.tsx"
+  },
+  {
+    "id": "t2-chest-open",
+    "name": "箱子开盖",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2ChestOpen",
+    "frames": 76,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "游戏原版箱子贴图拼成的 3D 木箱从画面下方升起落地，缝隙漏出金光，箱盖绕后铰链掀开，光柱冲天，宝物弹出；原画面被吸进箱口，金光铺满屏幕后下一幕从光里展开。",
+    "usage": "开箱 / 获得奖励 / 揭晓答案 / 战利品展示前的转场。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 76 帧。",
+    "tags": [
+      "箱子",
+      "宝箱",
+      "金光",
+      "质感",
+      "惊喜",
+      "开箱"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2ChestOpen.frames, C: ShotA},\n    {dur: t2ChestOpen.frames - t2ChestOpen.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2ChestOpen]}\n/>",
+    "source": "src/gallery/fx/trans2/chestOpen.tsx"
+  },
+  {
+    "id": "t2-book-flip",
+    "name": "像素翻页",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2BookFlip",
+    "frames": 72,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "画面是一本厚书的书页：皮革书脊带缝线、右侧叠出页边厚度。书页被切成 40 条竖条，沿一条弯曲的曲线逐条做透视旋转，像纸一样卷起、翻过；每条带曲面明暗和高光，翻动边有亮纸边，下一页上有跟随移动的柔和投影，翻过垂直线后露出纸背；露出的羊皮纸页再翻一次，露出下一幕。翻页速度缓入缓出。",
+    "usage": "章节切换、讲故事 / 背景介绍、教程「下一页」的转场。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 72 帧。",
+    "tags": [
+      "书",
+      "翻页",
+      "魔法书",
+      "质感",
+      "章节切换",
+      "故事"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2BookFlip.frames, C: ShotA},\n    {dur: t2BookFlip.frames - t2BookFlip.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2BookFlip]}\n/>",
+    "source": "src/gallery/fx/trans2/bookFlip.tsx"
+  },
+  {
+    "id": "t2-villager-hmm",
+    "name": "村民点头",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2VillagerHmm",
+    "frames": 66,
+    "mode": "cut",
+    "bStart": 27,
+    "overlayReady": true,
+    "blurb": "一排排真实贴图的大鼻子村民脑袋（3D 方块）从两侧挤进来铺满屏幕，齐刷刷点头两下，然后同时转向侧脸，一行一行走开，露出下一幕。",
+    "usage": "吐槽 / 疑惑 / 「懂了」「就这？」之类玩梗的转场，无文字，配音效使用。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=27,B 的第 0 帧在过渡第 27 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 66 帧。",
+    "tags": [
+      "村民",
+      "玩梗",
+      "点头",
+      "像素",
+      "搞笑",
+      "章节切换"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2VillagerHmm.frames, C: ShotA},\n    {dur: t2VillagerHmm.frames - t2VillagerHmm.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2VillagerHmm]}\n/>",
+    "source": "src/gallery/fx/trans2/villagerHmm.tsx"
+  },
+  {
+    "id": "t2-enderman-stare",
+    "name": "末影人盯着我看",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2EndermanStare",
+    "frames": 66,
+    "mode": "cut",
+    "bStart": 27,
+    "overlayReady": true,
+    "blurb": "画面沉入黑暗，真实贴图的末影人脑袋（3D 方块）在黑暗中亮起两只发光的紫色眼睛，缓缓左右转头扫视后正对镜头死死盯住你，紫色粒子涌来；脑袋猛扑镜头吞没画面，一眨眼后紫雾像瞬移一样碎成像素散去。",
+    "usage": "悬疑 / 惊吓 / 「别看它」「它在看着你」类的玩梗转场，也适合末地、夜晚场景。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=27,B 的第 0 帧在过渡第 27 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 66 帧。",
+    "tags": [
+      "末影人",
+      "玩梗",
+      "紫色",
+      "恐怖",
+      "凝视",
+      "惊吓"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2EndermanStare.frames, C: ShotA},\n    {dur: t2EndermanStare.frames - t2EndermanStare.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2EndermanStare]}\n/>",
+    "source": "src/gallery/fx/trans2/endermanStare.tsx"
+  },
+  {
+    "id": "t2-creeper-hiss",
+    "name": "苦力怕引爆",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2CreeperHiss",
+    "frames": 72,
+    "mode": "cut",
+    "bStart": 30,
+    "overlayReady": true,
+    "blurb": "画面像引爆前的苦力怕一样逐渐膨胀、越抖越凶、白光越闪越快，真实贴图的苦力怕脸从中间越鼓越大压满屏幕；最后画面向内一压，轰地炸开，脸碎成 64 个原版像素块飞向镜头，原版爆炸与烟雾接管，下一幕带着冲击闪现。",
+    "usage": "危险降临 / 反转前的蓄力 / 「完了」「要炸了」的玩梗转场。无任何文字，靠音效 + 画面。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=30,B 的第 0 帧在过渡第 30 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 72 帧。",
+    "tags": [
+      "苦力怕",
+      "爆炸",
+      "玩梗",
+      "蓄力",
+      "章节切换"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2CreeperHiss.frames, C: ShotA},\n    {dur: t2CreeperHiss.frames - t2CreeperHiss.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2CreeperHiss]}\n/>",
+    "source": "src/gallery/fx/trans2/creeperHiss.tsx"
+  },
+  {
+    "id": "t2-pickaxe-break",
+    "name": "挖掘后退",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2PickaxeBreak",
+    "frames": 60,
+    "mode": "dual",
+    "bStart": 0,
+    "overlayReady": false,
+    "blurb": "一把铁镐连续凿击画面四下，原版挖掘裂纹贴图一阶一阶爬满屏幕，前几下先崩出几格缺口，最后一击整个画面碎成石块碎片四散飞溅，下一幕从缺口里露出来。",
+    "usage": "挖掘 / 破局 / 「打破僵局」「开凿」类转场，或表现一块一块拆开的内容。 类型 dual:A、B 各自变换(bStart=0,B 从过渡第 0 帧起就在动),没有独立的透明层。过渡本体 60 帧。",
+    "tags": [
+      "镐子",
+      "挖掘",
+      "裂纹",
+      "碎裂",
+      "方块",
+      "玩梗"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2PickaxeBreak.frames, C: ShotA},\n    {dur: t2PickaxeBreak.frames - t2PickaxeBreak.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2PickaxeBreak]}\n/>",
+    "source": "src/gallery/fx/trans2/pickaxeBreak.tsx"
+  },
+  {
+    "id": "t2-text-flood",
+    "name": "文字刷屏",
+    "kind": "transition",
+    "category": "transition",
+    "export": "t2TextFlood",
+    "frames": 54,
+    "mode": "cut",
+    "bStart": 21,
+    "overlayReady": true,
+    "blurb": "八条等高的字幕带（黑底黄字 / 黄底黑字 / 米白底黑字三色）从左右交替扫入铺满屏幕，带内文字「下一幕 / NEXT SCENE」整齐滚动；盖满后下一幕在后面接管，字幕带顺着各自方向依次扫出。",
+    "usage": "章节切换、快节奏段落过渡、「下一幕 / 敬请期待」类转场。 类型 cut:覆盖层在过渡中点盖满画面并切到 B(bStart=21,B 的第 0 帧在过渡第 21 帧),带透明 Overlay,可用 TransitionOverlay 叠在素材上。过渡本体 54 帧。",
+    "tags": [
+      "文字",
+      "字幕",
+      "跑马灯",
+      "章节切换",
+      "字幕带",
+      "干净"
+    ],
+    "props": [],
+    "example": "<TransitionSeries\n  shots={[\n    {dur: 20 + t2TextFlood.frames, C: ShotA},\n    {dur: t2TextFlood.frames - t2TextFlood.bStart + 20, C: ShotB},\n  ]}\n  transitions={[t2TextFlood]}\n/>",
+    "source": "src/gallery/fx/trans2/textFlood.tsx"
+  },
+  {
+    "id": "jump-chapter",
+    "name": "章节跳转",
+    "kind": "transition",
+    "category": "transition",
+    "export": "jumpChapter",
+    "frames": 120,
+    "mode": "cut",
+    "bStart": 54,
+    "overlayReady": true,
+    "blurb": "六条斜切色带（金、墨、橙交替）从左侧依次跑入，边靠边铺满整个画面；随后居中的章节卡砸在色带上：数字牌 02→03 翻滚、“深入矿洞”标题、副标题、三个物品格，上方章节条、下方七点进度条（光点从第 2 点滑到第 3 点）；最后色带按原顺序向右跑出并露出下一镜头，全程画面都是满的。",
+    "usage": "视频分章节时的转场卡。类型 cut:色带铺满后在过渡第 54 帧切到 B(bStart=54),带透明 Overlay(整条章节卡),可用 TransitionOverlay 叠在素材上。章节号、标题、副标题、物品、进度点用 makeJumpChapter({...}) 自定义;jumpChapter 是默认文案。",
+    "tags": [
+      "章节",
+      "转场",
+      "大卡片",
+      "进度点"
+    ],
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "default": "'CHAPTER 03 / 07 · 第三章'",
+        "desc": "顶部标签条文字"
+      },
+      {
+        "name": "plateTop",
+        "type": "string",
+        "default": "'CHAPTER'",
+        "desc": "数字牌上方小字"
+      },
+      {
+        "name": "from",
+        "type": "string",
+        "default": "'02'",
+        "desc": "数字牌上滚出的旧章节号"
+      },
+      {
+        "name": "to",
+        "type": "string",
+        "default": "'03'",
+        "desc": "数字牌上滚入的新章节号"
+      },
+      {
+        "name": "plateBottom",
+        "type": "string",
+        "default": "'第 3 章'",
+        "desc": "数字牌下方小字"
+      },
+      {
+        "name": "badge",
+        "type": "string",
+        "default": "'进度 · 3 / 7'",
+        "desc": "标题上方的进度小标签"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'深入矿洞'",
+        "desc": "章节标题"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'在黑暗里点亮第一支火把'",
+        "desc": "分隔线下的一句话"
+      },
+      {
+        "name": "items",
+        "type": "string[]",
+        "default": "['stick', 'iron_pickaxe', 'coal']",
+        "desc": "三个物品格里的原版物品 id(版面按 3 个设计)"
+      },
+      {
+        "name": "dots",
+        "type": "number",
+        "default": "7",
+        "desc": "底部进度条的点数"
+      },
+      {
+        "name": "current",
+        "type": "number",
+        "default": "2",
+        "desc": "被点亮的点的下标(从 0 数)"
+      }
+    ],
+    "example": "const chapter4 = makeJumpChapter({from: '03', to: '04', label: 'CHAPTER 04 / 07 · 第四章', plateBottom: '第 4 章', badge: '进度 · 4 / 7', title: '熔岩之下', subtitle: '下界的门已经打开', current: 3});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + chapter4.frames, C: ShotA},\n    {dur: chapter4.frames - chapter4.bStart + 20, C: ShotB},\n  ]}\n  transitions={[chapter4]}\n/>",
+    "source": "src/gallery/fx/dim/chapter.tsx"
+  },
+  {
+    "id": "jump-next-episode",
+    "name": "下集预告",
+    "kind": "transition",
+    "category": "transition",
+    "export": "jumpNextEpisode",
+    "frames": 204,
+    "mode": "dual",
+    "bStart": 30,
+    "overlayReady": false,
+    "blurb": "本集画面缩进右下角变成小窗，紫色舞台上展开“下集预告”：下集预览大图、集数标签、简介、倒计时进度条和“立即观看”按钮；光标点击后预览图撑满全屏进入下一集。",
+    "usage": "每集结尾的「下集预告 / 自动连播」画面。类型 dual:A 缩进右下角小窗一直在播,B 从过渡第 30 帧起作为预览图出现(bStart=30,B 的第 0 帧在此),光标点击后 B 撑满全屏;没有透明层。文字用 makeJumpNextEpisode({...}) 自定义。",
+    "tags": [
+      "下集预告",
+      "片尾",
+      "小窗",
+      "倒计时",
+      "按钮"
+    ],
+    "props": [
+      {
+        "name": "channel",
+        "type": "string",
+        "default": "'Oriel 频道 · 第一季'",
+        "desc": "顶部条左侧的频道文字"
+      },
+      {
+        "name": "live",
+        "type": "string",
+        "default": "'LIVE'",
+        "desc": "顶部条左侧红色标签"
+      },
+      {
+        "name": "range",
+        "type": "string",
+        "default": "'EP.01 → EP.02'",
+        "desc": "顶部条右侧文字"
+      },
+      {
+        "name": "heading",
+        "type": "string",
+        "default": "'下集预告'",
+        "desc": "右栏大标题"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "default": "'NEXT EPISODE'",
+        "desc": "标题下第一个标签"
+      },
+      {
+        "name": "ep",
+        "type": "string",
+        "default": "'EP.02'",
+        "desc": "标题下第二个标签(集数)"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'深入下界'",
+        "desc": "下一集标题"
+      },
+      {
+        "name": "desc",
+        "type": "string[]",
+        "default": "['穿过传送门，', '在岩浆湖畔建立第一座据点。']",
+        "desc": "简介,每个元素一行(按两行设计)"
+      },
+      {
+        "name": "watch",
+        "type": "string",
+        "default": "'立即观看'",
+        "desc": "主按钮文字(光标点击的那个)"
+      },
+      {
+        "name": "subscribe",
+        "type": "string",
+        "default": "'订阅'",
+        "desc": "第二个按钮文字"
+      },
+      {
+        "name": "newChip",
+        "type": "string",
+        "default": "'NEW · 下集'",
+        "desc": "预览图左上角标签"
+      },
+      {
+        "name": "duration",
+        "type": "string",
+        "default": "'12:34'",
+        "desc": "预览图右下角时长"
+      },
+      {
+        "name": "moreLabel",
+        "type": "string",
+        "default": "'更多剧集'",
+        "desc": "「更多剧集」三个物品格前的文字"
+      },
+      {
+        "name": "moreItems",
+        "type": "string[]",
+        "default": "['netherite_ingot', 'ender_pearl', 'diamond']",
+        "desc": "三个物品格里的原版物品 id"
+      },
+      {
+        "name": "replayChip",
+        "type": "string",
+        "default": "'本集 · 回看'",
+        "desc": "小窗上方标签"
+      },
+      {
+        "name": "autoplay",
+        "type": "(sec: number) => string",
+        "default": "(sec) => `${sec} 秒后自动播放`",
+        "desc": "倒计时文案,参数是剩余秒数"
+      },
+      {
+        "name": "cancel",
+        "type": "string",
+        "default": "'点击取消'",
+        "desc": "倒计时右侧小字"
+      }
+    ],
+    "example": "const nextEp = makeJumpNextEpisode({ep: 'EP.03', range: 'EP.02 → EP.03', title: '深入末地', desc: ['找到要塞，', '点亮末地传送门。']});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + nextEp.frames, C: ShotA},\n    {dur: nextEp.frames - nextEp.bStart + 20, C: ShotB},\n  ]}\n  transitions={[nextEp]}\n/>",
+    "source": "src/gallery/fx/dim/jumpsA.tsx"
+  },
+  {
+    "id": "jump-pip-expand",
+    "name": "画中画展开",
+    "kind": "transition",
+    "category": "transition",
+    "export": "jumpPipExpand",
+    "frames": 132,
+    "mode": "dual",
+    "bStart": 2,
+    "overlayReady": false,
+    "blurb": "右下角带深色边框、投影和高光边的圆角小窗升起，光标移上展开键并点击，小窗轻按一下后缓动放大到全屏：位置、缩放同步变化，圆角收成直角，窗面掠过一道斜向反光；旧画面同时后退、压暗并模糊，最后旧画面以小窗留在右下角。",
+    "usage": "从小窗口画面切到主画面,或演示「点开放大」的交互。类型 dual:A 在后面后退压暗并模糊,B 从过渡第 2 帧起以右下角小窗升起(bStart=2),放大到全屏;最后 A 以小窗留在右下角。没有透明层。标签文字用 makeJumpPipExpand({...}) 自定义。",
+    "tags": [
+      "画中画",
+      "放大",
+      "全屏",
+      "光标"
+    ],
+    "props": [
+      {
+        "name": "titleB",
+        "type": "string",
+        "default": "'画面 B · LIVE'",
+        "desc": "小窗顶栏文字"
+      },
+      {
+        "name": "expanded",
+        "type": "string",
+        "default": "'已展开 · 全屏'",
+        "desc": "放大后左上角的标签"
+      },
+      {
+        "name": "labelA",
+        "type": "string",
+        "default": "'画面 A'",
+        "desc": "旧画面缩成小窗后上方的标签"
+      }
+    ],
+    "example": "const pip = makeJumpPipExpand({titleB: '玩家视角 · LIVE', labelA: '主镜头'});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + pip.frames, C: ShotA},\n    {dur: pip.frames - pip.bStart + 20, C: ShotB},\n  ]}\n  transitions={[pip]}\n/>",
+    "source": "src/gallery/fx/dim/jumpsA.tsx"
+  },
+  {
+    "id": "jump-time-skip",
+    "name": "时间跳转（三天后）",
+    "kind": "transition",
+    "category": "transition",
+    "export": "jumpTimeSkip",
+    "frames": 160,
+    "mode": "cut",
+    "bStart": 95,
+    "overlayReady": true,
+    "blurb": "原版时钟飞速转动，日月交替、云层飞掠，“第 N 天”计数器翻页，两侧日夜色块滚动；快转三天后黑边猛地合上，“三天后”大字砸落并带冲击波，副标题与“第 4 天 · 正午”收尾。",
+    "usage": "「三天后 / 一个月后 / 第二天清晨」这类时间跳转。类型 cut:A 在时钟与计数器下快放,黑边砸下、白闪(第 95 帧)时切到 B(bStart=95),带透明 Overlay(时钟、计数器、大字、黑边),可叠在任意镜头上。文字与天数用 makeJumpTimeSkip({...}) 自定义。注意:cues 里的点击音数量随 days 变。",
+    "tags": [
+      "时间跳转",
+      "三天后",
+      "昼夜",
+      "时钟"
+    ],
+    "props": [
+      {
+        "name": "big",
+        "type": "string",
+        "default": "'三天后'",
+        "desc": "砸下的大字(字号固定 336px,建议 ≤4 个字,如「一个月后」)"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'THREE DAYS LATER'",
+        "desc": "大字下的英文副标题"
+      },
+      {
+        "name": "days",
+        "type": "number",
+        "default": "3",
+        "desc": "时钟飞转的天数(1–5,计数器只做到第 6 天)"
+      },
+      {
+        "name": "dayPrefix",
+        "type": "string",
+        "default": "'第'",
+        "desc": "天数计数器前缀"
+      },
+      {
+        "name": "daySuffix",
+        "type": "string",
+        "default": "'天'",
+        "desc": "天数计数器后缀"
+      },
+      {
+        "name": "marks",
+        "type": "[string, string, string, string]",
+        "default": "['日出', '正午', '日落', '午夜']",
+        "desc": "时钟下方日月条的四个刻度文字"
+      },
+      {
+        "name": "footer",
+        "type": "(day: number) => string",
+        "default": "(d) => `第 ${d} 天 · 正午`",
+        "desc": "最后出现的小标签,参数是当前天数"
+      }
+    ],
+    "example": "const skip = makeJumpTimeSkip({big: '一周后', sub: 'ONE WEEK LATER', days: 4, footer: () => '第 8 天 · 正午'});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + skip.frames, C: ShotA},\n    {dur: skip.frames - skip.bStart + 20, C: ShotB},\n  ]}\n  transitions={[skip]}\n/>",
+    "source": "src/gallery/fx/dim/jumpsB.tsx"
+  },
+  {
+    "id": "jump-countdown",
+    "name": "倒计时 3-2-1-GO",
+    "kind": "transition",
+    "category": "transition",
+    "export": "jumpCountdown",
+    "frames": 168,
+    "mode": "cut",
+    "bStart": 97,
+    "overlayReady": true,
+    "blurb": "红、橙、黄三个方块像素数字依次砸在切角底板上：底板落地挤压、整屏压缩脉冲、像素十字与碎片飞溅、边缘色脉冲，底部十二格像素进度条随数字走满；最后绿色“GO”底板变宽，引爆原版爆炸帧与方块彩纸，进度条亮成彩虹。",
+    "usage": "比赛/挑战开始前、章节正式开始的倒计时。类型 cut:A 在倒计时下作背景,GO 砸下的瞬间(第 97 帧)切到 B(bStart=97,B 的第 0 帧正好是 GO),带透明 Overlay(只有底板、数字与特效),可直接盖在实拍上。提示文字用 makeJumpCountdown({...}) 自定义;数字字模只含 3 2 1 G O。",
+    "tags": [
+      "倒计时",
+      "开始",
+      "节奏",
+      "像素数字"
+    ],
+    "props": [
+      {
+        "name": "ready",
+        "type": "(n: string) => string",
+        "default": "(n) => `准备 · ${n}`",
+        "desc": "3 / 2 / 1 时顶部标签文字,参数是数字"
+      },
+      {
+        "name": "go",
+        "type": "string",
+        "default": "'GO · 开始'",
+        "desc": "GO 时顶部标签文字"
+      }
+    ],
+    "example": "const countdown = makeJumpCountdown({ready: (n) => `比赛开始 · ${n}`, go: 'GO · 冲！'});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + countdown.frames, C: ShotA},\n    {dur: countdown.frames - countdown.bStart + 20, C: ShotB},\n  ]}\n  transitions={[countdown]}\n/>",
+    "source": "src/gallery/fx/dim/countdown.tsx"
+  },
+  {
+    "id": "jump-meanwhile",
+    "name": "与此同时（斜切分屏）",
+    "kind": "transition",
+    "category": "transition",
+    "export": "jumpMeanwhile",
+    "frames": 144,
+    "mode": "dual",
+    "bStart": 22,
+    "overlayReady": false,
+    "blurb": "一道白色斩线斜劈画面，两半向两侧滑开，黑色缎带“与此同时”砸在切口上并带冲击波，两个画面各带标签缓慢反向漂移；最后第二个画面沿斜线扫过整屏。",
+    "usage": "切换到另一条故事线 / 另一位玩家的视角。类型 dual:A 先被斜线劈开,B 从过渡第 22 帧起出现在右半(bStart=22,B 的第 0 帧在此)并最终扫过整屏;没有透明层。文字与两个标签用 makeJumpMeanwhile({...}) 自定义(标签传空字符串可隐藏)。",
+    "tags": [
+      "分屏",
+      "与此同时",
+      "双线叙事",
+      "斜切"
+    ],
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'与此同时'",
+        "desc": "缎带上的大字"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'MEANWHILE'",
+        "desc": "缎带下的英文字距小字"
+      },
+      {
+        "name": "labelA",
+        "type": "string",
+        "default": "'A · 白天 · 主角线'",
+        "desc": "左上角给 A 的标签,空字符串隐藏"
+      },
+      {
+        "name": "labelB",
+        "type": "string",
+        "default": "'B · 夜晚 · 同伴线'",
+        "desc": "右下角给 B 的标签,空字符串隐藏"
+      }
+    ],
+    "example": "const meanwhile = makeJumpMeanwhile({title: '另一边', sub: 'ELSEWHERE', labelA: '', labelB: ''});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + meanwhile.frames, C: ShotA},\n    {dur: meanwhile.frames - meanwhile.bStart + 20, C: ShotB},\n  ]}\n  transitions={[meanwhile]}\n/>",
+    "source": "src/gallery/fx/dim/jumpsC.tsx"
+  },
+  {
+    "id": "jump-flashback",
+    "name": "回忆闪回（老胶片）",
+    "kind": "transition",
+    "category": "transition",
+    "export": "jumpFlashback",
+    "frames": 156,
+    "mode": "cut",
+    "bStart": 125,
+    "overlayReady": true,
+    "blurb": "画面水波扭曲、闪白后变成褐色老胶片：齿孔边、颗粒、划痕、灰尘、放映机闪烁、边缘暗角与轻微抖动，不带任何文字；结束时再次水波闪白回到现实。",
+    "usage": "插入回忆片段、「很久以前」、历史回顾。类型 cut,过渡本体 156 帧同时包含「进入回忆 → 回忆 → 回到现实」:A 在第 24 帧水波闪白后进入老胶片回忆,第 124 帧再次闪白回到现实并换成 B(bStart=125,B 的第 0 帧在此)。回忆画面默认就是 A 自己(给当前镜头套胶片),用 makeJumpFlashback({Memory: 另一段素材}) 可换成别的回忆素材(回忆开始时从第 0 帧播放)。带透明 Overlay(胶片罩、暗角、齿孔、颗粒、闪白),可盖在你自己的回忆素材上。无文字。",
+    "tags": [
+      "闪回",
+      "回忆",
+      "胶片",
+      "褐色",
+      "颗粒"
+    ],
+    "props": [
+      {
+        "name": "Memory",
+        "type": "FC",
+        "default": "A 本身",
+        "desc": "回忆阶段(第 26–124 帧)显示的素材组件;不传则继续显示 A"
+      }
+    ],
+    "example": "const flashback = makeJumpFlashback({Memory: ShotB});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + flashback.frames, C: ShotA},\n    {dur: flashback.frames - flashback.bStart + 20, C: ShotA},\n  ]}\n  transitions={[flashback]}\n/>",
+    "source": "src/gallery/fx/dim/jumpsC.tsx"
+  },
+  {
+    "id": "jump-respawn",
+    "name": "死亡 → 重生",
+    "kind": "transition",
+    "category": "transition",
+    "export": "jumpRespawn",
+    "frames": 196,
+    "mode": "cut",
+    "bStart": 136,
+    "overlayReady": false,
+    "blurb": "受击红闪、镜头倾倒变灰泛红，弹出“你死了！”界面（得分滚动、重生/标题按钮）；光标点“重生”后整屏白光爆开，出生点画面由推近拉回，并弹出“已重生”提示。",
+    "usage": "失败/死亡后的重来,或把「死了又活了」作为剧情跳转。类型 cut:A 受击变灰倾倒并弹出死亡界面,光标点「重生」后白光爆开,第 136 帧起显示 B(bStart=136,B 的第 0 帧在此),B 由推近拉回。依赖 A 的倾倒/变灰,没有独立透明层。文字与得分用 makeJumpRespawn({...}) 自定义。",
+    "tags": [
+      "死亡",
+      "重生",
+      "复活",
+      "界面"
+    ],
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'你死了！'",
+        "desc": "死亡界面大标题"
+      },
+      {
+        "name": "scoreLabel",
+        "type": "string",
+        "default": "'得分：'",
+        "desc": "得分前的文字"
+      },
+      {
+        "name": "score",
+        "type": "number",
+        "default": "1337",
+        "desc": "得分最终值(数字从 0 滚动到它)"
+      },
+      {
+        "name": "respawn",
+        "type": "string",
+        "default": "'重生'",
+        "desc": "重生按钮文字(光标点它)"
+      },
+      {
+        "name": "toTitle",
+        "type": "string",
+        "default": "'回到标题画面'",
+        "desc": "第二个按钮文字"
+      },
+      {
+        "name": "cause",
+        "type": "string",
+        "default": "'死因 · 掉进岩浆湖'",
+        "desc": "左上角死因标签"
+      },
+      {
+        "name": "stats",
+        "type": "string",
+        "default": "'第 4 天 · 存活 3 小时 12 分'",
+        "desc": "右上角统计标签"
+      },
+      {
+        "name": "toast",
+        "type": "string",
+        "default": "'已重生 · 出生点'",
+        "desc": "重生后顶部提示"
+      }
+    ],
+    "example": "const respawn = makeJumpRespawn({cause: '死因 · 被苦力怕炸死', score: 2048});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + respawn.frames, C: ShotA},\n    {dur: respawn.frames - respawn.bStart + 20, C: ShotB},\n  ]}\n  transitions={[respawn]}\n/>",
+    "source": "src/gallery/fx/dim/respawn.tsx"
+  },
+  {
+    "id": "dim-overworld-to-nether",
+    "name": "主世界 → 下界",
+    "kind": "transition",
+    "category": "map",
+    "export": "dimOverToNether",
+    "frames": 210,
+    "mode": "cut",
+    "bStart": 84,
+    "overlayReady": true,
+    "blurb": "镜头推进紫色传送门，画面扭曲、像素漩涡把一切吞没，紫色像素溶解后落在岩浆与灰烬的下界，边缘泛红，弹出“下界”大标题。",
+    "usage": "玩家进入下界传送门的那一刻,或章节从主世界切到下界。类型 cut:A 被推进、扭曲、色相偏紫,紫色像素溶解盖满后在过渡第 84 帧切到 B(bStart=84,B 的第 0 帧在此),B 带推近回落、震动、红色暗角和「下界」标题。带透明 Overlay(漩涡、溶解、暗角、黑边、标题),可叠在素材上。标题文字用 makeDimOverToNether({...}) 自定义。",
+    "tags": [
+      "维度",
+      "下界",
+      "传送门",
+      "标题"
+    ],
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'下界'",
+        "desc": "标题文字,每个字依次砸落(默认值随转场而不同:下界 / 末地 / 主世界)"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'THE NETHER'",
+        "desc": "标题下的英文副标题"
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "default": "'岩浆与灰烬的炽热世界'",
+        "desc": "一句话描述"
+      },
+      {
+        "name": "chip",
+        "type": "string",
+        "default": "'DIMENSION · 维度'",
+        "desc": "标题上方的小标签"
+      }
+    ],
+    "example": "const toNether = makeDimOverToNether({title: '下界', sub: 'THE NETHER', desc: '岩浆与灰烬的炽热世界'});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + toNether.frames, C: ShotA},\n    {dur: toNether.frames - toNether.bStart + 20, C: ShotB},\n  ]}\n  transitions={[toNether]}\n/>",
+    "source": "src/gallery/fx/dim/cross.tsx"
+  },
+  {
+    "id": "dim-nether-to-end",
+    "name": "下界 → 末地",
+    "kind": "transition",
+    "category": "map",
+    "export": "dimNetherToEnd",
+    "frames": 204,
+    "mode": "cut",
+    "bStart": 62,
+    "overlayReady": true,
+    "blurb": "红色的下界画面出现白紫色裂纹并剧烈震动，随后被整个撕开、两半飞散，紫黑星空与末地岛屿涌出，弹出“末地”标题。",
+    "usage": "进入末地传送门/要塞,或剧情从下界跳到末地。类型 cut:A 出现裂纹并剧烈震动,第 64 帧被撕成两半飞散,B 从第 62 帧起垫在下面(bStart=62,B 的第 0 帧在此),弹出「末地」标题。带透明 Overlay,但 Overlay 里没有被撕开的两半(那依赖 A),只有裂纹、光束、碎片、暗角、标题,单独叠在素材上不会有「撕开」效果。标题文字用 makeDimNetherToEnd({...}) 自定义。",
+    "tags": [
+      "维度",
+      "末地",
+      "撕裂",
+      "标题"
+    ],
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'末地'",
+        "desc": "标题文字,每个字依次砸落(默认值随转场而不同:下界 / 末地 / 主世界)"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'THE END'",
+        "desc": "标题下的英文副标题"
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "default": "'龙与虚空的尽头'",
+        "desc": "一句话描述"
+      },
+      {
+        "name": "chip",
+        "type": "string",
+        "default": "'DIMENSION · 维度'",
+        "desc": "标题上方的小标签"
+      }
+    ],
+    "example": "const toEnd = makeDimNetherToEnd({desc: '龙与虚空的尽头'});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + toEnd.frames, C: ShotA},\n    {dur: toEnd.frames - toEnd.bStart + 20, C: ShotB},\n  ]}\n  transitions={[toEnd]}\n/>",
+    "source": "src/gallery/fx/dim/cross.tsx"
+  },
+  {
+    "id": "dim-to-overworld",
+    "name": "回到主世界",
+    "kind": "transition",
+    "category": "map",
+    "export": "dimToOverworld",
+    "frames": 196,
+    "mode": "cut",
+    "bStart": 14,
+    "overlayReady": true,
+    "blurb": "从紫色虚空的黑暗里，一道光线像睁眼一样展开，日出，天空蓝回来，草地与云出现，弹出“主世界”标题。",
+    "usage": "从下界/末地返回主世界,或作为「回家」「醒来」的开场。类型 cut:A 在最初 34 帧淡成紫色虚空,第 14 帧起一道光线像睁眼一样展开并显示 B(bStart=14,B 的第 0 帧在此),日出,弹出「主世界」标题。带透明 Overlay(暗幕、光线、光晕、粒子、标题)。标题文字用 makeDimToOverworld({...}) 自定义。",
+    "tags": [
+      "维度",
+      "主世界",
+      "日出",
+      "标题"
+    ],
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'主世界'",
+        "desc": "标题文字,每个字依次砸落(默认值随转场而不同:下界 / 末地 / 主世界)"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'THE OVERWORLD'",
+        "desc": "标题下的英文副标题"
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "default": "'万物生长的起点'",
+        "desc": "一句话描述"
+      },
+      {
+        "name": "chip",
+        "type": "string",
+        "default": "'DIMENSION · 维度'",
+        "desc": "标题上方的小标签"
+      }
+    ],
+    "example": "const toOverworld = makeDimToOverworld({title: '主世界'});\n\n<TransitionSeries\n  shots={[\n    {dur: 20 + toOverworld.frames, C: ShotA},\n    {dur: toOverworld.frames - toOverworld.bStart + 20, C: ShotB},\n  ]}\n  transitions={[toOverworld]}\n/>",
+    "source": "src/gallery/fx/dim/cross.tsx"
+  },
+  {
+    "id": "dim-pearl-teleport",
+    "name": "末影珍珠传送",
+    "kind": "scene",
+    "category": "map",
+    "export": "DimPearlTeleport",
+    "frames": 112,
+    "overlayReady": true,
+    "blurb": "史蒂夫甩出末影珍珠，原地故障闪烁、紫色粒子螺旋升起，被拉成细长光柱抽走，画面短暂挤压扭曲，随后在珍珠落点被粒子聚拢、挤压弹出，并受到摔落伤害。",
+    "usage": "展示末影珍珠、传送点、瞬移位置变化。组件,默认透明:只有史蒂夫、珍珠、轨迹与粒子,位置按画面左 1/5 → 右 4/5 固定(源码常量 AX/BX),叠在横版场景素材上;bg 打开才画演示用的主世界与 HUD。本地帧 0 = 第一帧,时长见 DIM_PEARL_TELEPORT_FRAMES(112)。",
+    "tags": [
+      "传送",
+      "末影珍珠",
+      "粒子",
+      "扭曲"
+    ],
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "true 时画演示用主世界 + HUD 背景,默认透明"
+      },
+      {
+        "name": "damage",
+        "type": "string",
+        "default": "'-2.5 ♥'",
+        "desc": "落地后飘出的摔落伤害文字,空字符串隐藏"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放内置音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  <ShotA />\n  <Sequence from={20} durationInFrames={DIM_PEARL_TELEPORT_FRAMES}>\n    <DimPearlTeleport damage=\"-2 ♥\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/dim/pearl.tsx"
+  },
+  {
+    "id": "dim-end-portal-activate",
+    "name": "末地传送门激活",
+    "kind": "scene",
+    "category": "map",
+    "export": "DimEndPortalActivate",
+    "frames": 232,
+    "overlayReady": true,
+    "blurb": "昏暗要塞里，十二只末影之眼依次飞入地面的传送门框架，每次落下都绿光闪动、房间轻震；集齐后中心展开星空虚空，光柱冲天，“末地传送门”大标题砸下。",
+    "usage": "讲解/演示激活末地传送门、进入末地前的铺垫。组件,默认透明:眼睛飞入、绿光、光柱、计数条、「末地传送门」标题叠在素材上(画面位置按地面框架在下半屏设计,需要俯视要塞地面的素材);bg 打开才画演示要塞房间。本地帧 0 = 第一帧,时长见 DIM_END_PORTAL_ACTIVATE_FRAMES(232)。",
+    "tags": [
+      "末地",
+      "传送门",
+      "末影之眼",
+      "要塞"
+    ],
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "true 时画演示用要塞房间背景,默认透明"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'末地传送门'",
+        "desc": "大标题(每个字依次砸落)"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'END PORTAL ACTIVATED'",
+        "desc": "英文副标题"
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "default": "'十二只末影之眼，唤醒了虚空'",
+        "desc": "一句话描述"
+      },
+      {
+        "name": "chip",
+        "type": "string",
+        "default": "'STRONGHOLD · 要塞'",
+        "desc": "标题上方小标签"
+      },
+      {
+        "name": "counter",
+        "type": "(n: number) => string",
+        "default": "(n) => `末影之眼 · ${n} / 12`",
+        "desc": "顶部计数条文字,参数是已放入的眼睛数(0–12)"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放内置音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  <ShotA />\n  <Sequence from={20} durationInFrames={DIM_END_PORTAL_ACTIVATE_FRAMES}>\n    <DimEndPortalActivate title=\"末地之门\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/dim/portal.tsx"
+  },
+  {
+    "id": "loc-title-card",
+    "name": "进入新地点标题卡",
+    "kind": "title",
+    "category": "map",
+    "export": "LocTitleCard",
+    "frames": 156,
+    "overlayReady": true,
+    "blurb": "画面上下降下砖纹装饰条与暗角，“下界要塞”大标题从两侧高速挤入、在中间撞出光效和冲击波，之后依次出现副标题、小图标、指南针和数字滚动的 X/Y/Z 坐标。",
+    "usage": "到达新地点、要塞、村庄、地标时的大字标题;默认透明,直接叠在任何实拍上(上下有暗角与砖纹条,会压暗素材边缘)。本地帧 0 = 第一帧,时长见 LOC_TITLE_CARD_FRAMES(156)。标题分左右两半,字数少时(各 2 字)最稳。",
+    "tags": [
+      "地点",
+      "标题",
+      "坐标",
+      "暗角"
+    ],
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "true 时画演示用下界背景,默认透明"
+      },
+      {
+        "name": "tone",
+        "type": "'stone' | 'nether' | 'end' | 'grass' | 'gold' | 'ice' | 'pink'",
+        "default": "'gold'",
+        "desc": "标题配色"
+      },
+      {
+        "name": "left",
+        "type": "string",
+        "default": "'下界'",
+        "desc": "标题左半(从左侧滑入)"
+      },
+      {
+        "name": "right",
+        "type": "string",
+        "default": "'要塞'",
+        "desc": "标题右半(从右侧滑入)"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'NETHER FORTRESS'",
+        "desc": "英文副标题"
+      },
+      {
+        "name": "coords",
+        "type": "[number, number, number]",
+        "default": "[-312, 64, 1048]",
+        "desc": "X / Y / Z 三个数字框滚动到的值"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "default": "'新地点 · NEW LOCATION'",
+        "desc": "标题上方标签,空字符串隐藏"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "default": "'nether_bricks'",
+        "desc": "第一个图标框里的原版方块 id"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放内置音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  <ShotA />\n  <Sequence from={20} durationInFrames={LOC_TITLE_CARD_FRAMES}>\n    <LocTitleCard tone=\"grass\" left=\"翡翠\" right=\"森林\" sub=\"EMERALD FOREST\" coords={[128, 72, -640]} tag=\"新地点 · NEW LOCATION\" icon=\"grass_block_side\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/dim/loc.tsx"
+  },
+  {
+    "id": "loc-biome-banner",
+    "name": "群系横幅（华丽版）",
+    "kind": "card",
+    "category": "map",
+    "export": "LocBiomeBanner",
+    "frames": 164,
+    "overlayReady": true,
+    "blurb": "一道亮线从中心展开成带金边、两翼和菱形铆钉的 Ore 横幅，逐字打出“樱花树林”，附气候标签、经验条和已发现群系数，花瓣不断飘落。",
+    "usage": "进入新群系、新区域时的提示条,比游戏原版的小字更华丽;默认透明,叠在任何实拍上(顶部有粉色暗角与飘落的樱花花瓣,花瓣为装饰,不可关)。本地帧 0 = 第一帧,时长见 LOC_BIOME_BANNER_FRAMES(164)。",
+    "tags": [
+      "群系",
+      "横幅",
+      "Ore",
+      "樱花"
+    ],
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "true 时画演示用樱花林背景,默认透明"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'樱花树林'",
+        "desc": "群系名,逐字打出"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'CHERRY GROVE'",
+        "desc": "英文名"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "default": "'新群系 · NEW BIOME'",
+        "desc": "标题上方小字"
+      },
+      {
+        "name": "chips",
+        "type": "[string, string][]",
+        "default": "[['温和 · 18°C', '#ffd23f'], ['降雨 · 0.8', '#7ab8ff'], ['粉红花瓣', '#ff9fc4']]",
+        "desc": "气候标签:[文字, 圆点颜色]"
+      },
+      {
+        "name": "xp",
+        "type": "string",
+        "default": "'+25 XP'",
+        "desc": "右侧经验瓶旁的奖励文字"
+      },
+      {
+        "name": "explored",
+        "type": "(percent: number) => string",
+        "default": "(p) => `探索度 ${p}%`",
+        "desc": "发现进度文字,参数是百分比(25–75)"
+      },
+      {
+        "name": "ribbon",
+        "type": "string",
+        "default": "'已发现 · 3 / 12 群系'",
+        "desc": "横幅下方丝带上的文字"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "default": "'cherry_leaves'",
+        "desc": "图标框里的原版方块 id"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放内置音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  <ShotA />\n  <Sequence from={20} durationInFrames={LOC_BIOME_BANNER_FRAMES}>\n    <LocBiomeBanner title=\"蘑菇岛\" sub=\"MUSHROOM FIELDS\" tag=\"新群系 · NEW BIOME\" ribbon=\"已发现 · 4 / 12 群系\" icon=\"red_mushroom_block\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/dim/loc.tsx"
+  }
+]

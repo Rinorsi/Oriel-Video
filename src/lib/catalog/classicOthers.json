@@ -1,0 +1,5410 @@
+[
+  {
+    "id": "map-route-a2b",
+    "name": "地图旅程 · 经典 A→B",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapRouteA2B",
+    "frames": 300,
+    "overlayReady": false,
+    "blurb": "羊皮纸像素地图铺满全屏，镜头先拉远再推近，头像踩着脚印沿虚线从起点图钉走到终点，旗帜升起、标牌弹出。整屏场景，不透明，不能叠在素材上。",
+    "usage": "介绍“从某地前往某地”、探险路线、跑图开场、下期预告地点。作为一个独立镜头放进 Sequence，或接在转场里。通用版 MapJourney 可自选 kind。",
+    "props": [
+      {
+        "name": "nodes",
+        "type": "MapNodeSpec[]",
+        "default": "(演示站点)",
+        "desc": "沿途站点：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [u,v]（0..1）/ icon 精灵名(house tent tower castle anchor bed chest flag skull)或物品 id / sub 副标题 / color 图钉边框色。首个为起点，末个为终点"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "总帧数，结尾镜头自动拉远；要和外层 <Sequence durationInFrames> 一致"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "(演示标题)",
+        "desc": "左上角标题牌大字"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'起点名 → 终点名'",
+        "desc": "标题牌副标题"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "default": "(随 kind 预设，约 50–58)",
+        "desc": "出发帧"
+      },
+      {
+        "name": "legFrames",
+        "type": "number | number[]",
+        "default": "(随 kind 预设)",
+        "desc": "每段路程用时（帧）；数组可逐段指定"
+      },
+      {
+        "name": "pauseFrames",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "多站旅程每站停留帧数"
+      },
+      {
+        "name": "followZ",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "跟随镜头缩放，越大越近"
+      },
+      {
+        "name": "tint",
+        "type": "string | ((f: number) => string)",
+        "default": "undefined",
+        "desc": "盖在地图上的色调（CSS 颜色或随帧函数），如黄昏紫"
+      },
+      {
+        "name": "night",
+        "type": "boolean",
+        "default": "false",
+        "desc": "夜间配色地图"
+      },
+      {
+        "name": "hud",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示边框/图例/小地图/坐标/进度条等 HUD"
+      },
+      {
+        "name": "arriveText",
+        "type": "string",
+        "default": "undefined",
+        "desc": "替换终点标牌最后一行文字"
+      },
+      {
+        "name": "noSign",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画通用到站标牌"
+      },
+      {
+        "name": "hideFinalMarker",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画终点通用旗帜/图钉"
+      },
+      {
+        "name": "enterBuilding",
+        "type": "boolean",
+        "default": "false",
+        "desc": "到站后旅行者缩小走进终点建筑"
+      },
+      {
+        "name": "extraBack / extraWorld / extraScreen",
+        "type": "(c: MapJourneyContext) => ReactNode",
+        "default": "undefined",
+        "desc": "高级：在地图背景层 / 世界层 / 屏幕层渲染额外内容"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效（脚步、到站提示音等）"
+      }
+    ],
+    "example": "<Sequence durationInFrames={300}>\n  <MapRouteA2B\n    nodes={[\n      {name: '雪松镇', xz: [-480, 210], pos: [0.28, 0.62], icon: 'house', sub: '出发地'},\n      {name: '黑曜石要塞', xz: [960, -520], pos: [0.7, 0.36], icon: 'castle', sub: '终点 · 最终关卡'},\n    ]}\n    title=\"前往黑曜石要塞\"\n    seed={7}\n  />\n</Sequence>",
+    "source": "src/gallery/fx/map/journey.tsx"
+  },
+  {
+    "id": "map-route-chain",
+    "name": "地图旅程 · 多站串联",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapRouteChain",
+    "frames": 480,
+    "overlayReady": false,
+    "blurb": "四个节点依次到站：每站图标不同、路径累计延伸、进度条逐站点亮，每到一站弹出标牌。整屏场景。",
+    "usage": "多地点探险路线、攻略“一路经过哪些点”、系列视频目录。nodes 可传 3~6 个站点，frames 要随站数增加（约每站 90–120 帧）。",
+    "props": [
+      {
+        "name": "nodes",
+        "type": "MapNodeSpec[]",
+        "default": "(演示站点)",
+        "desc": "沿途站点：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [u,v]（0..1）/ icon 精灵名(house tent tower castle anchor bed chest flag skull)或物品 id / sub 副标题 / color 图钉边框色。首个为起点，末个为终点"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "总帧数，结尾镜头自动拉远；要和外层 <Sequence durationInFrames> 一致"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "(演示标题)",
+        "desc": "左上角标题牌大字"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'起点名 → 终点名'",
+        "desc": "标题牌副标题"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "default": "(随 kind 预设，约 50–58)",
+        "desc": "出发帧"
+      },
+      {
+        "name": "legFrames",
+        "type": "number | number[]",
+        "default": "(随 kind 预设)",
+        "desc": "每段路程用时（帧）；数组可逐段指定"
+      },
+      {
+        "name": "pauseFrames",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "多站旅程每站停留帧数"
+      },
+      {
+        "name": "followZ",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "跟随镜头缩放，越大越近"
+      },
+      {
+        "name": "tint",
+        "type": "string | ((f: number) => string)",
+        "default": "undefined",
+        "desc": "盖在地图上的色调（CSS 颜色或随帧函数），如黄昏紫"
+      },
+      {
+        "name": "night",
+        "type": "boolean",
+        "default": "false",
+        "desc": "夜间配色地图"
+      },
+      {
+        "name": "hud",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示边框/图例/小地图/坐标/进度条等 HUD"
+      },
+      {
+        "name": "arriveText",
+        "type": "string",
+        "default": "undefined",
+        "desc": "替换终点标牌最后一行文字"
+      },
+      {
+        "name": "noSign",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画通用到站标牌"
+      },
+      {
+        "name": "hideFinalMarker",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画终点通用旗帜/图钉"
+      },
+      {
+        "name": "enterBuilding",
+        "type": "boolean",
+        "default": "false",
+        "desc": "到站后旅行者缩小走进终点建筑"
+      },
+      {
+        "name": "extraBack / extraWorld / extraScreen",
+        "type": "(c: MapJourneyContext) => ReactNode",
+        "default": "undefined",
+        "desc": "高级：在地图背景层 / 世界层 / 屏幕层渲染额外内容"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效（脚步、到站提示音等）"
+      }
+    ],
+    "example": "<Sequence durationInFrames={480}>\n  <MapRouteChain\n    nodes={[\n      {name: '出生点', xz: [0, 0], pos: [0.26, 0.64], icon: 'bed', sub: '第 1 站'},\n      {name: '蘑菇岛', xz: [420, 300], pos: [0.42, 0.4], icon: 'tent', sub: '第 2 站 · 休整'},\n      {name: '海底神殿', xz: [900, 120], pos: [0.62, 0.62], icon: 'anchor', sub: '第 3 站 · 打怪'},\n      {name: '末地门户', xz: [1500, -200], pos: [0.74, 0.38], icon: 'ender_eye', sub: '终点'},\n    ]}\n    title=\"通关四站\"\n  />\n</Sequence>",
+    "source": "src/gallery/fx/map/journey.tsx"
+  },
+  {
+    "id": "map-route-minecart",
+    "name": "地图旅程 · 矿车铁轨",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapRouteMinecart",
+    "frames": 300,
+    "overlayReady": false,
+    "blurb": "铁轨在前方一段段铺开，头像坐矿车沿直角弯道飞驰，车轮溅火花，到站标牌。整屏场景。",
+    "usage": "矿洞/地铁/红石线路、矿车运输介绍、快速抵达某地。",
+    "props": [
+      {
+        "name": "nodes",
+        "type": "MapNodeSpec[]",
+        "default": "(演示站点)",
+        "desc": "沿途站点：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [u,v]（0..1）/ icon 精灵名(house tent tower castle anchor bed chest flag skull)或物品 id / sub 副标题 / color 图钉边框色。首个为起点，末个为终点"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "总帧数，结尾镜头自动拉远；要和外层 <Sequence durationInFrames> 一致"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "(演示标题)",
+        "desc": "左上角标题牌大字"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'起点名 → 终点名'",
+        "desc": "标题牌副标题"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "default": "(随 kind 预设，约 50–58)",
+        "desc": "出发帧"
+      },
+      {
+        "name": "legFrames",
+        "type": "number | number[]",
+        "default": "(随 kind 预设)",
+        "desc": "每段路程用时（帧）；数组可逐段指定"
+      },
+      {
+        "name": "pauseFrames",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "多站旅程每站停留帧数"
+      },
+      {
+        "name": "followZ",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "跟随镜头缩放，越大越近"
+      },
+      {
+        "name": "tint",
+        "type": "string | ((f: number) => string)",
+        "default": "undefined",
+        "desc": "盖在地图上的色调（CSS 颜色或随帧函数），如黄昏紫"
+      },
+      {
+        "name": "night",
+        "type": "boolean",
+        "default": "false",
+        "desc": "夜间配色地图"
+      },
+      {
+        "name": "hud",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示边框/图例/小地图/坐标/进度条等 HUD"
+      },
+      {
+        "name": "arriveText",
+        "type": "string",
+        "default": "undefined",
+        "desc": "替换终点标牌最后一行文字"
+      },
+      {
+        "name": "noSign",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画通用到站标牌"
+      },
+      {
+        "name": "hideFinalMarker",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画终点通用旗帜/图钉"
+      },
+      {
+        "name": "enterBuilding",
+        "type": "boolean",
+        "default": "false",
+        "desc": "到站后旅行者缩小走进终点建筑"
+      },
+      {
+        "name": "extraBack / extraWorld / extraScreen",
+        "type": "(c: MapJourneyContext) => ReactNode",
+        "default": "undefined",
+        "desc": "高级：在地图背景层 / 世界层 / 屏幕层渲染额外内容"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效（脚步、到站提示音等）"
+      }
+    ],
+    "example": "<Sequence durationInFrames={300}>\n  <MapRouteMinecart\n    nodes={[\n      {name: '地下车站', xz: [-700, 300], pos: [0.27, 0.36], icon: 'iron_pickaxe', sub: '入口'},\n      {name: '红石工坊', xz: [880, 520], pos: [0.71, 0.6], icon: 'diamond', sub: '终点 · 矿车到站'},\n    ]}\n    title=\"地铁一号线\"\n    hud={false}\n  />\n</Sequence>",
+    "source": "src/gallery/fx/map/journey.tsx"
+  },
+  {
+    "id": "map-route-horse",
+    "name": "地图旅程 · 骑马",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapRouteHorse",
+    "frames": 270,
+    "overlayReady": false,
+    "blurb": "头像骑着马飞奔，身后蹄印与滚滚尘土，镜头微微拉远营造速度感，到站勒马。整屏场景。",
+    "usage": "赶路、追逐、牧场到哨站的快速移动。",
+    "props": [
+      {
+        "name": "nodes",
+        "type": "MapNodeSpec[]",
+        "default": "(演示站点)",
+        "desc": "沿途站点：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [u,v]（0..1）/ icon 精灵名(house tent tower castle anchor bed chest flag skull)或物品 id / sub 副标题 / color 图钉边框色。首个为起点，末个为终点"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "总帧数，结尾镜头自动拉远；要和外层 <Sequence durationInFrames> 一致"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "(演示标题)",
+        "desc": "左上角标题牌大字"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'起点名 → 终点名'",
+        "desc": "标题牌副标题"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "default": "(随 kind 预设，约 50–58)",
+        "desc": "出发帧"
+      },
+      {
+        "name": "legFrames",
+        "type": "number | number[]",
+        "default": "(随 kind 预设)",
+        "desc": "每段路程用时（帧）；数组可逐段指定"
+      },
+      {
+        "name": "pauseFrames",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "多站旅程每站停留帧数"
+      },
+      {
+        "name": "followZ",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "跟随镜头缩放，越大越近"
+      },
+      {
+        "name": "tint",
+        "type": "string | ((f: number) => string)",
+        "default": "undefined",
+        "desc": "盖在地图上的色调（CSS 颜色或随帧函数），如黄昏紫"
+      },
+      {
+        "name": "night",
+        "type": "boolean",
+        "default": "false",
+        "desc": "夜间配色地图"
+      },
+      {
+        "name": "hud",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示边框/图例/小地图/坐标/进度条等 HUD"
+      },
+      {
+        "name": "arriveText",
+        "type": "string",
+        "default": "undefined",
+        "desc": "替换终点标牌最后一行文字"
+      },
+      {
+        "name": "noSign",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画通用到站标牌"
+      },
+      {
+        "name": "hideFinalMarker",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画终点通用旗帜/图钉"
+      },
+      {
+        "name": "enterBuilding",
+        "type": "boolean",
+        "default": "false",
+        "desc": "到站后旅行者缩小走进终点建筑"
+      },
+      {
+        "name": "extraBack / extraWorld / extraScreen",
+        "type": "(c: MapJourneyContext) => ReactNode",
+        "default": "undefined",
+        "desc": "高级：在地图背景层 / 世界层 / 屏幕层渲染额外内容"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效（脚步、到站提示音等）"
+      }
+    ],
+    "example": "<Sequence durationInFrames={270}>\n  <MapRouteHorse\n    nodes={[\n      {name: '马场', xz: [1100, 240], pos: [0.74, 0.6], icon: 'house', sub: '出发'},\n      {name: '瞭望塔', xz: [-500, -300], pos: [0.27, 0.34], icon: 'tower', sub: '终点'},\n    ]}\n    title=\"赶往瞭望塔\"\n    subtitle=\"全速骑行\"\n  />\n</Sequence>",
+    "source": "src/gallery/fx/map/journey.tsx"
+  },
+  {
+    "id": "map-route-pearl",
+    "name": "地图旅程 · 末影珍珠",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapRoutePearl",
+    "frames": 240,
+    "overlayReady": false,
+    "blurb": "珍珠划出紫色抛物线飞越整张地图，拖粒子尾迹，落点传送光效，头像在远端闪现。整屏场景。",
+    "usage": "传送、瞬移、“一秒到达”的地点跳转。",
+    "props": [
+      {
+        "name": "nodes",
+        "type": "MapNodeSpec[]",
+        "default": "(演示站点)",
+        "desc": "沿途站点：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [u,v]（0..1）/ icon 精灵名(house tent tower castle anchor bed chest flag skull)或物品 id / sub 副标题 / color 图钉边框色。首个为起点，末个为终点"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "总帧数，结尾镜头自动拉远；要和外层 <Sequence durationInFrames> 一致"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "(演示标题)",
+        "desc": "左上角标题牌大字"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'起点名 → 终点名'",
+        "desc": "标题牌副标题"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "default": "(随 kind 预设，约 50–58)",
+        "desc": "出发帧"
+      },
+      {
+        "name": "legFrames",
+        "type": "number | number[]",
+        "default": "(随 kind 预设)",
+        "desc": "每段路程用时（帧）；数组可逐段指定"
+      },
+      {
+        "name": "pauseFrames",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "多站旅程每站停留帧数"
+      },
+      {
+        "name": "followZ",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "跟随镜头缩放，越大越近"
+      },
+      {
+        "name": "tint",
+        "type": "string | ((f: number) => string)",
+        "default": "undefined",
+        "desc": "盖在地图上的色调（CSS 颜色或随帧函数），如黄昏紫"
+      },
+      {
+        "name": "night",
+        "type": "boolean",
+        "default": "false",
+        "desc": "夜间配色地图"
+      },
+      {
+        "name": "hud",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示边框/图例/小地图/坐标/进度条等 HUD"
+      },
+      {
+        "name": "arriveText",
+        "type": "string",
+        "default": "undefined",
+        "desc": "替换终点标牌最后一行文字"
+      },
+      {
+        "name": "noSign",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画通用到站标牌"
+      },
+      {
+        "name": "hideFinalMarker",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画终点通用旗帜/图钉"
+      },
+      {
+        "name": "enterBuilding",
+        "type": "boolean",
+        "default": "false",
+        "desc": "到站后旅行者缩小走进终点建筑"
+      },
+      {
+        "name": "extraBack / extraWorld / extraScreen",
+        "type": "(c: MapJourneyContext) => ReactNode",
+        "default": "undefined",
+        "desc": "高级：在地图背景层 / 世界层 / 屏幕层渲染额外内容"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效（脚步、到站提示音等）"
+      }
+    ],
+    "example": "<Sequence durationInFrames={240}>\n  <MapRoutePearl\n    nodes={[\n      {name: '悬崖边', xz: [-300, -200], pos: [0.28, 0.36], icon: 'house', sub: '投掷点'},\n      {name: '对岸', xz: [700, 480], pos: [0.74, 0.62], icon: 'ender_eye', sub: '落点'},\n    ]}\n    title=\"一秒过河\"\n  />\n</Sequence>",
+    "source": "src/gallery/fx/map/journey.tsx"
+  },
+  {
+    "id": "map-route-elytra",
+    "name": "地图旅程 · 鞘翅飞行",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapRouteElytra",
+    "frames": 320,
+    "overlayReady": false,
+    "blurb": "俯视地图，镜头拉得更高，头像展翅滑翔、尾迹拖曳，穿过金色切角方框门，大朵云层掠过。整屏场景。",
+    "usage": "远距离飞行、鞘翅竞速、跨地图探索、空中俯瞰。",
+    "props": [
+      {
+        "name": "nodes",
+        "type": "MapNodeSpec[]",
+        "default": "(演示站点)",
+        "desc": "沿途站点：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [u,v]（0..1）/ icon 精灵名(house tent tower castle anchor bed chest flag skull)或物品 id / sub 副标题 / color 图钉边框色。首个为起点，末个为终点"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "总帧数，结尾镜头自动拉远；要和外层 <Sequence durationInFrames> 一致"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "(演示标题)",
+        "desc": "左上角标题牌大字"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'起点名 → 终点名'",
+        "desc": "标题牌副标题"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "default": "(随 kind 预设，约 50–58)",
+        "desc": "出发帧"
+      },
+      {
+        "name": "legFrames",
+        "type": "number | number[]",
+        "default": "(随 kind 预设)",
+        "desc": "每段路程用时（帧）；数组可逐段指定"
+      },
+      {
+        "name": "pauseFrames",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "多站旅程每站停留帧数"
+      },
+      {
+        "name": "followZ",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "跟随镜头缩放，越大越近"
+      },
+      {
+        "name": "tint",
+        "type": "string | ((f: number) => string)",
+        "default": "undefined",
+        "desc": "盖在地图上的色调（CSS 颜色或随帧函数），如黄昏紫"
+      },
+      {
+        "name": "night",
+        "type": "boolean",
+        "default": "false",
+        "desc": "夜间配色地图"
+      },
+      {
+        "name": "hud",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示边框/图例/小地图/坐标/进度条等 HUD"
+      },
+      {
+        "name": "arriveText",
+        "type": "string",
+        "default": "undefined",
+        "desc": "替换终点标牌最后一行文字"
+      },
+      {
+        "name": "noSign",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画通用到站标牌"
+      },
+      {
+        "name": "hideFinalMarker",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画终点通用旗帜/图钉"
+      },
+      {
+        "name": "enterBuilding",
+        "type": "boolean",
+        "default": "false",
+        "desc": "到站后旅行者缩小走进终点建筑"
+      },
+      {
+        "name": "extraBack / extraWorld / extraScreen",
+        "type": "(c: MapJourneyContext) => ReactNode",
+        "default": "undefined",
+        "desc": "高级：在地图背景层 / 世界层 / 屏幕层渲染额外内容"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效（脚步、到站提示音等）"
+      }
+    ],
+    "example": "<Sequence durationInFrames={320}>\n  <MapRouteElytra\n    nodes={[\n      {name: '山顶发射台', xz: [-900, 300], pos: [0.26, 0.62], icon: 'house', sub: '起飞'},\n      {name: '浮空岛', xz: [1400, -480], pos: [0.68, 0.4], icon: 'elytra', sub: '终点'},\n    ]}\n    title=\"飞越群山\"\n  />\n</Sequence>",
+    "source": "src/gallery/fx/map/journey.tsx"
+  },
+  {
+    "id": "map-route-boat",
+    "name": "地图旅程 · 乘船",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapRouteBoat",
+    "frames": 300,
+    "overlayReady": false,
+    "blurb": "海图上一条白色虚线航线，头像坐船破浪前行，船尾拖出 V 形浪花与水波纹，靠港抛锚。整屏场景。",
+    "usage": "跨海旅行、海洋神殿/海盗岛探险、群岛之间的航行。",
+    "props": [
+      {
+        "name": "nodes",
+        "type": "MapNodeSpec[]",
+        "default": "(演示站点)",
+        "desc": "沿途站点：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [u,v]（0..1）/ icon 精灵名(house tent tower castle anchor bed chest flag skull)或物品 id / sub 副标题 / color 图钉边框色。首个为起点，末个为终点"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "总帧数，结尾镜头自动拉远；要和外层 <Sequence durationInFrames> 一致"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "(演示标题)",
+        "desc": "左上角标题牌大字"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'起点名 → 终点名'",
+        "desc": "标题牌副标题"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "(随效果)",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "default": "(随 kind 预设，约 50–58)",
+        "desc": "出发帧"
+      },
+      {
+        "name": "legFrames",
+        "type": "number | number[]",
+        "default": "(随 kind 预设)",
+        "desc": "每段路程用时（帧）；数组可逐段指定"
+      },
+      {
+        "name": "pauseFrames",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "多站旅程每站停留帧数"
+      },
+      {
+        "name": "followZ",
+        "type": "number",
+        "default": "(随 kind 预设)",
+        "desc": "跟随镜头缩放，越大越近"
+      },
+      {
+        "name": "tint",
+        "type": "string | ((f: number) => string)",
+        "default": "undefined",
+        "desc": "盖在地图上的色调（CSS 颜色或随帧函数），如黄昏紫"
+      },
+      {
+        "name": "night",
+        "type": "boolean",
+        "default": "false",
+        "desc": "夜间配色地图"
+      },
+      {
+        "name": "hud",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示边框/图例/小地图/坐标/进度条等 HUD"
+      },
+      {
+        "name": "arriveText",
+        "type": "string",
+        "default": "undefined",
+        "desc": "替换终点标牌最后一行文字"
+      },
+      {
+        "name": "noSign",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画通用到站标牌"
+      },
+      {
+        "name": "hideFinalMarker",
+        "type": "boolean",
+        "default": "false",
+        "desc": "不画终点通用旗帜/图钉"
+      },
+      {
+        "name": "enterBuilding",
+        "type": "boolean",
+        "default": "false",
+        "desc": "到站后旅行者缩小走进终点建筑"
+      },
+      {
+        "name": "extraBack / extraWorld / extraScreen",
+        "type": "(c: MapJourneyContext) => ReactNode",
+        "default": "undefined",
+        "desc": "高级：在地图背景层 / 世界层 / 屏幕层渲染额外内容"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效（脚步、到站提示音等）"
+      }
+    ],
+    "example": "<Sequence durationInFrames={300}>\n  <MapRouteBoat\n    nodes={[\n      {name: '渔村码头', xz: [-640, 200], pos: [0.27, 0.58], icon: 'anchor', sub: '出港'},\n      {name: '骷髅岛', xz: [1000, -280], pos: [0.74, 0.4], icon: 'chest', sub: '终点 · 宝藏'},\n    ]}\n    title=\"出海寻宝\"\n    arriveText=\"宝藏就在这里\"\n  />\n</Sequence>",
+    "source": "src/gallery/fx/map/journey.tsx"
+  },
+  {
+    "id": "map-home",
+    "name": "地图旅程 · 回家",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapHome",
+    "frames": 340,
+    "overlayReady": false,
+    "blurb": "黄昏的地图上头像从远方走回小屋，推门进屋，窗户亮灯，暖光扩散、爱心与萤火升起，挂牌弹出欢迎文字。整屏场景。",
+    "usage": "回到基地、新家展示、一集的温馨收尾、返回出生点。",
+    "props": [
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "340",
+        "desc": "总帧数"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "3",
+        "desc": "地图种子"
+      },
+      {
+        "name": "houseName",
+        "type": "string",
+        "default": "'温馨小屋'",
+        "desc": "小屋名称（覆盖 nodes[1].name）"
+      },
+      {
+        "name": "nodes",
+        "type": "[MapNodeSpec, MapNodeSpec]",
+        "default": "[远征营地, 温馨小屋]",
+        "desc": "[出发地, 家] 两个站点；家的 pos 即小屋在地图上的位置"
+      },
+      {
+        "name": "welcomeText",
+        "type": "string",
+        "default": "'欢迎回家'",
+        "desc": "灯亮后挂牌上的文字"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'回家的路'",
+        "desc": "标题牌大字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效"
+      }
+    ],
+    "example": "<Sequence durationInFrames={340}>\n  <MapHome houseName=\"我的家\" welcomeText=\"我回来啦\" title=\"回家\" />\n</Sequence>",
+    "source": "src/gallery/fx/map/scenes.tsx"
+  },
+  {
+    "id": "map-respawn",
+    "name": "地图旅程 · 重生回床",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapRespawn",
+    "frames": 300,
+    "overlayReady": false,
+    "blurb": "头像在骷髅标记处倒下（红叉、掉落物、血量清零），光柱把它托起，金色拖尾飞越地图落回出生点的床，血量重新填满。整屏场景。",
+    "usage": "死亡回放、重生/复活梗、回到出生点、生存挑战的“再来一次”。",
+    "props": [
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "5",
+        "desc": "地图种子"
+      },
+      {
+        "name": "death",
+        "type": "MapNodeSpec",
+        "default": "{name:'死亡地点', xz:[1180,-340], pos:[0.72,0.38], icon:'skull', color:'#e5483f'}",
+        "desc": "死亡地点节点"
+      },
+      {
+        "name": "spawn",
+        "type": "MapNodeSpec",
+        "default": "{name:'出生点', xz:[12,64], pos:[0.3,0.62], icon:'bed', sub:'重生完成 · 生命值 20 / 20'}",
+        "desc": "出生点（床）节点"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'重生'",
+        "desc": "标题牌大字"
+      },
+      {
+        "name": "deadText",
+        "type": "string",
+        "default": "'你死了!'",
+        "desc": "倒下时的红色大字"
+      },
+      {
+        "name": "scoreText",
+        "type": "string",
+        "default": "'得分: 0'",
+        "desc": "大字下方的得分行"
+      },
+      {
+        "name": "hpLabel",
+        "type": "string",
+        "default": "'生命值'",
+        "desc": "底部血量面板标签"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "300",
+        "desc": "保留参数：时长由场景自身节奏决定，约 300 帧"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效"
+      }
+    ],
+    "example": "<Sequence durationInFrames={300}>\n  <MapRespawn deadText=\"你被击败了\" scoreText=\"得分: 1280\" />\n</Sequence>",
+    "source": "src/gallery/fx/map/scenes.tsx"
+  },
+  {
+    "id": "map-pin-pop",
+    "name": "地点图钉弹出",
+    "kind": "overlay",
+    "category": "map",
+    "export": "MapPinPop",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "图钉从天而降扎进画面，十字闪光与碎片迸开，名称牌与坐标牌先后弹出，图钉之间用虚线依次连起来。默认透明，叠在任意画面上。",
+    "usage": "在素材/截图上标注地点、坐标、基地位置。图钉位置用屏幕像素坐标（1920x1080）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示用地图底板（真实视频保持 false）"
+      },
+      {
+        "name": "pins",
+        "type": "MapPinSpec[]",
+        "default": "(4 个演示图钉)",
+        "desc": "图钉列表：x,y 针尖屏幕坐标 / name 名称 / coord 坐标文字（可省）/ at 落下帧 / color 颜色"
+      },
+      {
+        "name": "connect",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否用虚线依次连接各图钉"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(135deg, #3a5a3a, #a8c88a)'}}>\n  <Sequence from={10} durationInFrames={150}>\n    <MapPinPop\n      pins={[\n        {x: 520, y: 700, name: '主基地', coord: 'X: 0   Z: 0', at: 14, color: '#e5483f'},\n        {x: 960, y: 450, name: '刷怪塔', coord: 'X: 320   Z: -140', at: 42, color: '#3fb0e8'},\n        {x: 1400, y: 720, name: '末地要塞', coord: 'X: 1800   Z: 960', at: 70, color: '#8f6bff'},\n      ]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/map/scenes.tsx"
+  },
+  {
+    "id": "map-flat-modern",
+    "name": "地图旅程 · 极简现代地图",
+    "kind": "scene",
+    "category": "map",
+    "export": "MapFlatModern",
+    "frames": 270,
+    "overlayReady": false,
+    "blurb": "非像素风的几何色块城市地图：街区、公园、河流、干道，靛蓝路线沿街道生长，头像带脉冲光前进，顶部转向卡、底部 ETA 面板，到站图钉弹起。整屏场景。",
+    "usage": "想要干净现代的导航风格、与像素风区分的路线展示，或“手机导航”式的地点说明。",
+    "props": [
+      {
+        "name": "nodes",
+        "type": "MapNodeSpec[]",
+        "default": "[白桦村, 钻石城]",
+        "desc": "站点列表：首尾两项为起终点，位置自动吸附到最近的路口（至少 name 与 pos）"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "4",
+        "desc": "城市布局随机种子"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "270",
+        "desc": "总帧数（结尾拉远）"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'步行导航'",
+        "desc": "左上角标题标签"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "default": "50",
+        "desc": "出发帧"
+      },
+      {
+        "name": "legFrames",
+        "type": "number",
+        "default": "150",
+        "desc": "行程帧数"
+      },
+      {
+        "name": "tags",
+        "type": "[string, string, string]",
+        "default": "['最快路线','无拥堵','少红绿灯']",
+        "desc": "目的地卡片下方的三个路线标签"
+      },
+      {
+        "name": "arrivedText",
+        "type": "string",
+        "default": "'已到达'",
+        "desc": "到站后底部面板文字"
+      },
+      {
+        "name": "minuteUnit",
+        "type": "string",
+        "default": "'分钟'",
+        "desc": "剩余时间单位"
+      },
+      {
+        "name": "kmUnit",
+        "type": "string",
+        "default": "'公里'",
+        "desc": "剩余距离单位"
+      },
+      {
+        "name": "navText",
+        "type": "string",
+        "default": "'导航中'",
+        "desc": "行进中状态胶囊文字"
+      },
+      {
+        "name": "doneText",
+        "type": "string",
+        "default": "'完成'",
+        "desc": "到站后状态胶囊文字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效"
+      }
+    ],
+    "example": "<Sequence durationInFrames={270}>\n  <MapFlatModern\n    nodes={[\n      {name: '工坊', xz: [-312, 148], pos: [0.24, 0.66], icon: 'house'},\n      {name: '集市广场', xz: [1204, -388], pos: [0.78, 0.3], icon: 'castle'},\n    ]}\n    title=\"步行去集市\"\n    tags={['最快路线', '不堵车', '风景好']}\n  />\n</Sequence>",
+    "source": "src/gallery/fx/map/modern.tsx"
+  },
+  {
+    "id": "soc-like",
+    "name": "点赞 · 爱心爆开",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocLike",
+    "frames": 120,
+    "overlayReady": true,
+    "blurb": "小手点下大拇指按钮，按钮压扁再弹起，像素十字闪光加碎片飞溅，爱心、星星、彩块向四周炸开，计数 +1 滚动，画面四角冒出大爱心。",
+    "usage": "视频里提醒观众点赞的那一刻；全屏透明叠加层，四边与四角有装饰，直接 Sequence 在口播/素材上方即可。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（虚化视频底板）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "default": "1284",
+        "desc": "点赞前的数字（4 位数字牌），点完显示 count+1"
+      },
+      {
+        "name": "tapAt",
+        "type": "number",
+        "default": "26",
+        "desc": "按下按钮的帧（爆发时刻），其余动作都以它为基准"
+      },
+      {
+        "name": "plusText",
+        "type": "string",
+        "default": "'+1'",
+        "desc": "按钮旁飘出的文字"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "default": "FLAT.pink ('#ff7aa8')",
+        "desc": "主色：按钮、数字、飘字与闪光"
+      },
+      {
+        "name": "accentDeep",
+        "type": "string",
+        "default": "FLAT.pinkDeep ('#e5518a')",
+        "desc": "主色的深色（按钮下沿）"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(135deg, #3b6aa0, #8fd3ff)'}}>\n  <Sequence from={15} durationInFrames={120}>\n    <SocLike count={9527} tapAt={26} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/like.tsx"
+  },
+  {
+    "id": "soc-follow",
+    "name": "关注 · 已关注彩带",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocFollow",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "资料卡弹入，小手按下“关注”按钮，果冻般变成绿色“已关注”并打勾，彩带从两个底角喷出，头像上冒出徽章，星星散开，粉丝数 +1。",
+    "usage": "提醒观众关注 UP 主、介绍嘉宾/频道时；透明叠加层，卡片居中，叠在口播画面上会盖住中间区域。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（黎明虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'方块君Steve'",
+        "desc": "昵称"
+      },
+      {
+        "name": "face",
+        "type": "'steve' | 'alex' | 'creeper' | 'pig' | 'slime' | 'sunny' | 'zuri' | 'kai'",
+        "default": "'steve'",
+        "desc": "头像"
+      },
+      {
+        "name": "fans",
+        "type": "number",
+        "default": "1024",
+        "desc": "关注前的粉丝数（4 位数字牌），点完 +1"
+      },
+      {
+        "name": "tapAt",
+        "type": "number",
+        "default": "58",
+        "desc": "按下按钮的帧"
+      },
+      {
+        "name": "followText",
+        "type": "string",
+        "default": "'关注'",
+        "desc": "未关注时的按钮文字"
+      },
+      {
+        "name": "doneText",
+        "type": "string",
+        "default": "'已关注'",
+        "desc": "关注后的按钮文字"
+      },
+      {
+        "name": "fansLabel",
+        "type": "string",
+        "default": "'粉丝'",
+        "desc": "粉丝数前的文字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(135deg, #7a4a2a, #e8b86a)'}}>\n  <Sequence from={15} durationInFrames={150}>\n    <SocFollow name=\"红石小能手\" face=\"alex\" fans={9999} tapAt={58} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/follow.tsx"
+  },
+  {
+    "id": "soc-coin",
+    "name": "投币 · 连投入箱",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocCoin",
+    "frames": 135,
+    "overlayReady": true,
+    "blurb": "绿宝石和金币从画面四边抛着弧线飞来，带残影砸进大硬币按钮，每次落下按钮下沉果冻、边缘闪一下像素星光、计数 +1，最后一枚触发扫光、金币雨与环绕小金币。",
+    "usage": "提醒投币、打赏、感谢支持的时候；透明叠加层，按钮居中。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（黄昏虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "default": "128",
+        "desc": "投币前的硬币数（3 位数字牌），每落一枚 +1"
+      },
+      {
+        "name": "throws",
+        "type": "{id: 'emerald' | 'coin' | 'diamond'; from: [number, number]; land: number; h: number}[]",
+        "default": "内置 4 次抛掷（落点帧 24/42/58/72）",
+        "desc": "抛物线日程：id 飞的是什么，from 起点像素（画面外），land 落点帧，h 抛高；最后一个的落点帧触发收尾"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "'硬币'",
+        "desc": "计数牌上的文字"
+      },
+      {
+        "name": "plusText",
+        "type": "string",
+        "default": "'+1'",
+        "desc": "每枚落下时弹出的文字"
+      },
+      {
+        "name": "doneText",
+        "type": "string",
+        "default": "'投币成功'",
+        "desc": "最后一枚落下后的大字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(160deg, #141028, #3b2a7a)'}}>\n  <Sequence from={15} durationInFrames={135}>\n    <SocCoin count={64} label=\"硬币\" doneText=\"投币成功\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/coin.tsx"
+  },
+  {
+    "id": "soc-favorite",
+    "name": "收藏 · 附魔书入箱",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocFavorite",
+    "frames": 135,
+    "overlayReady": true,
+    "blurb": "附魔书、星星、钻石、经验瓶从四边飞进一只张着盖子的收藏箱，每接住一个就闪一下星光；盖子猛地合上，前面的星星亮成金色，闪光四溅，弹出“已收藏”。",
+    "usage": "提醒收藏、稍后再看、存档合集时；透明叠加层，收藏箱居中偏下。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（Ore 紫色虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "default": "2048",
+        "desc": "收藏数（4 位数字牌），合上盖子后 +1"
+      },
+      {
+        "name": "closeAt",
+        "type": "number",
+        "default": "86",
+        "desc": "盖子合上的帧"
+      },
+      {
+        "name": "gifts",
+        "type": "{kind: 'book' | 'star' | 'diamond' | 'xp'; from: [number, number]; land: number; h: number}[]",
+        "default": "内置 4 件（落点帧 30/46/60/72）",
+        "desc": "飞进箱子的物品日程：kind 种类，from 起点像素，land 落点帧，h 抛高"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "'收藏'",
+        "desc": "收藏数前的文字"
+      },
+      {
+        "name": "tagText",
+        "type": "string",
+        "default": "'已收藏'",
+        "desc": "合上后弹出的标签文字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(135deg, #1f4d3a, #6cc08a)'}}>\n  <Sequence from={15} durationInFrames={135}>\n    <SocFavorite count={512} closeAt={86} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/favorite.tsx"
+  },
+  {
+    "id": "soc-triple",
+    "name": "一键三连 · 终极爆发",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocTriple",
+    "frames": 240,
+    "overlayReady": true,
+    "blurb": "小手长按点赞，蓄力框涌满，点赞→投币→收藏三枚图标依次亮起，盘旋聚成能量球，随即全屏爆发：爆炸帧、旋转光芒、彩虹彩带写着“三连成功!”，四角喷彩带，爱心金币附魔书满屏飞。",
+    "usage": "视频结尾或关键节点的“一键三连”召唤；全屏高密度效果，建议放在片尾，会盖住大部分画面。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（夜空虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "fireAt",
+        "type": "number",
+        "default": "62",
+        "desc": "第一个图标点亮的帧（之后每 8 帧点亮下一个）"
+      },
+      {
+        "name": "boomAt",
+        "type": "number",
+        "default": "118",
+        "desc": "全屏爆发的帧（能量球在其前 20 帧开始聚拢）"
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "default": "'长按点赞 = 一键三连'",
+        "desc": "长按阶段顶部的提示文字"
+      },
+      {
+        "name": "labels",
+        "type": "[string, string, string]",
+        "default": "['点赞', '投币', '收藏']",
+        "desc": "三个图标下方的文字"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'三连成功!'",
+        "desc": "爆发后的大字贴纸"
+      },
+      {
+        "name": "thanks",
+        "type": "string",
+        "default": "'感谢支持，下期见！'",
+        "desc": "大字下方的感谢语"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(160deg, #141028, #3b2a7a)'}}>\n  <Sequence from={15} durationInFrames={240}>\n    <SocTriple fireAt={62} boomAt={118} title=\"三连成功!\" thanks=\"感谢支持，下期见！\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/triple.tsx"
+  },
+  {
+    "id": "soc-bell",
+    "name": "订阅铃铛 · 已开启小铃铛",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocBell",
+    "frames": 120,
+    "overlayReady": true,
+    "blurb": "MC 铃铛挂在木梁下被敲响，阻尼摆动，左右打出三道像素声波短条，音符和星星飞出，红色角标弹出，底部滑上 Ore 风提示条，四角小铃铛跟着摇。",
+    "usage": "提示观众点小铃铛 / 开启动态通知；透明叠加层，提示条在画面下方，铃铛居中。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（黄昏虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "kickAt",
+        "type": "number",
+        "default": "24",
+        "desc": "第一下敲响的帧"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'已开启小铃铛'",
+        "desc": "提示条标题"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'UP主一更新，第一时间通知你'",
+        "desc": "提示条副标题"
+      },
+      {
+        "name": "badgeText",
+        "type": "string",
+        "default": "'1'",
+        "desc": "红色角标上的文字"
+      },
+      {
+        "name": "secondKickAfter",
+        "type": "number",
+        "default": "62",
+        "desc": "第二下敲响距第一下的帧数"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(135deg, #7a4a2a, #e8b86a)'}}>\n  <Sequence from={15} durationInFrames={120}>\n    <SocBell kickAt={24} title=\"已开启小铃铛\" sub=\"UP主一更新，第一时间通知你\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/bell.tsx"
+  },
+  {
+    "id": "soc-danmaku",
+    "name": "弹幕评论 · 气泡堆叠",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocDanmaku",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "一条条带头像和昵称的彩色评论气泡从右边飞来，过冲弹跳，落地果冻挤压，往上堆叠、挤走旧的；顶部三条弹幕车道横穿画面，右侧评论数滚动，气泡与爱心从底部飘起。",
+    "usage": "“看看大家怎么说”、评论区互动、反馈精选、热评展示；透明叠加层，气泡集中在左下、计数牌在右侧。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（日间虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "comments",
+        "type": "{nick: string; text: string; face: 'steve' | 'alex' | 'creeper' | 'pig' | 'slime' | 'sunny' | 'zuri' | 'kai'; color: string; deep: string}[]",
+        "default": "内置 8 条评论",
+        "desc": "评论气泡列表：nick 昵称，text 内容，face 头像，color / deep 气泡填充与阴影色"
+      },
+      {
+        "name": "gap",
+        "type": "number",
+        "default": "17",
+        "desc": "相邻气泡出现的间隔帧数"
+      },
+      {
+        "name": "laneTexts",
+        "type": "string[]",
+        "default": "内置 15 条（哈哈哈哈哈、666666 等）",
+        "desc": "顶部三条滚动弹幕的文字库（固定种子随机抽取）"
+      },
+      {
+        "name": "hotIndex",
+        "type": "number",
+        "default": "2",
+        "desc": "打红色热评标的气泡序号，-1 表示都不打"
+      },
+      {
+        "name": "hotText",
+        "type": "string",
+        "default": "'热评'",
+        "desc": "红标上的文字"
+      },
+      {
+        "name": "baseCount",
+        "type": "number",
+        "default": "1288",
+        "desc": "评论计数的起始值，每个气泡落地 +1"
+      },
+      {
+        "name": "header",
+        "type": "string",
+        "default": "'评论'",
+        "desc": "计数牌上的标题"
+      },
+      {
+        "name": "badgeText",
+        "type": "string",
+        "default": "'弹幕护体'",
+        "desc": "计数牌下方粉色小标签的文字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(135deg, #1f4d3a, #6cc08a)'}}>\n  <Sequence from={15} durationInFrames={180}>\n    <SocDanmaku gap={17} hotIndex={2} header=\"评论\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/danmaku.tsx"
+  },
+  {
+    "id": "soc-share",
+    "name": "分享 · 纸飞机彩虹尾",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocShare",
+    "frames": 135,
+    "overlayReady": true,
+    "blurb": "点下紫色分享按钮，像素纸飞机弹出并划过大弧线，彩虹拖尾从机尾连续发出，俯冲落进底部一排社交图标；图标跳起打勾、爆出纸片与爱心，弹出“分享成功”，云朵与吉祥物围在画面边缘。",
+    "usage": "提醒观众转发/分享给朋友，或介绍“分享”入口；透明叠加层，按钮在左、图标架在右下。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（日间虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "target",
+        "type": "number",
+        "default": "2",
+        "desc": "纸飞机落在第几个图标（0 到 4）"
+      },
+      {
+        "name": "launchAt",
+        "type": "number",
+        "default": "32",
+        "desc": "纸飞机离开按钮的帧"
+      },
+      {
+        "name": "flight",
+        "type": "number",
+        "default": "54",
+        "desc": "飞行帧数（落地帧 = launchAt + flight）"
+      },
+      {
+        "name": "labels",
+        "type": "string[]",
+        "default": "['聊天', '动态', '空间', '链接', '更多']",
+        "desc": "五个图标下方的文字"
+      },
+      {
+        "name": "buttonText",
+        "type": "string",
+        "default": "'分享'",
+        "desc": "紫色圆按钮下方的文字"
+      },
+      {
+        "name": "forwardLabel",
+        "type": "string",
+        "default": "'转发'",
+        "desc": "转发计数前的文字"
+      },
+      {
+        "name": "forwardCount",
+        "type": "number",
+        "default": "256",
+        "desc": "转发计数起始值（3 位），落地后 +1"
+      },
+      {
+        "name": "successText",
+        "type": "string",
+        "default": "'分享成功'",
+        "desc": "落地后弹出的大字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(135deg, #3b6aa0, #8fd3ff)'}}>\n  <Sequence from={15} durationInFrames={135}>\n    <SocShare target={2} launchAt={32} flight={54} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/share.tsx"
+  },
+  {
+    "id": "soc-follow-corner",
+    "name": "常驻关注角标 · 循环",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocFollowCorner",
+    "frames": 120,
+    "overlayReady": true,
+    "blurb": "画面角落滑出一张“关注”小卡片，轻轻呼吸、按钮角上闪几下像素星光，小手点一下按钮（果冻 + 爱心星星 + 扫光），再滑回角落；120 帧首尾相接可无缝循环。",
+    "usage": "整条视频里反复出现的关注提示，用 <Loop durationInFrames={120}> 铺满时间线即可；只占一个角落，对素材干扰最小。内部节拍固定（点按在第 62 帧）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（黄昏虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "corner",
+        "type": "'bl' | 'br' | 'tl' | 'tr'",
+        "default": "'bl'",
+        "desc": "所在角落：左下 / 右下 / 左上 / 右上"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'红石小能手'",
+        "desc": "昵称"
+      },
+      {
+        "name": "fans",
+        "type": "string",
+        "default": "'12.8万 粉丝'",
+        "desc": "粉丝文案（整串文字，不滚动）"
+      },
+      {
+        "name": "face",
+        "type": "'steve' | 'alex' | 'creeper' | 'pig' | 'slime' | 'sunny' | 'zuri' | 'kai'",
+        "default": "'alex'",
+        "desc": "头像"
+      },
+      {
+        "name": "scale",
+        "type": "number",
+        "default": "1",
+        "desc": "卡片缩放（卡片原尺寸 720 x 200）"
+      },
+      {
+        "name": "margin",
+        "type": "number",
+        "default": "56",
+        "desc": "距画面边缘的像素"
+      },
+      {
+        "name": "buttonText",
+        "type": "string",
+        "default": "'关注'",
+        "desc": "按钮文字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(160deg, #141028, #3b2a7a)'}}>\n  <Sequence from={15} durationInFrames={240}>\n    <Loop durationInFrames={120}>\n      <SocFollowCorner corner=\"br\" scale={1.25} name=\"红石小能手\" fans=\"12.8万 粉丝\" face=\"alex\" />\n    </Loop>\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/corner.tsx"
+  },
+  {
+    "id": "soc-milestone",
+    "name": "粉丝里程碑 · 破万烟花",
+    "kind": "overlay",
+    "category": "social",
+    "export": "SocMilestone",
+    "frames": 210,
+    "overlayReady": true,
+    "blurb": "紫色计数牌里数字飞快滚动，越接近目标越慢，到目标猛地定住并爆出光芒与像素十字闪光；火箭从底部升起，在画面四周接连炸开烟花，彩带从两个底角喷出，横幅和“感谢大家!”贴纸弹出。",
+    "usage": "粉丝/订阅数破万、破十万等里程碑的庆祝与感谢；全屏高密度，建议放在片头片尾或专门的庆祝镜头。横幅文字需与 target 自行匹配。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制演示背景（夜空虚化底）；真实视频保持 false（透明叠加）"
+      },
+      {
+        "name": "target",
+        "type": "number",
+        "default": "10000",
+        "desc": "目标数字（滚动终点；定住帧固定为第 112 帧）"
+      },
+      {
+        "name": "digits",
+        "type": "number",
+        "default": "5",
+        "desc": "数字牌位数，需不小于 target 的位数"
+      },
+      {
+        "name": "fireworks",
+        "type": "{x: number; y: number; at: number; colors: string[]; n?: number}[]",
+        "default": "内置 19 发（炸开帧 80 到 198）",
+        "desc": "烟花日程：x/y 炸开中心像素，at 炸开帧（火箭提前 15 帧升起），colors 颜色，n 粒子数"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "'粉丝'",
+        "desc": "数字下方的文字"
+      },
+      {
+        "name": "banner",
+        "type": "string",
+        "default": "'万粉达成！'",
+        "desc": "红色横幅文字"
+      },
+      {
+        "name": "thanks",
+        "type": "string",
+        "default": "'感谢大家!'",
+        "desc": "底部大字贴纸文字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否播放音效，关掉则完全不渲染 Sfx"
+      }
+    ],
+    "example": "<AbsoluteFill style={{background: 'linear-gradient(160deg, #141028, #3b2a7a)'}}>\n  <Sequence from={15} durationInFrames={210}>\n    <SocMilestone target={10000} label=\"粉丝\" banner=\"万粉达成！\" thanks=\"感谢大家!\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/social/milestone.tsx"
+  },
+  {
+    "id": "item-craft-table",
+    "name": "合成台",
+    "kind": "scene",
+    "category": "item",
+    "export": "ItemCraft",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "3×3 合成界面:材料从两侧飞入落进格子(落地闪白+碎屑),箭头走满,材料汇聚后成品放大砸出,带射线、冲击十字、粒子和 rare 提示框。默认透明,只保留面板/格子/物品/特效,可叠在任意素材上;传 bg 得到完整木工坊场景(木板墙、工具墙、方块架、材料堆)。",
+    "usage": "讲合成配方、展示新物品的获得。换 ingredients/result/tooltip/accent 就能演示任意配方;不需要标题块时 showHead={false}。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制木工坊背景(木板墙、地板、灯光、工具墙、方块架、材料堆、暗角、飘尘);false 时只剩面板/格子/物品/特效(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'合成台'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'钻石镐 · 3×3 配方'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'CRAFT'"
+      },
+      {
+        "name": "headIcon",
+        "type": "string",
+        "desc": "标题块图标物品 id",
+        "default": "'crafting_table'"
+      },
+      {
+        "name": "panelTitle",
+        "type": "string",
+        "desc": "面板顶部分节标题",
+        "default": "'合成 · 钻石镐'"
+      },
+      {
+        "name": "result",
+        "type": "string",
+        "desc": "成品物品 id",
+        "default": "'diamond_pickaxe'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "成品强调色(光晕、冲击、粒子), #rrggbb",
+        "default": "'#55ffff'"
+      },
+      {
+        "name": "ingredients",
+        "type": "ItemCraftIngredient[]",
+        "desc": "材料列表(位置、飞入时间、起点);下方材料清单由它自动统计",
+        "default": "内置钻石镐配方(3 钻石 + 2 木棍)"
+      },
+      {
+        "name": "tooltip",
+        "type": "{text: string; color?: string}[]",
+        "desc": "成品提示框行(rare 样式)",
+        "default": "内置钻石镐提示框(3 行)"
+      },
+      {
+        "name": "recipeChip",
+        "type": "string",
+        "desc": "配方类型标签(左)",
+        "default": "'有序配方'"
+      },
+      {
+        "name": "countChip",
+        "type": "string",
+        "desc": "材料数量标签(完成前),默认按材料数生成「材料 N 件」"
+      },
+      {
+        "name": "doneChip",
+        "type": "string",
+        "desc": "完成后的稀有度标签",
+        "default": "'稀有 · 钻石'"
+      },
+      {
+        "name": "labelIdle",
+        "type": "string",
+        "desc": "箭头上方状态:未开始",
+        "default": "'摆放材料'"
+      },
+      {
+        "name": "labelWorking",
+        "type": "string",
+        "desc": "箭头上方状态:合成中",
+        "default": "'合成中…'"
+      },
+      {
+        "name": "labelDone",
+        "type": "string",
+        "desc": "箭头上方状态:完成",
+        "default": "'完成'"
+      },
+      {
+        "name": "fillAt",
+        "type": "number",
+        "desc": "箭头开始填充的本地帧",
+        "default": "58"
+      },
+      {
+        "name": "gatherAt",
+        "type": "number",
+        "desc": "材料汇聚进成品格的本地帧",
+        "default": "90"
+      },
+      {
+        "name": "slamAt",
+        "type": "number",
+        "desc": "成品砸出(爆发)的本地帧",
+        "default": "100"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={150}>\n    <ItemCraft\n      result=\"iron_pickaxe\"\n      accent=\"#d4d6da\"\n      subtitle=\"铁镐 · 3×3 配方\"\n      panelTitle=\"合成 · 铁镐\"\n      doneChip=\"普通 · 铁镐\"\n      tooltip={[{text: '铁镐', color: '#ffffff'}, {text: '效率 · 挖掘等级 2', color: '#a8a8a8'}]}\n      ingredients={[\n        {id: 'iron_ingot', c: 0, r: 0, at: 14, from: [1700, 940]},\n        {id: 'iron_ingot', c: 1, r: 0, at: 20, from: [1640, 960]},\n        {id: 'iron_ingot', c: 2, r: 0, at: 26, from: [1760, 930]},\n        {id: 'stick', c: 1, r: 1, at: 34, from: [250, 950]},\n        {id: 'stick', c: 1, r: 2, at: 40, from: [190, 970]},\n      ]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/craft.tsx"
+  },
+  {
+    "id": "item-furnace",
+    "name": "熔炉烧炼",
+    "kind": "scene",
+    "category": "item",
+    "export": "ItemFurnace",
+    "frames": 160,
+    "overlayReady": true,
+    "blurb": "熔炉界面:原料与燃料落入,火焰点燃,进度箭头走满,产物带火星和经验球弹出,鼠标把它拖进快捷栏(数量 +1,飘字)。默认透明,只保留面板/物品/特效/快捷栏;传 bg 得到完整炉房(石砖墙、两侧炉子、炉火辉光)。",
+    "usage": "讲烧炼/冶炼流程、自动化前的手动步骤。换 input/fuel/output/recipes/hotbar 即可演示别的烧炼。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制炉房背景(石砖墙、炉火辉光、两侧炉子与材料堆、飘尘、暗角);false 时只剩面板/物品/特效/快捷栏(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'熔炉'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'铁矿 → 铁锭 · 烧炼'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'SMELT'"
+      },
+      {
+        "name": "headIcon",
+        "type": "string",
+        "desc": "标题块图标物品 id",
+        "default": "'furnace'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "强调色(标题点缀),#rrggbb",
+        "default": "'#ff9a3c'"
+      },
+      {
+        "name": "panelTitle",
+        "type": "string",
+        "desc": "面板顶部分节标题",
+        "default": "'熔炉 · 烧炼铁锭'"
+      },
+      {
+        "name": "input",
+        "type": "string",
+        "desc": "待烧炼物品 id",
+        "default": "'raw_iron'"
+      },
+      {
+        "name": "fuel",
+        "type": "string",
+        "desc": "燃料物品 id",
+        "default": "'coal'"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "desc": "产物物品 id",
+        "default": "'iron_ingot'"
+      },
+      {
+        "name": "inputCount",
+        "type": "number",
+        "desc": "放入的待烧炼物品数量(完成后少 1)",
+        "default": "3"
+      },
+      {
+        "name": "fuelCount",
+        "type": "number",
+        "desc": "放入的燃料数量(点火后少 1)",
+        "default": "5"
+      },
+      {
+        "name": "hotbar",
+        "type": "{id?: string; count?: number}[]",
+        "desc": "快捷栏 9 格内容(产物落入 targetSlot,数量 +1)",
+        "default": "内置 9 格快捷栏(第 5 格为铁锭 ×3)"
+      },
+      {
+        "name": "targetSlot",
+        "type": "number",
+        "desc": "产物落入的快捷栏格序号(0-8)",
+        "default": "4"
+      },
+      {
+        "name": "pickupText",
+        "type": "string",
+        "desc": "产物落入时飘出的文字",
+        "default": "'+1 铁锭'"
+      },
+      {
+        "name": "listTitle",
+        "type": "string",
+        "desc": "右侧「可烧炼」列表标题",
+        "default": "'可烧炼'"
+      },
+      {
+        "name": "recipes",
+        "type": "[string, string][]",
+        "desc": "右侧列表 [原料 id, 产物 id],第一行为当前配方",
+        "default": "内置 5 条(铁/金/铜/猪排/鳕鱼)"
+      },
+      {
+        "name": "xpChip",
+        "type": "string",
+        "desc": "经验标签(烧炼前)",
+        "default": "'经验 0.7'"
+      },
+      {
+        "name": "xpDoneChip",
+        "type": "string",
+        "desc": "经验标签(烧炼完成后)",
+        "default": "'经验 +0.7'"
+      },
+      {
+        "name": "timeChip",
+        "type": "string",
+        "desc": "烧炼时间标签",
+        "default": "'烧炼 200 刻'"
+      },
+      {
+        "name": "labelIdle",
+        "type": "string",
+        "desc": "箭头上方状态:等待放入",
+        "default": "'等待放入'"
+      },
+      {
+        "name": "labelWorking",
+        "type": "string",
+        "desc": "箭头上方状态:烧炼中",
+        "default": "'烧炼中…'"
+      },
+      {
+        "name": "labelDone",
+        "type": "string",
+        "desc": "箭头上方状态:完成",
+        "default": "'完成'"
+      },
+      {
+        "name": "oreAt",
+        "type": "number",
+        "desc": "待烧炼物品飞入的本地帧",
+        "default": "14"
+      },
+      {
+        "name": "coalAt",
+        "type": "number",
+        "desc": "燃料飞入的本地帧",
+        "default": "24"
+      },
+      {
+        "name": "flameAt",
+        "type": "number",
+        "desc": "火焰点燃的本地帧",
+        "default": "42"
+      },
+      {
+        "name": "fillAt",
+        "type": "number",
+        "desc": "进度箭头开始填充的本地帧",
+        "default": "50"
+      },
+      {
+        "name": "fillDur",
+        "type": "number",
+        "desc": "进度箭头走满所需帧数(产物在 fillAt+fillDur 弹出)",
+        "default": "52"
+      },
+      {
+        "name": "clickAt",
+        "type": "number",
+        "desc": "鼠标点起产物的本地帧",
+        "default": "122"
+      },
+      {
+        "name": "dropAt",
+        "type": "number",
+        "desc": "产物放进快捷栏的本地帧",
+        "default": "138"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={160}>\n    <ItemFurnace\n      input=\"raw_gold\"\n      output=\"gold_ingot\"\n      subtitle=\"金矿 → 金锭 · 烧炼\"\n      panelTitle=\"熔炉 · 烧炼金锭\"\n      pickupText=\"+1 金锭\"\n      hotbar={[{id: 'iron_pickaxe'}, {id: 'iron_sword'}, {id: 'torch', count: 26}, {id: 'bread', count: 12}, {id: 'gold_ingot', count: 3}, {id: 'coal', count: 41}, {id: 'cooked_beef', count: 8}, {id: 'water_bucket'}, {id: 'oak_planks', count: 64}]}\n      recipes={[['raw_gold', 'gold_ingot'], ['raw_iron', 'iron_ingot'], ['raw_copper', 'copper_ingot']]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/furnace.tsx"
+  },
+  {
+    "id": "item-smithing",
+    "name": "锻造台升级",
+    "kind": "scene",
+    "category": "item",
+    "export": "ItemSmithing",
+    "frames": 190,
+    "overlayReady": true,
+    "blurb": "锻造台界面:模板、装备、材料依次落入,铁锤三次敲击铁砧(火花、闪光、震屏、箭头分三段),三者汇聚后成品旋转砸出,属性条增长并弹出提示框。默认透明,只保留面板/铁砧/铁锤/特效;传 bg 得到完整锻造房(熔岩槽、炉子、工具架)。",
+    "usage": "讲装备升级、下界合金升级、强化。可改 inputs/result/tooltip/hits 演示别的升级。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制锻造房背景(深板岩墙、炉火与熔岩槽、工具架、材料堆、飘火、暗角);false 时只剩面板/铁砧/锤子/特效(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'锻造台'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'钻石剑 → 下界合金剑'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'SMITH'"
+      },
+      {
+        "name": "headIcon",
+        "type": "string",
+        "desc": "标题块图标物品 id",
+        "default": "'smithing_table'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "标题点缀色,#rrggbb",
+        "default": "'#ff9a3c'"
+      },
+      {
+        "name": "panelTitle",
+        "type": "string",
+        "desc": "面板顶部分节标题",
+        "default": "'锻造台 · 下界合金升级'"
+      },
+      {
+        "name": "inputs",
+        "type": "[ItemSmithingInput, ItemSmithingInput, ItemSmithingInput]",
+        "desc": "三个输入格:[模板, 基础装备, 材料],含物品 id、飞入起点与时间;第三项同时是铁砧上被锤击的毛坯",
+        "default": "内置:升级模板 + 钻石剑 + 下界合金锭"
+      },
+      {
+        "name": "slotLabels",
+        "type": "[string, string, string]",
+        "desc": "三个输入格下方的小标签",
+        "default": "['模板', '基础', '材料']"
+      },
+      {
+        "name": "result",
+        "type": "string",
+        "desc": "成品物品 id",
+        "default": "'netherite_sword'"
+      },
+      {
+        "name": "tooltip",
+        "type": "{text: string; color?: string}[]",
+        "desc": "成品提示框行(rare 样式)",
+        "default": "内置下界合金剑提示框(3 行)"
+      },
+      {
+        "name": "hits",
+        "type": "[number, number, number]",
+        "desc": "三次锤击的本地帧",
+        "default": "[58, 74, 90]"
+      },
+      {
+        "name": "mergeAt",
+        "type": "number",
+        "desc": "三个输入汇聚进成品格的本地帧",
+        "default": "106"
+      },
+      {
+        "name": "slamAt",
+        "type": "number",
+        "desc": "成品砸出(爆发)的本地帧",
+        "default": "118"
+      },
+      {
+        "name": "hitLabel",
+        "type": "string",
+        "desc": "锤击计数小标签前缀(「锤击 1」「锤击 2」…)",
+        "default": "'锤击'"
+      },
+      {
+        "name": "forgeLabel",
+        "type": "string",
+        "desc": "箭头上方状态前缀(「锻造 1/3」)",
+        "default": "'锻造'"
+      },
+      {
+        "name": "labelIdle",
+        "type": "string",
+        "desc": "箭头上方状态:未开始",
+        "default": "'准备中'"
+      },
+      {
+        "name": "labelDone",
+        "type": "string",
+        "desc": "箭头上方状态:完成",
+        "default": "'完成'"
+      },
+      {
+        "name": "hint",
+        "type": "string",
+        "desc": "配方说明小字",
+        "default": "'钻石剑 + 下界合金锭 + 升级模板'"
+      },
+      {
+        "name": "statsTitle",
+        "type": "string",
+        "desc": "右侧属性栏标题",
+        "default": "'属性'"
+      },
+      {
+        "name": "atkLabel",
+        "type": "string",
+        "desc": "第一条属性名",
+        "default": "'攻击伤害'"
+      },
+      {
+        "name": "durLabel",
+        "type": "string",
+        "desc": "第二条属性名",
+        "default": "'耐久'"
+      },
+      {
+        "name": "atkFrom",
+        "type": "number",
+        "desc": "第一条属性:升级前数值",
+        "default": "7"
+      },
+      {
+        "name": "atkTo",
+        "type": "number",
+        "desc": "第一条属性:升级后数值",
+        "default": "8"
+      },
+      {
+        "name": "durFrom",
+        "type": "number",
+        "desc": "第二条属性:升级前数值",
+        "default": "1561"
+      },
+      {
+        "name": "durTo",
+        "type": "number",
+        "desc": "第二条属性:升级后数值",
+        "default": "2031"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={190}>\n    <ItemSmithing showHead={false} hits={[58, 74, 90]} hint=\"钻石剑 + 下界合金锭 + 升级模板\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/smithing.tsx"
+  },
+  {
+    "id": "item-enchanting",
+    "name": "附魔台",
+    "kind": "scene",
+    "category": "item",
+    "export": "ItemEnchant",
+    "frames": 200,
+    "overlayReady": true,
+    "blurb": "附魔台界面:物品与青金石放入,三个附魔选项依次悬停(符文翻成文字并弹提示),点选第三项后符文旋入物品、青金石飞入、紫光炸开,经验等级扣除。默认透明,只保留面板/选项/特效/经验条;传 bg 得到书架魔法厅(符文带、漂浮符文、悬浮附魔书)。",
+    "usage": "讲附魔、神秘物品获得。options 控制三项附魔的文字/消耗/等级,selected 选中哪一项。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制魔法厅背景(书架墙、紫光、符文带、漂浮符文、悬浮附魔书、飘尘、暗角);false 时只剩面板/物品/特效/经验条(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'附魔台'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'符文低语 · 为钻石剑附魔'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'ENCHANT'"
+      },
+      {
+        "name": "headIcon",
+        "type": "string",
+        "desc": "标题块图标物品 id",
+        "default": "'enchanting_table'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "标题点缀色,#rrggbb",
+        "default": "'#b57cff'"
+      },
+      {
+        "name": "panelTitle",
+        "type": "string",
+        "desc": "面板顶部分节标题",
+        "default": "'附魔台 · 钻石剑'"
+      },
+      {
+        "name": "item",
+        "type": "string",
+        "desc": "被附魔的物品 id",
+        "default": "'diamond_sword'"
+      },
+      {
+        "name": "lapis",
+        "type": "string",
+        "desc": "消耗品物品 id(青金石)",
+        "default": "'lapis_lazuli'"
+      },
+      {
+        "name": "itemLabel",
+        "type": "string",
+        "desc": "物品格上方小标签",
+        "default": "'物品'"
+      },
+      {
+        "name": "lapisLabel",
+        "type": "string",
+        "desc": "消耗品格下方小标签",
+        "default": "'青金石'"
+      },
+      {
+        "name": "lapisCount",
+        "type": "number",
+        "desc": "放入的消耗品数量",
+        "default": "3"
+      },
+      {
+        "name": "options",
+        "type": "ItemEnchantOption[]",
+        "desc": "三个附魔选项(文字、青金石数、等级、符文种子、提示)",
+        "default": "内置三项:耐久 3 / 锋利 4 / 火焰附加 2"
+      },
+      {
+        "name": "selected",
+        "type": "number",
+        "desc": "最终被选中的选项序号(0-2)",
+        "default": "2"
+      },
+      {
+        "name": "hover",
+        "type": "[number, number][]",
+        "desc": "三个选项各自的悬停起止帧 [起, 止]",
+        "default": "[[62, 78], [86, 102], [110, 200]]"
+      },
+      {
+        "name": "costLine",
+        "type": "string",
+        "desc": "悬停提示框第二行模板,{cost} {level} 会被替换",
+        "default": "'{cost} 青金石  ·  需要 {level} 级经验'"
+      },
+      {
+        "name": "resultTooltip",
+        "type": "{text: string; color?: string}[]",
+        "desc": "附魔完成后的成品提示框行(rare 样式)",
+        "default": "内置钻石剑提示框(3 行)"
+      },
+      {
+        "name": "shelfChip",
+        "type": "string",
+        "desc": "左下角书架标签",
+        "default": "'书架 15/15'"
+      },
+      {
+        "name": "powerChip",
+        "type": "string",
+        "desc": "左下角附魔力标签(附魔前)",
+        "default": "'附魔力 30'"
+      },
+      {
+        "name": "doneChip",
+        "type": "string",
+        "desc": "左下角附魔力标签(附魔后)",
+        "default": "'已附魔'"
+      },
+      {
+        "name": "successText",
+        "type": "string",
+        "desc": "附魔成功飘字",
+        "default": "'附魔成功'"
+      },
+      {
+        "name": "levelText",
+        "type": "string",
+        "desc": "扣除等级飘字",
+        "default": "'-3 级'"
+      },
+      {
+        "name": "levelBefore",
+        "type": "number",
+        "desc": "附魔前玩家等级",
+        "default": "34"
+      },
+      {
+        "name": "levelAfter",
+        "type": "number",
+        "desc": "附魔后玩家等级",
+        "default": "31"
+      },
+      {
+        "name": "itemAt",
+        "type": "number",
+        "desc": "物品飞入的本地帧",
+        "default": "14"
+      },
+      {
+        "name": "lapisAt",
+        "type": "number",
+        "desc": "消耗品飞入的本地帧",
+        "default": "24"
+      },
+      {
+        "name": "selectAt",
+        "type": "number",
+        "desc": "点选选项的本地帧",
+        "default": "128"
+      },
+      {
+        "name": "bangAt",
+        "type": "number",
+        "desc": "附魔完成(爆发)的本地帧",
+        "default": "150"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={200}>\n    <ItemEnchant\n      item=\"diamond_pickaxe\"\n      subtitle=\"符文低语 · 为钻石镐附魔\"\n      panelTitle=\"附魔台 · 钻石镐\"\n      options={[\n        {text: '效率 2', cost: 1, level: 8, seed: 3, tip: '效率 II…?'},\n        {text: '耐久 3', cost: 2, level: 17, seed: 11, tip: '耐久 III…?'},\n        {text: '时运 3', cost: 3, level: 30, seed: 23, tip: '时运 III…?'},\n      ]}\n      resultTooltip={[{text: '钻石镐', color: '#55ffff'}, {text: '时运 III', color: '#b57cff'}, {text: '效率 · 挖掘等级 4', color: '#a8a8a8'}]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/enchant.tsx"
+  },
+  {
+    "id": "item-brewing",
+    "name": "酿造台",
+    "kind": "scene",
+    "category": "item",
+    "export": "ItemBrew",
+    "frames": 240,
+    "overlayReady": true,
+    "blurb": "酿造台界面:三个水瓶、烈焰粉、第一种材料依次放入,蒸汽气泡升起,药水由蓝变紫(第一轮),加入第二种材料再变色(第二轮),三瓶举起合一放大发光并弹出提示框。默认透明,只保留面板/药水/特效;传 bg 得到完整酿造地窖(药瓶架、灵魂灯笼、炼药锅、蒸汽)。",
+    "usage": "讲药水配方、炼药流程。stages 决定两轮的材料/名称/颜色,tooltip 决定成品提示框。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制酿造地窖背景(苔石墙、彩色辉光、药瓶架、灵魂灯笼、炼药锅、材料堆、蒸汽、飘尘、暗角);false 时只剩面板/药水/特效(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'酿造台'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'水瓶 → 粗制 → 再生药水'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'BREW'"
+      },
+      {
+        "name": "headIcon",
+        "type": "string",
+        "desc": "标题块图标物品 id",
+        "default": "'brewing_stand'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "标题点缀色,#rrggbb",
+        "default": "'#4cff7a'"
+      },
+      {
+        "name": "panelTitle",
+        "type": "string",
+        "desc": "面板顶部分节标题",
+        "default": "'酿造台 · 再生药水'"
+      },
+      {
+        "name": "fuel",
+        "type": "string",
+        "desc": "燃料物品 id",
+        "default": "'blaze_powder'"
+      },
+      {
+        "name": "waterColor",
+        "type": "string",
+        "desc": "起始水瓶液体颜色,#rrggbb",
+        "default": "'#4a86e8'"
+      },
+      {
+        "name": "stages",
+        "type": "[ItemBrewStage, ItemBrewStage]",
+        "desc": "两轮酿造:材料、阶段名称、液体颜色(最后一轮的颜色即成品颜色)",
+        "default": "内置:地狱疣 → 粗制药水(#9a6fdc),恶魂之泪 → 再生药水(#ff5fa8)"
+      },
+      {
+        "name": "baseName",
+        "type": "string",
+        "desc": "起始状态标签(第一轮之前)",
+        "default": "'水瓶'"
+      },
+      {
+        "name": "brewingText",
+        "type": "string",
+        "desc": "第二轮酿造中的标签",
+        "default": "'酿造中…'"
+      },
+      {
+        "name": "roundText",
+        "type": "string",
+        "desc": "轮次标签模板,{n} 会被替换为当前轮次",
+        "default": "'第 {n} / 2 轮'"
+      },
+      {
+        "name": "fuelLabel",
+        "type": "string",
+        "desc": "燃料格上方小标签",
+        "default": "'燃料'"
+      },
+      {
+        "name": "ingredientLabel",
+        "type": "string",
+        "desc": "材料格上方小标签",
+        "default": "'材料'"
+      },
+      {
+        "name": "labelWorking",
+        "type": "string",
+        "desc": "状态:酿造中",
+        "default": "'酿造中'"
+      },
+      {
+        "name": "labelDone",
+        "type": "string",
+        "desc": "状态:完成",
+        "default": "'完成'"
+      },
+      {
+        "name": "labelIdle",
+        "type": "string",
+        "desc": "状态:待命",
+        "default": "'待命'"
+      },
+      {
+        "name": "tooltip",
+        "type": "{text: string; color?: string}[]",
+        "desc": "成品提示框行(rare 样式)",
+        "default": "内置再生药水提示框(3 行)"
+      },
+      {
+        "name": "doneText",
+        "type": "string",
+        "desc": "成品合体后的飘字",
+        "default": "'酿造完成'"
+      },
+      {
+        "name": "bottlesAt",
+        "type": "[number, number, number]",
+        "desc": "三个水瓶飞入的本地帧",
+        "default": "[14, 20, 26]"
+      },
+      {
+        "name": "fuelAt",
+        "type": "number",
+        "desc": "燃料飞入的本地帧",
+        "default": "32"
+      },
+      {
+        "name": "ingredient1At",
+        "type": "number",
+        "desc": "第一种材料飞入的本地帧",
+        "default": "38"
+      },
+      {
+        "name": "brew1",
+        "type": "[number, number]",
+        "desc": "第一轮酿造的 [开始, 结束] 帧",
+        "default": "[56, 108]"
+      },
+      {
+        "name": "ingredient2At",
+        "type": "number",
+        "desc": "第二种材料飞入的本地帧",
+        "default": "118"
+      },
+      {
+        "name": "brew2",
+        "type": "[number, number]",
+        "desc": "第二轮酿造的 [开始, 结束] 帧",
+        "default": "[134, 190]"
+      },
+      {
+        "name": "doneAt",
+        "type": "number",
+        "desc": "三瓶举起(完成)的本地帧",
+        "default": "192"
+      },
+      {
+        "name": "mergeAt",
+        "type": "number",
+        "desc": "三瓶合一的本地帧",
+        "default": "208"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={240}>\n    <ItemBrew\n      subtitle=\"水瓶 → 粗制 → 治疗药水\"\n      panelTitle=\"酿造台 · 治疗药水\"\n      stages={[\n        {ingredient: 'nether_wart', name: '粗制药水', color: '#9a6fdc'},\n        {ingredient: 'glistering_melon_slice', name: '治疗药水', color: '#ff4d4d'},\n      ]}\n      tooltip={[{text: '治疗药水', color: '#ff6a6a'}, {text: '瞬间治疗', color: '#ff6a6a'}, {text: '立即恢复 4 点生命', color: '#a8a8a8'}]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/brew.tsx"
+  },
+  {
+    "id": "item-drop-bounce",
+    "name": "物品掉落弹跳",
+    "kind": "overlay",
+    "category": "item",
+    "export": "ItemDropBounce",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "一批物品分三排从天而降,旋转、三次弹跳、落地扬尘并压扁回弹,地面阴影随高度变化,稀有物品拉起光柱并挂名牌。默认透明,只有物品/阴影/粒子,可直接叠在地面画面上;传 bg 加黄昏天空与透视地面。",
+    "usage": "展示掉落物、战利品、奖励。items 控制物品/位置/排/掉落顺序/稀有度/名牌,rows 控制三排的地面高度与缩放。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制黄昏天空与透视地面;默认不画(透明)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "items",
+        "type": "ItemDropItem[]",
+        "desc": "掉落物列表",
+        "default": "内置 16 件物品,分三排,含 uncommon/rare/epic 名牌"
+      },
+      {
+        "name": "rows",
+        "type": "{gy: number; s: number}[]",
+        "desc": "三排的地面 y 坐标与缩放",
+        "default": "[{gy: 672, s: 0.78}, {gy: 842, s: 1}, {gy: 1016, s: 1.38}]"
+      },
+      {
+        "name": "baseSize",
+        "type": "number",
+        "desc": "物品基础尺寸(像素,乘以排缩放)",
+        "default": "232"
+      },
+      {
+        "name": "fallFrames",
+        "type": "number",
+        "desc": "下落帧数",
+        "default": "16"
+      },
+      {
+        "name": "bounceFrames",
+        "type": "number[]",
+        "desc": "每次弹跳的帧数",
+        "default": "[13, 9, 6]"
+      },
+      {
+        "name": "bounceHeights",
+        "type": "number[]",
+        "desc": "每次弹跳的高度(像素)",
+        "default": "[230, 100, 38]"
+      },
+      {
+        "name": "startAt",
+        "type": "number",
+        "desc": "第一件物品开始下落的本地帧",
+        "default": "4"
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "desc": "相邻掉落顺序之间的间隔帧",
+        "default": "3"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={150}>\n    <ItemDropBounce\n      items={[\n        {id: 'iron_ingot', x: 480, row: 1, order: 1},\n        {id: 'diamond', x: 960, row: 1, order: 0, rar: 'rare', name: '钻石'},\n        {id: 'emerald', x: 1440, row: 1, order: 2, rar: 'uncommon', name: '绿宝石'},\n        {id: 'nether_star', x: 720, row: 2, order: 3, rar: 'epic', name: '下界之星'},\n        {id: 'golden_apple', x: 1200, row: 2, order: 4, rar: 'rare', name: '金苹果'},\n      ]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/drop.tsx"
+  },
+  {
+    "id": "item-pickup",
+    "name": "拾取飞入",
+    "kind": "overlay",
+    "category": "item",
+    "export": "ItemPickup",
+    "frames": 140,
+    "overlayReady": true,
+    "blurb": "地面上的物品先后被吸向画面下方的快捷栏,拖着残影飞进槽位,槽位闪白弹跳、数量 +1、飘字,右侧拾取日志滚动。快捷栏、经验条、生命与饥饿条一并绘制。默认透明,可叠在实机画面上;传 bg 加白天天空与草地。",
+    "usage": "展示获得物品、采集、掉落物回收。picks 控制物品/名称/地面位置/目标格/拾取帧,baseSlots 控制快捷栏初始内容;status/showLog 可关掉状态条或日志。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制白天天空与草地;默认不画(透明)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "status",
+        "type": "boolean",
+        "desc": "是否显示快捷栏上方的经验条、生命与饥饿",
+        "default": "true"
+      },
+      {
+        "name": "showLog",
+        "type": "boolean",
+        "desc": "是否显示右侧拾取日志",
+        "default": "true"
+      },
+      {
+        "name": "picks",
+        "type": "ItemPickupItem[]",
+        "desc": "被拾取的物品列表(位置、目标格、拾取时间)",
+        "default": "内置 6 件(铁锭/钻石/箭/金苹果/面包/火把)"
+      },
+      {
+        "name": "baseSlots",
+        "type": "{id?: string; count?: number}[]",
+        "desc": "快捷栏 9 格初始内容(拾取后数量逐个 +1)",
+        "default": "内置 9 格快捷栏(钻石剑、弓、铁锭×14、火把×32…)"
+      },
+      {
+        "name": "pullFrames",
+        "type": "number",
+        "desc": "从被吸走到落入格子的飞行帧数",
+        "default": "18"
+      },
+      {
+        "name": "logText",
+        "type": "string",
+        "desc": "右侧日志文字模板,{name} 会被替换",
+        "default": "'拾取 {name} ×1'"
+      },
+      {
+        "name": "floatText",
+        "type": "string",
+        "desc": "落入格子时的飘字模板,{name} 会被替换",
+        "default": "'+1 {name}'"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={140}>\n    <ItemPickup\n      picks={[\n        {id: 'diamond', name: '钻石', x: 480, gy: 700, s: 1, slot: 4, at: 26, rar: 'rare', col: ['#ffffff', '#55ffff', '#aaf6ff']},\n        {id: 'iron_ingot', name: '铁锭', x: 960, gy: 640, s: 0.9, slot: 2, at: 52, col: ['#ffffff', '#d4d6da', '#9a9ca2']},\n        {id: 'golden_apple', name: '金苹果', x: 1440, gy: 740, s: 1.1, slot: 6, at: 78, rar: 'rare', col: ['#ffffff', '#ffd23f', '#ffaa00']},\n      ]}\n      showLog={false}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/pickup.tsx"
+  },
+  {
+    "id": "item-upgrade-chain",
+    "name": "升级进化链",
+    "kind": "scene",
+    "category": "item",
+    "export": "ItemUpgradeChain",
+    "frames": 215,
+    "overlayReady": true,
+    "blurb": "木、石、铁、金、钻石、下界合金六把剑依次进化:材料飞入、像素十字闪光与碎片飞溅、主体换色弹出、属性条与进化路线列表与底部等级条推进,最后一级全屏炫光与震屏。默认透明(无随等级换色的背景),只保留面板与主体;传 bg 得到完整的换色背景、辉光与射线。",
+    "usage": "讲装备进阶、工具升级路线、版本/等级成长。tiers 控制每级的物品/材料/名称/主题色/数值,times 控制每级出现的帧。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制随等级换色的背景(底色、物品图案、辉光、射线、飘尘、暗角);false 时只剩面板/主体物品/特效(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'装备进化'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'木 → 石 → 铁 → 金 → 钻石 → 下界合金'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'UPGRADE'"
+      },
+      {
+        "name": "tiers",
+        "type": "ItemUpgradeTier[]",
+        "desc": "进化各级(建议 6 级:左侧路线列表容纳 6 行)",
+        "default": "内置 6 级:木剑/石剑/铁剑/金剑/钻石剑/下界合金剑(含材料、主题色、伤害、耐久)"
+      },
+      {
+        "name": "times",
+        "type": "number[]",
+        "desc": "各级出现的本地帧,长度与 tiers 相同,第一项通常为 0",
+        "default": "[0, 36, 64, 92, 120, 148]"
+      },
+      {
+        "name": "statsTitle",
+        "type": "string",
+        "desc": "左侧属性面板标题",
+        "default": "'属性'"
+      },
+      {
+        "name": "routeTitle",
+        "type": "string",
+        "desc": "右侧路线面板标题",
+        "default": "'进化路线'"
+      },
+      {
+        "name": "atkLabel",
+        "type": "string",
+        "desc": "第一条属性名",
+        "default": "'攻击伤害'"
+      },
+      {
+        "name": "durLabel",
+        "type": "string",
+        "desc": "第二条属性名",
+        "default": "'耐久'"
+      },
+      {
+        "name": "speedLabel",
+        "type": "string",
+        "desc": "第三条属性名(固定值,不随等级变化)",
+        "default": "'攻击速度'"
+      },
+      {
+        "name": "speedValue",
+        "type": "string",
+        "desc": "第三条属性值文字",
+        "default": "'1.6'"
+      },
+      {
+        "name": "speedFill",
+        "type": "number",
+        "desc": "第三条属性条的填充比例 0-1",
+        "default": "0.8"
+      },
+      {
+        "name": "levelText",
+        "type": "string",
+        "desc": "等级标签模板,{n} 当前级、{total} 总级数",
+        "default": "'等级 {n} / {total}'"
+      },
+      {
+        "name": "upText",
+        "type": "string",
+        "desc": "每次升级的飘字",
+        "default": "'升级!'"
+      },
+      {
+        "name": "finalText",
+        "type": "string",
+        "desc": "最终级的飘字",
+        "default": "'进化完成!'"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={215}>\n    <ItemUpgradeChain title=\"装备进化\" subtitle=\"木 → 石 → 铁 → 金 → 钻石 → 下界合金\" levelText=\"等级 {n} / {total}\" />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/upgrade.tsx"
+  },
+  {
+    "id": "item-rarity-showcase",
+    "name": "稀有度展示",
+    "kind": "card",
+    "category": "item",
+    "export": "ItemRarityShowcase",
+    "frames": 200,
+    "overlayReady": true,
+    "blurb": "普通、罕见、稀有、史诗四张物品卡依次翻出,光效逐级加码:边框脉冲、光晕与光柱,到史诗卡的紫色射线、两侧升腾的符文柱与上升粒子,底部稀有度轨道同步走满。默认透明,只保留卡片与光效;传 bg 得到暗色背景与暗角。",
+    "usage": "介绍物品分级、战利品品质、抽奖/掉落结果。cards 控制四张卡的稀有度/物品/名称/说明/星级,flipAt 控制翻牌时间。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制暗色渐变底、斜纹、史诗紫色背景光、飘尘与暗角;false 时只剩卡片/光柱/粒子/稀有度轨道(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'物品稀有度'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'普通 · 罕见 · 稀有 · 史诗'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'RARITY'"
+      },
+      {
+        "name": "headIcon",
+        "type": "string",
+        "desc": "标题块图标物品 id",
+        "default": "'nether_star'"
+      },
+      {
+        "name": "cards",
+        "type": "ItemRarityCard[]",
+        "desc": "四张卡:稀有度、物品、名称、说明、星级(按顺序从左到右翻出)",
+        "default": "内置 4 张(铁剑/经验之瓶/海洋之心/附魔金苹果)"
+      },
+      {
+        "name": "flipAt",
+        "type": "number[]",
+        "desc": "每张卡开始翻转的本地帧,长度 4",
+        "default": "[18, 50, 82, 114]"
+      },
+      {
+        "name": "rarityNames",
+        "type": "Partial<Record<RarityKey, string>>",
+        "desc": "稀有度显示名,缺省用默认「普通/罕见/稀有/史诗」",
+        "default": "{}"
+      },
+      {
+        "name": "backText",
+        "type": "string",
+        "desc": "卡背上的符号",
+        "default": "'?'"
+      },
+      {
+        "name": "finaleText",
+        "type": "string",
+        "desc": "最后一张(史诗)翻出后的大字飘字",
+        "default": "'史诗!'"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={200}>\n    <ItemRarityShowcase\n      title=\"战利品品质\"\n      subtitle=\"普通 · 罕见 · 稀有 · 史诗\"\n      finaleText=\"史诗掉落!\"\n      cards={[\n        {rar: 'common', id: 'stone_sword', name: '石剑', lines: ['攻击伤害 5', '耐久 131'], stars: 1},\n        {rar: 'uncommon', id: 'golden_carrot', name: '金胡萝卜', lines: ['饱和度极高', '酿造夜视药水'], stars: 2, glint: true},\n        {rar: 'rare', id: 'diamond_chestplate', name: '钻石胸甲', lines: ['防御 8', '耐久 528'], stars: 3},\n        {rar: 'epic', id: 'totem_of_undying', name: '不死图腾', lines: ['免于一次死亡', '再生 II · 吸收 II'], stars: 4, glint: true},\n      ]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/rarity.tsx"
+  },
+  {
+    "id": "item-chest-loot",
+    "name": "开箱战利品",
+    "kind": "scene",
+    "category": "item",
+    "export": "ItemChestLoot",
+    "frames": 200,
+    "overlayReady": true,
+    "blurb": "宝箱抖动、掀盖、金光炸开,物品按弧线喷出落进战利品网格(落点闪白、碎屑),稀有物品依次放大高亮、挂名牌、带粒子,面板上方有计数与稀有计数。默认透明,只保留宝箱/面板/物品/特效;传 bg 得到火把照亮的地牢(木桶、金块、材料堆)。",
+    "usage": "开箱、宝藏、副本奖励、抽奖结果展示。loot 控制每件物品的网格位置/数量/稀有度/名牌;网格为 7 列 × 3 行。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制地牢背景(苔石墙、金色辉光、地板、四支火把、木桶与金块、材料堆、飘尘、暗角);false 时只剩宝箱/战利品面板/特效(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'开箱战利品'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'掀盖 · 喷出 · 高亮'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'LOOT'"
+      },
+      {
+        "name": "headIcon",
+        "type": "string",
+        "desc": "标题块图标物品 id",
+        "default": "'chest_minecart'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "标题点缀色,#rrggbb",
+        "default": "'#ffd060'"
+      },
+      {
+        "name": "panelTitle",
+        "type": "string",
+        "desc": "战利品面板标题",
+        "default": "'战利品箱'"
+      },
+      {
+        "name": "loot",
+        "type": "ItemChestLootItem[]",
+        "desc": "战利品列表(位置、数量、稀有度),喷出顺序见 order",
+        "default": "内置 21 件(7 列 × 3 行),含 3 件 rare 与 2 件 epic"
+      },
+      {
+        "name": "order",
+        "type": "number[]",
+        "desc": "喷出顺序:loot 下标的排列;默认 21 件用内置乱序,其他数量按列表顺序",
+        "default": "21 件时用内置乱序,其他数量按列表顺序"
+      },
+      {
+        "name": "rareLabel",
+        "type": "string",
+        "desc": "稀有计数标签前缀",
+        "default": "'稀有'"
+      },
+      {
+        "name": "rareText",
+        "type": "string",
+        "desc": "全部稀有物品高亮后的飘字",
+        "default": "'稀有战利品!'"
+      },
+      {
+        "name": "rattleAt",
+        "type": "number",
+        "desc": "宝箱开始抖动的本地帧",
+        "default": "22"
+      },
+      {
+        "name": "openAt",
+        "type": "number",
+        "desc": "宝箱开盖的本地帧",
+        "default": "46"
+      },
+      {
+        "name": "spewAt",
+        "type": "number",
+        "desc": "第一件物品喷出的本地帧",
+        "default": "56"
+      },
+      {
+        "name": "spewStep",
+        "type": "number",
+        "desc": "相邻物品喷出的间隔帧",
+        "default": "3"
+      },
+      {
+        "name": "highlightAt",
+        "type": "number",
+        "desc": "第一件稀有物品开始高亮的本地帧",
+        "default": "138"
+      },
+      {
+        "name": "highlightStep",
+        "type": "number",
+        "desc": "相邻稀有物品高亮的间隔帧",
+        "default": "9"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={200}>\n    <ItemChestLoot\n      panelTitle=\"地牢宝箱\"\n      loot={[\n        {id: 'bread', c: 1, r: 0, count: 3},\n        {id: 'iron_ingot', c: 2, r: 0, count: 5},\n        {id: 'diamond', c: 3, r: 0, count: 2, rar: 'rare', name: '钻石'},\n        {id: 'arrow', c: 4, r: 0, count: 12},\n        {id: 'emerald', c: 5, r: 0, count: 4},\n        {id: 'enchanted_book', c: 1, r: 1, rar: 'rare', name: '附魔书'},\n        {id: 'experience_bottle', c: 2, r: 1, count: 3},\n        {id: 'totem_of_undying', c: 3, r: 1, rar: 'epic', name: '不死图腾'},\n        {id: 'golden_apple', c: 4, r: 1, rar: 'rare', name: '金苹果'},\n        {id: 'name_tag', c: 5, r: 1},\n      ]}\n    />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/chest.tsx"
+  },
+  {
+    "id": "item-inventory-sort",
+    "name": "物品栏整理",
+    "kind": "scene",
+    "category": "item",
+    "export": "ItemInventorySort",
+    "frames": 190,
+    "overlayReady": true,
+    "blurb": "杂乱的 9×4 背包里鼠标按下「整理」:所有堆叠升起并沿弧线飞向各自位置,同类合并、数量相加(飘字+合并日志),工具/方块/食物/材料四行依次亮起归类,最后扫光。默认透明,只保留面板/物品/特效/快捷栏;传 bg 得到深色底与两侧储物堆。",
+    "usage": "讲背包管理、自动整理模组、物品栏优化。rows 描述整理后每行的物品与数量(merge 表示两堆合并),cats 定义分类名称/颜色/图标。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "desc": "是否绘制深色渐变底、方格纹、两侧储物堆、飘尘与暗角;false 时只剩面板/物品/特效/快捷栏(库默认 false,即透明;画廊 Demo 为 true)",
+        "default": "false"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "desc": "是否带音效",
+        "default": "true"
+      },
+      {
+        "name": "showHead",
+        "type": "boolean",
+        "desc": "是否显示左上角标题块",
+        "default": "true"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "标题块主标题",
+        "default": "'物品栏整理'"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "desc": "标题块副标题",
+        "default": "'归位 · 分类 · 合并堆叠'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "标题块右上角英文标签",
+        "default": "'SORT'"
+      },
+      {
+        "name": "headIcon",
+        "type": "string",
+        "desc": "标题块图标物品 id",
+        "default": "'hopper'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "标题点缀色,#rrggbb",
+        "default": "'#b8f040'"
+      },
+      {
+        "name": "rows",
+        "type": "ItemSortEntry[][]",
+        "desc": "四行整理结果,每行一个分类(行内第一项决定该行分类)",
+        "default": "内置 4 行共 25 种堆叠(7 组需合并)"
+      },
+      {
+        "name": "cats",
+        "type": "Record<ItemSortCat, ItemSortCatDef>",
+        "desc": "四个分类的名称、颜色、图标",
+        "default": "内置 4 类:工具/方块/食物/材料"
+      },
+      {
+        "name": "panelTitle",
+        "type": "string",
+        "desc": "背包面板标题",
+        "default": "'背包 · 整理物品'"
+      },
+      {
+        "name": "legendTitle",
+        "type": "string",
+        "desc": "左侧分类面板标题",
+        "default": "'分类'"
+      },
+      {
+        "name": "mergeTitle",
+        "type": "string",
+        "desc": "右侧合并面板标题",
+        "default": "'合并'"
+      },
+      {
+        "name": "tabs",
+        "type": "string[]",
+        "desc": "面板上的 5 个标签页文字",
+        "default": "['全部', '工具', '方块', '食物', '材料']"
+      },
+      {
+        "name": "buttonText",
+        "type": "string",
+        "desc": "整理按钮文字(点击前)",
+        "default": "'整理'"
+      },
+      {
+        "name": "buttonDoneText",
+        "type": "string",
+        "desc": "整理按钮文字(完成后)",
+        "default": "'已整理'"
+      },
+      {
+        "name": "stackChip",
+        "type": "string",
+        "desc": "底部「堆叠」标签模板,{n} 为数量",
+        "default": "'堆叠 {n}'"
+      },
+      {
+        "name": "emptyChip",
+        "type": "string",
+        "desc": "底部「空位」标签模板,{n} 为数量",
+        "default": "'空位 {n}'"
+      },
+      {
+        "name": "messyText",
+        "type": "string",
+        "desc": "底部状态标签:整理前",
+        "default": "'杂乱无章'"
+      },
+      {
+        "name": "tidyText",
+        "type": "string",
+        "desc": "底部状态标签:整理后",
+        "default": "'井然有序'"
+      },
+      {
+        "name": "doneText",
+        "type": "string",
+        "desc": "全部完成后的飘字",
+        "default": "'整理完成'"
+      },
+      {
+        "name": "hotbar",
+        "type": "{id?: string; count?: number}[]",
+        "desc": "底部快捷栏 9 格内容",
+        "default": "内置 9 格快捷栏"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "desc": "初始乱序的随机种子",
+        "default": "2026"
+      },
+      {
+        "name": "clickAt",
+        "type": "number",
+        "desc": "鼠标点击「整理」的本地帧",
+        "default": "54"
+      },
+      {
+        "name": "liftAt",
+        "type": "number",
+        "desc": "堆叠升起的本地帧",
+        "default": "56"
+      },
+      {
+        "name": "flyAt",
+        "type": "number",
+        "desc": "堆叠开始飞行的本地帧",
+        "default": "66"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* 你的素材 */}\n  <Sequence from={20} durationInFrames={190}>\n    <ItemInventorySort title=\"背包整理\" subtitle=\"一键归位 · 合并堆叠\" buttonText=\"整理\" doneText=\"整理完成\" seed={2026} />\n  </Sequence>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/item/sort.tsx"
+  },
+  {
+    "id": "info-chapter-ore",
+    "name": "章节标题卡 · Ore 风",
+    "kind": "title",
+    "category": "info",
+    "export": "InfoChapterOre",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "上下黑条滑入，Ore 大面板竖向展开，图标框发光，标题逐字砸落，进度段依次点亮，黄黑警示带铺满左右。",
+    "usage": "每期视频的章节切换，叠在素材上；章节号、标题、提示、图标、材料格都可换。自带半透明压暗（dim 可调）。",
+    "props": [
+      {
+        "name": "no",
+        "type": "number",
+        "desc": "当前章节号",
+        "default": "3"
+      },
+      {
+        "name": "total",
+        "type": "number",
+        "desc": "总章节数(决定底部进度段数量)",
+        "default": "8"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "章节标题,建议 7 字以内",
+        "default": "'合成钻石装备'"
+      },
+      {
+        "name": "hint",
+        "type": "string",
+        "desc": "标题下的提示行",
+        "default": "'先备好 3 颗钻石和 2 根木棍'"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "desc": "左侧大图标的物品 id",
+        "default": "'diamond_sword'"
+      },
+      {
+        "name": "items",
+        "type": "string[]",
+        "desc": "右侧材料格的物品 id 列表(建议 3 个)",
+        "default": "['diamond','stick','iron_ingot']"
+      },
+      {
+        "name": "series",
+        "type": "string",
+        "desc": "顶部左侧系列名",
+        "default": "'EP.12 · 钻石装备篇'"
+      },
+      {
+        "name": "next",
+        "type": "string",
+        "desc": "底部右侧\"下一章\"提示",
+        "default": "'下一章 · 附魔'"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "desc": "章节词,不传则按 no 生成 `第 NN 章`"
+      },
+      {
+        "name": "kicker",
+        "type": "string",
+        "desc": "章节词旁的小英文",
+        "default": "'CHAPTER'"
+      },
+      {
+        "name": "itemsLabel",
+        "type": "string",
+        "desc": "材料列上方的小标题",
+        "default": "'本章材料'"
+      },
+      {
+        "name": "footer",
+        "type": "string",
+        "desc": "底部左侧说明",
+        "default": "'本章约 6 分钟 · 含合成演示'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "强调色(金色)",
+        "default": "'#f8af2b'"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "背景压暗强度倍数(0 = 不压暗)",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 26 帧开始;应与 Sequence 的 durationInFrames 一致",
+        "default": "150"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <InfoChapterOre no={3} total={8} title=\"合成钻石装备\" hint=\"先备好 3 颗钻石和 2 根木棍\" icon=\"diamond_sword\" items={['diamond', 'stick', 'iron_ingot']} series=\"EP.12 · 钻石装备篇\" next=\"下一章 · 附魔\" frames={150} />\n</Sequence>",
+    "source": "src/gallery/fx/info/chapterOre.tsx"
+  },
+  {
+    "id": "info-chapter-stone",
+    "name": "章节标题卡 · 石质厚重风",
+    "kind": "title",
+    "category": "info",
+    "export": "InfoChapterStone",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "石砖横幅从中央展开，石质大字砸落带震屏、裂纹、碎石粉尘，火把摇曳，随后一道光扫过字面。",
+    "usage": "重头章节、关键转折、Boss 与副本入口；字多时调小 size。自带半透明压暗（dim 可调）。",
+    "props": [
+      {
+        "name": "no",
+        "type": "number",
+        "desc": "章节号,用于上方小牌 `第 NN 章`",
+        "default": "4"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "石质大字,建议 6 字以内",
+        "default": "'深渊之门'"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "desc": "横幅下方副标题",
+        "default": "'地下三百米 · 一扇不该被打开的门'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "直接替换上方小牌文字(不传则用 `第 NN 章`)"
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "desc": "大字字号,12 的倍数",
+        "default": "240"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "小牌强调色",
+        "default": "'#f8af2b'"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "背景压暗强度倍数",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 24 帧开始",
+        "default": "150"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <InfoChapterStone no={4} title=\"深渊之门\" sub=\"地下三百米 · 一扇不该被打开的门\" frames={150} />\n</Sequence>",
+    "source": "src/gallery/fx/info/chapterStone.tsx"
+  },
+  {
+    "id": "info-chapter-flat",
+    "name": "章节标题卡 · 可爱扁平风",
+    "kind": "title",
+    "category": "info",
+    "export": "InfoChapterFlat",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "五条糖果色斜带扫过，纸片横幅挤压弹入，贴纸大字逐个弹跳，圆章徽标摇摆，史莱姆、小猪、苦力怕从草丘冒出，云朵星星点缀。",
+    "usage": "轻松向、儿童向、生存日常视频的章节切换。",
+    "props": [
+      {
+        "name": "no",
+        "type": "number",
+        "desc": "章节号(圆章里显示 `第N章`)",
+        "default": "3"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "贴纸大字,建议 6 字以内",
+        "default": "'红石小课堂'"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "desc": "红色丝带副标题",
+        "default": "'今天教你造全自动门'"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "desc": "偶数位字母的颜色",
+        "default": "'#ffd23f'"
+      },
+      {
+        "name": "badge",
+        "type": "string",
+        "desc": "圆章文字",
+        "default": "`第{no}章`"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "背景压暗强度倍数",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 22 帧开始",
+        "default": "150"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <InfoChapterFlat no={3} title=\"红石小课堂\" sub=\"今天教你造全自动门\" accent=\"#ffd23f\" frames={150} />\n</Sequence>",
+    "source": "src/gallery/fx/info/chapterFlat.tsx"
+  },
+  {
+    "id": "info-lower-third-ore",
+    "name": "下三分之一字幕条 · Ore 风",
+    "kind": "overlay",
+    "category": "info",
+    "export": "InfoLowerThirdOre",
+    "frames": 135,
+    "overlayReady": true,
+    "blurb": "头像框弹出，Ore 名牌从头像后展开，姓名逐字打出，身份标签滑入，光扫掠过，账号小牌掉落，右上角频道角标下滑；结束时名牌卷回头像再离场。",
+    "usage": "嘉宾、角色、主播出场介绍；叠在人物镜头上，占画面左下方与右上角。底部带半透明压暗渐变（dim 可调）。",
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "desc": "姓名,建议 6 字以内",
+        "default": "'红石阿明'"
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "desc": "身份/头衔",
+        "default": "'建筑师 · 红石工程'"
+      },
+      {
+        "name": "handle",
+        "type": "string",
+        "desc": "账号小牌",
+        "default": "'@RedstoneAMing'"
+      },
+      {
+        "name": "skin",
+        "type": "string",
+        "desc": "头像皮肤路径(public/mc/textures 下)",
+        "default": "'entity/player/wide/steve.png'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "右上角频道角标文字",
+        "default": "'优易库'"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "desc": "右上角频道角标的物品 id",
+        "default": "'diamond'"
+      },
+      {
+        "name": "badge",
+        "type": "string",
+        "desc": "名牌右端第一个物品格的物品 id",
+        "default": "'redstone'"
+      },
+      {
+        "name": "badges",
+        "type": "string[]",
+        "desc": "名牌右端另外两个物品格的物品 id",
+        "default": "['diamond_pickaxe','golden_apple']"
+      },
+      {
+        "name": "avatarTag",
+        "type": "string",
+        "desc": "头像右下角的绿色小标签",
+        "default": "'UP主'"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "底部压暗渐变强度倍数",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,名牌从最后 34 帧开始卷回头像",
+        "default": "135"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={135}>\n  <InfoLowerThirdOre name=\"红石阿明\" role=\"建筑师 · 红石工程\" handle=\"@RedstoneAMing\" skin=\"entity/player/wide/steve.png\" tag=\"优易库\" icon=\"diamond\" badge=\"redstone\" frames={135} />\n</Sequence>",
+    "source": "src/gallery/fx/info/lowerThird.tsx"
+  },
+  {
+    "id": "info-lower-third-cute",
+    "name": "下三分之一字幕条 · 可爱风",
+    "kind": "overlay",
+    "category": "info",
+    "export": "InfoLowerThirdCute",
+    "frames": 135,
+    "overlayReady": true,
+    "blurb": "圆形吉祥物头像带虚线转圈弹出，黄色贴纸名牌叠在蓝色底卡上展开，粉色身份丝带翻出，爱心星星漂浮，底部一排云朵，右上角“关注我”胶囊。",
+    "usage": "轻松向视频的人物/角色介绍，也可作字幕署名条。",
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "desc": "姓名",
+        "default": "'小蓝同学'"
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "desc": "身份丝带文字",
+        "default": "'今天的讲解员'"
+      },
+      {
+        "name": "mascot",
+        "type": "'slime' | 'pig' | 'creeper'",
+        "desc": "头像吉祥物,可选 slime(史莱姆) | pig(小猪) | creeper(苦力怕)",
+        "default": "'slime'"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "desc": "右上角胶囊文字",
+        "default": "'关注我'"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 22 帧开始",
+        "default": "135"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={135}>\n  <InfoLowerThirdCute name=\"小蓝同学\" role=\"今天的讲解员\" mascot=\"slime\" tag=\"关注我\" frames={135} />\n</Sequence>",
+    "source": "src/gallery/fx/info/lowerThird.tsx"
+  },
+  {
+    "id": "info-toast-advancement",
+    "name": "成就弹窗(任务 / 目标 / 挑战)",
+    "kind": "overlay",
+    "category": "info",
+    "export": "InfoAdvancementToasts",
+    "frames": 240,
+    "overlayReady": true,
+    "blurb": "三张成就依次从右侧弹入：钢色方框的任务、绿色切角的目标、金边尖刺紫光的挑战；挑战触发粒子爆发、金色彩屑漫天、屏幕边缘金光和光线。",
+    "usage": "达成里程碑、拿到关键物品、通关节点；只传 1 张也可以（toasts 数组 1~3 项）。",
+    "props": [
+      {
+        "name": "toasts",
+        "type": "{kind: 'task' | 'goal' | 'challenge'; title: string; desc: string; icon: string; head?: string}[]",
+        "desc": "成就数组(1~3 项):{kind: task|goal|challenge, title, desc, icon 物品 id, head? 覆盖顶部文案}",
+        "default": "石器时代 / 钻石！ / 天空之限 三项"
+      },
+      {
+        "name": "counter",
+        "type": "string",
+        "desc": "底部计数条文字",
+        "default": "'已解锁 18 / 124 个进度'"
+      },
+      {
+        "name": "progress",
+        "type": "[number, number]",
+        "desc": "计数条填充的 [起始, 结束] 比例(0..1)",
+        "default": "[0.1, 0.145]"
+      },
+      {
+        "name": "starts",
+        "type": "number[]",
+        "desc": "每张成就的出现帧",
+        "default": "第 i 张 = 8 + 56 * i"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 42 帧开始",
+        "default": "240"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={240}>\n  <InfoAdvancementToasts\n      toasts={[\n        {kind: 'task', title: '石器时代', desc: '用镐子挖掘一块石头', icon: 'stone_pickaxe'},\n        {kind: 'goal', title: '钻石！', desc: '用铁镐找到并挖出钻石', icon: 'diamond'},\n        {kind: 'challenge', title: '天空之限', desc: '穿着鞘翅飞越 500 米高空', icon: 'elytra'},\n      ]}\n      counter=\"已解锁 18 / 124 个进度\"\n      frames={240}\n    />\n</Sequence>",
+    "source": "src/gallery/fx/info/toasts.tsx"
+  },
+  {
+    "id": "info-stat-bars",
+    "name": "血量 / 饥饿 / 经验条变化",
+    "kind": "overlay",
+    "category": "info",
+    "export": "InfoStatBars",
+    "frames": 240,
+    "overlayReady": true,
+    "blurb": "三条 HUD 条滑入：受伤时血条骤降、苍白残影缓缓追上、整行闪红、屏幕边缘泛红并弹出“-12”；回血时亮绿残影先冲上去、主条追赶、绿光与火花；经验条满格后升级金光、等级数字跳变。",
+    "usage": "讲生存、战斗、食物机制时展示数值变化；可叠在第一人称画面上。health/hunger 事件数组决定什么时候掉血、回血。",
+    "props": [
+      {
+        "name": "scale",
+        "type": "number",
+        "desc": "整块 HUD 缩放",
+        "default": "1"
+      },
+      {
+        "name": "health",
+        "type": "{at: number; to: number}[]",
+        "desc": "生命值事件 [{at 帧, to 0..20 目标值}],降=受伤(红闪/震动/弹字),升=回复",
+        "default": "[{at:58,to:8},{at:118,to:18}]"
+      },
+      {
+        "name": "hunger",
+        "type": "{at: number; to: number}[]",
+        "desc": "饥饿值事件,格式同 health",
+        "default": "[{at:84,to:10},{at:150,to:16}]"
+      },
+      {
+        "name": "levelUpAt",
+        "type": "number",
+        "desc": "经验条升级发生的帧",
+        "default": "112"
+      },
+      {
+        "name": "level",
+        "type": "number",
+        "desc": "升级前显示的等级,升级后 +1",
+        "default": "30"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "面板左上标题",
+        "default": "'生存状态 · HUD'"
+      },
+      {
+        "name": "labels",
+        "type": "[string, string, string]",
+        "desc": "三行名称 [生命, 饥饿, 经验]",
+        "default": "['生命','饥饿','经验']"
+      },
+      {
+        "name": "statusLabels",
+        "type": "[string, string, string]",
+        "desc": "右上状态词 [第一个事件前, 之后, 第二个事件后]",
+        "default": "['正常','重伤','恢复中']"
+      },
+      {
+        "name": "levelUpText",
+        "type": "string",
+        "desc": "升级时弹出的文字",
+        "default": "'升级!'"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 24 帧开始",
+        "default": "240"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={240}>\n  <InfoStatBars health={[{at: 58, to: 8}, {at: 118, to: 18}]} hunger={[{at: 84, to: 10}, {at: 150, to: 16}]} levelUpAt={112} level={30} frames={240} />\n</Sequence>",
+    "source": "src/gallery/fx/info/statBars.tsx"
+  },
+  {
+    "id": "info-compare-bars",
+    "name": "属性对比条",
+    "kind": "card",
+    "category": "info",
+    "export": "InfoCompareBars",
+    "frames": 230,
+    "overlayReady": true,
+    "blurb": "两件物品卡从上方落下，VS 徽章砸中，四行属性条从中线向两侧生长、数字滚动，胜出方变金并闪光、落败方变灰，最后弹出胜负横幅与彩屑。",
+    "usage": "装备、武器、方块、生物的属性对比；评测类视频的核心图表。大面板居中，下方素材被半透明压暗。",
+    "props": [
+      {
+        "name": "left",
+        "type": "{id: string; name: string; tag: string; color: string}",
+        "desc": "左侧物品 {id 物品 id, name, tag, color}",
+        "default": "钻石剑(锋利 V,青色)"
+      },
+      {
+        "name": "right",
+        "type": "{id: string; name: string; tag: string; color: string}",
+        "desc": "右侧物品 {id, name, tag, color}",
+        "default": "下界合金剑(锋利 V,紫色)"
+      },
+      {
+        "name": "rows",
+        "type": "{label: string; l: number; r: number; max: number; dec?: number}[]",
+        "desc": "属性行 [{label, l 左值, r 右值, max 满格值, dec? 小数位}],数值大者胜、相等平手",
+        "default": "攻击伤害/耐久/攻击速度/抗击退 四行"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "面板标题",
+        "default": "'属性对比'"
+      },
+      {
+        "name": "ratings",
+        "type": "[number, number]",
+        "desc": "左右两侧物品卡的金色评级格数 [左, 右](满 5)",
+        "default": "[4, 5]"
+      },
+      {
+        "name": "vs",
+        "type": "string",
+        "desc": "中间徽章文字",
+        "default": "'VS'"
+      },
+      {
+        "name": "winSuffix",
+        "type": "string",
+        "desc": "胜出横幅后缀,最终文案 `${name}${winSuffix}`",
+        "default": "' 胜出'"
+      },
+      {
+        "name": "tieText",
+        "type": "string",
+        "desc": "平局横幅文字",
+        "default": "'势均力敌'"
+      },
+      {
+        "name": "leftColors",
+        "type": "[string, string, string]",
+        "desc": "左侧条形颜色 [主色, 高光, 阴影]",
+        "default": "['#2d9fcf','#8fe9ff','#14607f']"
+      },
+      {
+        "name": "rightColors",
+        "type": "[string, string, string]",
+        "desc": "右侧条形颜色 [主色, 高光, 阴影]",
+        "default": "['#9a58e0','#e2b8ff','#5a2a96']"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "背景压暗强度倍数",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 26 帧开始",
+        "default": "230"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={230}>\n  <InfoCompareBars\n      title=\"属性对比\"\n      left={{id: 'diamond_sword', name: '钻石剑', tag: '锋利 V', color: '#55ffff'}}\n      right={{id: 'netherite_sword', name: '下界合金剑', tag: '锋利 V', color: '#d58bff'}}\n      rows={[\n        {label: '攻击伤害', l: 7, r: 8, max: 10},\n        {label: '耐久', l: 1561, r: 2031, max: 2400},\n        {label: '攻击速度', l: 1.6, r: 1.6, max: 2, dec: 1},\n        {label: '抗击退', l: 0, r: 0.1, max: 0.2, dec: 1},\n      ]}\n      frames={230}\n    />\n</Sequence>",
+    "source": "src/gallery/fx/info/compareBars.tsx"
+  },
+  {
+    "id": "info-leaderboard",
+    "name": "排行榜 Top5",
+    "kind": "card",
+    "category": "info",
+    "export": "InfoLeaderboard",
+    "frames": 280,
+    "overlayReady": true,
+    "blurb": "两侧挂旗垂下，五行按名次依次从右滑入；分数刷新后行与行互相超越、交换位置，上升者闪绿并标出名次变化，皇冠沿弧线飞向新的第一名，伴随光芒与粒子。",
+    "usage": "击杀榜、建造榜、竞速榜、投票结果等；一次展示榜单变动（a 更新前分数，b 更新后分数）。",
+    "props": [
+      {
+        "name": "players",
+        "type": "{name: string; skin: string; a: number; b: number}[]",
+        "desc": "玩家数组(建议 5 个) [{name, skin 皮肤路径, a 更新前分数, b 更新后分数}],名次由分数自动算出",
+        "default": "艾利克斯/史蒂夫/凯/诺尔/祖里"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "榜单标题",
+        "default": "'击杀排行榜'"
+      },
+      {
+        "name": "unit",
+        "type": "string",
+        "desc": "右上周期标签前缀",
+        "default": "'本周'"
+      },
+      {
+        "name": "topLabel",
+        "type": "string",
+        "desc": "标题后的金色标签",
+        "default": "'TOP 5'"
+      },
+      {
+        "name": "periodBefore",
+        "type": "string",
+        "desc": "更新前的周期文字",
+        "default": "'第 11 周'"
+      },
+      {
+        "name": "periodAfter",
+        "type": "string",
+        "desc": "更新后的周期文字",
+        "default": "'第 12 周 ▲'"
+      },
+      {
+        "name": "bannerText",
+        "type": "string",
+        "desc": "两侧挂旗上的竖排文字(2 字)",
+        "default": "'榜单'"
+      },
+      {
+        "name": "updateAt",
+        "type": "number",
+        "desc": "分数刷新、名次互换开始的帧",
+        "default": "120"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "背景压暗强度倍数",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 26 帧开始",
+        "default": "280"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={280}>\n  <InfoLeaderboard\n      title=\"击杀排行榜\"\n      unit=\"本周\"\n      players={[\n        {name: '艾利克斯', skin: 'entity/player/wide/alex.png', a: 2480, b: 2620},\n        {name: '史蒂夫', skin: 'entity/player/wide/steve.png', a: 2310, b: 2990},\n        {name: '凯', skin: 'entity/player/wide/kai.png', a: 2105, b: 2290},\n        {name: '诺尔', skin: 'entity/player/wide/noor.png', a: 1890, b: 2010},\n        {name: '祖里', skin: 'entity/player/wide/zuri.png', a: 1650, b: 2450},\n      ]}\n      frames={280}\n    />\n</Sequence>",
+    "source": "src/gallery/fx/info/leaderboard.tsx"
+  },
+  {
+    "id": "info-countdown-big",
+    "name": "大数字倒计时 5-4-3-2-1",
+    "kind": "overlay",
+    "category": "info",
+    "export": "InfoCountdownBig",
+    "frames": 230,
+    "overlayReady": true,
+    "blurb": "五个方块像素大数字依次砸在切角方块底板上：整屏压缩脉冲、像素碎片飞溅、短震屏，底板下的分段计时条逐格耗尽，两侧色块计数；最后“开始！”底板展宽、金色闪光与彩屑。",
+    "usage": "比赛开始、挑战开局、发布会/抽奖倒数、视频开场卡点。总帧数随 from 变化，为 14 + 30*from + 66。",
+    "props": [
+      {
+        "name": "from",
+        "type": "number",
+        "desc": "起始数字,倒数到 1 再出\"开始\"",
+        "default": "5"
+      },
+      {
+        "name": "go",
+        "type": "string",
+        "desc": "结尾文字",
+        "default": "'开始!'"
+      },
+      {
+        "name": "colors",
+        "type": "string[]",
+        "desc": "每个数字的填充色数组(循环取用)",
+        "default": "['#6cc349','#e5c317','#f8af2b','#ff7a3c','#ff4d5e']"
+      },
+      {
+        "name": "goColor",
+        "type": "string",
+        "desc": "结尾文字的颜色",
+        "default": "'#ffd35a'"
+      },
+      {
+        "name": "topLabel",
+        "type": "string",
+        "desc": "上方条带左侧小字",
+        "default": "'倒计时'"
+      },
+      {
+        "name": "bottomLabel",
+        "type": "string",
+        "desc": "下方条带左侧小字",
+        "default": "'准备好了吗'"
+      },
+      {
+        "name": "goTag",
+        "type": "string",
+        "desc": "结尾时条带右侧的小字",
+        "default": "'GO'"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "背景压暗强度倍数",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,最后 14 帧淡出",
+        "default": "14 + 30 * from + 66(from=5 时 230)"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={230}>\n  <InfoCountdownBig from={5} go=\"开始!\" frames={230} />\n</Sequence>",
+    "source": "src/gallery/fx/info/countdown.tsx"
+  },
+  {
+    "id": "info-coord-tag",
+    "name": "坐标标签",
+    "kind": "overlay",
+    "category": "info",
+    "export": "InfoCoordTags",
+    "frames": 200,
+    "overlayReady": true,
+    "blurb": "地面像素碎片闪光标出位置，细杆升起，带指针的 Ore 标签果冻般弹出，X/Y/Z 数字滚动、微微浮动；顶部罗盘条同步标出方位，结束时标签收回成小钉。",
+    "usage": "标注基地、矿洞、村庄、传送门等位置；可叠多个。把 x、y 对准画面里的目标点即可（1920×1080 屏幕坐标）。",
+    "props": [
+      {
+        "name": "tags",
+        "type": "{x: number; y: number; name: string; xyz: [number, number, number]; color: string; at: number; dist?: string; icon?: 'pin' | 'skull' | 'bolt' | 'trophy'}[]",
+        "desc": "坐标标签数组 [{x,y 指向的屏幕点, name, xyz:[X,Y,Z], color, at 起始帧, dist? 距离文字, icon? pin|skull|bolt|trophy}]",
+        "default": "雪原村庄/地下钻石矿/下界传送门 三个"
+      },
+      {
+        "name": "compass",
+        "type": "boolean",
+        "desc": "是否显示顶部罗盘条",
+        "default": "true"
+      },
+      {
+        "name": "compassLabels",
+        "type": "[string, string, string]",
+        "desc": "罗盘三个方位字 [西, 北, 东]",
+        "default": "['西','北','东']"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,标签从最后 22 帧开始收回",
+        "default": "200"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={200}>\n  <InfoCoordTags\n      tags={[\n        {x: 380, y: 840, name: '雪原村庄', xyz: [128, 64, -240], color: '#f8af2b', at: 10, dist: '328 m', icon: 'pin'},\n        {x: 1000, y: 780, name: '地下钻石矿', xyz: [-512, -54, 96], color: '#55ffff', at: 34, dist: '1.2 km', icon: 'trophy'},\n        {x: 1560, y: 520, name: '下界传送门', xyz: [20, 71, 4], color: '#d58bff', at: 58, dist: '64 m', icon: 'bolt'},\n      ]}\n      frames={200}\n    />\n</Sequence>",
+    "source": "src/gallery/fx/info/coordTag.tsx"
+  },
+  {
+    "id": "info-ingredient-list",
+    "name": "材料清单卡",
+    "kind": "card",
+    "category": "info",
+    "export": "InfoIngredientList",
+    "frames": 250,
+    "overlayReady": true,
+    "blurb": "清单面板从左滑入，五行（图标 + 名称 + 出处 + 数量）逐行弹入，随后逐行打钩、行底泛绿；齐全时盖“材料齐全！”章，右侧成品卡从剪影点亮并爆出光芒与彩屑。",
+    "usage": "合成/建造/红石教程开头交代需要准备什么；rows 建议 4~5 行，frames 随行数增减（±16/行）。",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "desc": "面板标题",
+        "default": "'材料清单'"
+      },
+      {
+        "name": "rows",
+        "type": "{id: string; name: string; count: number; src: string}[]",
+        "desc": "材料行 [{id 物品 id, name, count, src 出处}],建议 4~5 行",
+        "default": "钻石/木棍/铁锭/红石粉/书 五行"
+      },
+      {
+        "name": "result",
+        "type": "{id: string; name: string; line: string}",
+        "desc": "右侧成品卡 {id 物品 id, name, line 说明}",
+        "default": "钻石镐(挖掘速度 8 · 耐久 1561)"
+      },
+      {
+        "name": "counterLabel",
+        "type": "string",
+        "desc": "顶部计数文字,`{done}` `{total}` 会被替换",
+        "default": "'已备齐 {done} / {total}'"
+      },
+      {
+        "name": "stampText",
+        "type": "string",
+        "desc": "材料齐全时的印章文字",
+        "default": "'材料齐全！'"
+      },
+      {
+        "name": "resultLabel",
+        "type": "string",
+        "desc": "成品卡顶部小字",
+        "default": "'合成目标'"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "背景压暗强度倍数",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 24 帧开始",
+        "default": "250 + 16 * (行数 - 5)"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={250}>\n  <InfoIngredientList\n      title=\"材料清单\"\n      rows={[\n        {id: 'diamond', name: '钻石', count: 3, src: '深层矿洞 · Y -58'},\n        {id: 'stick', name: '木棍', count: 2, src: '橡木 → 木板 → 木棍'},\n        {id: 'iron_ingot', name: '铁锭', count: 4, src: '熔炼铁矿石'},\n        {id: 'redstone', name: '红石粉', count: 8, src: '红石矿 · Y -59'},\n        {id: 'book', name: '书', count: 1, src: '村庄图书馆'},\n      ]}\n      result={{id: 'diamond_pickaxe', name: '钻石镐', line: '挖掘速度 8 · 耐久 1561'}}\n      frames={250}\n    />\n</Sequence>",
+    "source": "src/gallery/fx/info/ingredientList.tsx"
+  },
+  {
+    "id": "info-subtitle-dialog",
+    "name": "对话字幕",
+    "kind": "overlay",
+    "category": "info",
+    "export": "InfoDialogSubtitle",
+    "frames": 300,
+    "overlayReady": true,
+    "blurb": "左右两位角色头像，说话者发亮并上下弹跳，气泡带指针指向说话者；文字逐字打出并轻微抖动，感叹号 / 问号 / 省略号 / 音符弹出，打完出现继续箭头。",
+    "usage": "角色对话、剧情小短剧、双人解说的字幕；换人说话自动切换气泡方向。每句 62 帧，frames = 18 + 62 * 句数 + 34。",
+    "props": [
+      {
+        "name": "speakers",
+        "type": "{name: string; skin: string; color: string}[]",
+        "desc": "两位说话者 [{name, skin 皮肤路径, color}],下标 0 在左、1 在右",
+        "default": "史蒂夫(左)/艾利克斯(右)"
+      },
+      {
+        "name": "lines",
+        "type": "{who: 0 | 1; text: string; tone: 'shout' | 'ask' | 'dots' | 'happy'}[]",
+        "desc": "台词 [{who: 0|1, text, tone: shout|ask|dots|happy}],第 18 帧开始、每句占 62 帧",
+        "default": "苦力怕对话四句"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "底部压暗渐变强度倍数",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,退场从最后 22 帧开始",
+        "default": "18 + 62 * 台词数 + 34(4 句时 300)"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={300}>\n  <InfoDialogSubtitle\n      speakers={[\n        {name: '史蒂夫', skin: 'entity/player/wide/steve.png', color: '#ffd35a'},\n        {name: '艾利克斯', skin: 'entity/player/wide/alex.png', color: '#ff8fc0'},\n      ]}\n      lines={[\n        {who: 0, text: '小心！前面有一只苦力怕！', tone: 'shout'},\n        {who: 1, text: '放心，我早就准备好了……', tone: 'dots'},\n        {who: 0, text: '你确定？它已经开始冒烟了？', tone: 'ask'},\n        {who: 1, text: '哈哈，看我的！', tone: 'happy'},\n      ]}\n      frames={300}\n    />\n</Sequence>",
+    "source": "src/gallery/fx/info/dialogSubtitle.tsx"
+  },
+  {
+    "id": "info-sponsor-credit",
+    "name": "片尾鸣谢滚动",
+    "kind": "card",
+    "category": "info",
+    "export": "InfoCreditsRoll",
+    "frames": 480,
+    "overlayReady": false,
+    "blurb": "深色星空底，三层星点与流星视差漂移，两侧像素物品列反向滚动；职位与名字两栏向上滚，经过中线的一行被聚光放大，赞助分档着色，最后减速停在“谢谢观看”。",
+    "usage": "视频片尾。自带近乎不透明的暗化星空底，素材基本被盖住（overlayReady 为 false);dim={0} 可去掉暗化，但文字对比度会下降。",
+    "props": [
+      {
+        "name": "sections",
+        "type": "{title: string; rows?: [string, string][]; names?: string[]; tiers?: {label: string; icon: string; color: string; names: string[]}[]}[]",
+        "desc": "名单分区 [{title, rows?: [[职位,名字]], names?: 名字数组, tiers?: [{label, icon, color, names}]}]",
+        "default": "出品/制作/特别鸣谢/赞助名单 四段"
+      },
+      {
+        "name": "closing",
+        "type": "string",
+        "desc": "收尾大字",
+        "default": "'谢谢观看'"
+      },
+      {
+        "name": "heading",
+        "type": "string",
+        "desc": "开场大字",
+        "default": "'制作名单'"
+      },
+      {
+        "name": "headingSub",
+        "type": "string",
+        "desc": "开场大字下的小字",
+        "default": "'C R E D I T S'"
+      },
+      {
+        "name": "farewell",
+        "type": "string",
+        "desc": "收尾大字下的小字",
+        "default": "'下期再见 · 记得三连'"
+      },
+      {
+        "name": "laneItems",
+        "type": "string[]",
+        "desc": "两侧滚动栏的物品 id 列表",
+        "default": "diamond/emerald/gold_ingot 等 12 种矿物"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "desc": "深色星空暗化底的浓度倍数(0 = 无暗化)",
+        "default": "1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "desc": "总帧数,滚动在 frames - 40 处减速停住",
+        "default": "480"
+      },
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画占位底板(PlateA/PlateB,仅用于预览),默认透明叠加层"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效;false 时整个效果不渲染任何 Sfx"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={480}>\n  <InfoCreditsRoll\n      closing=\"谢谢观看\"\n      sections={[\n        {title: '出品', rows: [['导演', '红石阿明'], ['制片', '小蓝同学'], ['监制', '优易库工作室']]},\n        {title: '制作', rows: [['策划', '诺尔'], ['美术', '祖里'], ['动画', '凯'], ['剪辑', '艾利克斯'], ['配乐', '史蒂夫'], ['音效', '末影龙']]},\n        {title: '特别鸣谢', names: ['苦力怕', '僵尸村民', '小白猫', '铁傀儡', '末影人', '所有弹幕的你']},\n        {\n          title: '赞助名单',\n          tiers: [\n            {label: '钻石赞助', icon: 'diamond', color: '#55ffff', names: ['星野', 'BlockMaster', '夜航船']},\n            {label: '黄金赞助', icon: 'gold_ingot', color: '#ffd35a', names: ['小南瓜', 'Pixel_Fox', '三七', '雨后']},\n          ],\n        },\n      ]}\n      frames={480}\n    />\n</Sequence>",
+    "source": "src/gallery/fx/info/credits.tsx"
+  },
+  {
+    "id": "atm-vignette-close",
+    "name": "暗角收紧",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmVignetteClose",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "画面四周由外向内慢慢收紧（ease in-out，到位后轻微回弹），边缘色偏从冷色渐变到暖色，视线被拉向中心。只画边缘，中间保持素材原样。",
+    "usage": "镜头聚焦主体、进入紧张或回忆段落、强调中心信息时叠在素材上。需要画面同时微推近，请自己给素材加 scale。",
+    "props": [
+      {
+        "name": "tint",
+        "type": "'neutral' | 'cold' | 'warm' | 'blood'",
+        "default": "'cold'",
+        "desc": "暗角起始色偏"
+      },
+      {
+        "name": "tintTo",
+        "type": "'neutral' | 'cold' | 'warm' | 'blood' | null",
+        "default": "'warm'",
+        "desc": "收紧过程中渐变到的色偏；null 则不渐变"
+      },
+      {
+        "name": "from",
+        "type": "number",
+        "default": "0.12",
+        "desc": "起始收紧程度 0..1"
+      },
+      {
+        "name": "to",
+        "type": "number",
+        "default": "0.9",
+        "desc": "结束收紧程度 0..1"
+      },
+      {
+        "name": "start",
+        "type": "number",
+        "default": "8",
+        "desc": "开始收紧的帧"
+      },
+      {
+        "name": "dur",
+        "type": "number",
+        "default": "90",
+        "desc": "收紧所用帧数"
+      },
+      {
+        "name": "cx",
+        "type": "number",
+        "default": "0.5",
+        "desc": "焦点 x（0..1）"
+      },
+      {
+        "name": "cy",
+        "type": "number",
+        "default": "0.5",
+        "desc": "焦点 y（0..1）"
+      },
+      {
+        "name": "ringAmount",
+        "type": "number",
+        "default": "1",
+        "desc": "色环强度倍数"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={30} durationInFrames={150}>\n  <AtmVignetteClose tint=\"cold\" tintTo=\"warm\" />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/vignettes.tsx"
+  },
+  {
+    "id": "atm-vignette-breathe",
+    "name": "暗角呼吸",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmVignetteBreathe",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "暗红色暗角随“咚-咚”心跳明暗起伏，心率从 66 逐渐加快到 128，静息暗角也随之缓慢收紧。",
+    "usage": "低血量、被追杀、Boss 战前的紧张氛围；把 tint 换成 cold 可做心理压迫。",
+    "props": [
+      {
+        "name": "bpm0",
+        "type": "number",
+        "default": "66",
+        "desc": "起始心率（次/分钟）"
+      },
+      {
+        "name": "bpm1",
+        "type": "number",
+        "default": "128",
+        "desc": "结束心率（次/分钟）"
+      },
+      {
+        "name": "base",
+        "type": "number",
+        "default": "0.5",
+        "desc": "静息时暗角程度 0..1"
+      },
+      {
+        "name": "depth",
+        "type": "number",
+        "default": "0.4",
+        "desc": "每次心跳额外收紧的幅度"
+      },
+      {
+        "name": "tint",
+        "type": "'neutral' | 'cold' | 'warm' | 'blood'",
+        "default": "'blood'",
+        "desc": "暗角色偏"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "180",
+        "desc": "总帧数，决定心率渐变速度和心跳声范围；应与 Sequence 的 durationInFrames 一致"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={180}>\n  <AtmVignetteBreathe frames={180} bpm0={66} bpm1={128} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/vignettes.tsx"
+  },
+  {
+    "id": "atm-vignette-spotlight",
+    "name": "聚光灯",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmSpotlight",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "画面压暗，只剩一个边缘柔和的圆形聚光，沿预设点依次滑动；移动时被拉成椭圆，落点轻微回弹，光束内有漂浮尘埃。",
+    "usage": "讲解画面时依次指出重点位置、悬疑或舞台式介绍。points 的坐标按 1920×1080 画面的 px 填。",
+    "props": [
+      {
+        "name": "points",
+        "type": "{x: number; y: number; r?: number; at: number}[]",
+        "default": "三个点：(960,420,r430,at0) → (960,835,r300,at70) → (640,985,r250,at118)",
+        "desc": "聚光路径，第一个点是起点；r 为半径 px；at 为到达该点的帧"
+      },
+      {
+        "name": "travel",
+        "type": "number",
+        "default": "28",
+        "desc": "每段移动所用帧数"
+      },
+      {
+        "name": "dark",
+        "type": "number",
+        "default": "0.88",
+        "desc": "光圈外的暗度 0..1"
+      },
+      {
+        "name": "soft",
+        "type": "number",
+        "default": "0.55",
+        "desc": "边缘柔和度 0..1"
+      },
+      {
+        "name": "warm",
+        "type": "number",
+        "default": "0.12",
+        "desc": "边缘暖色光晕强度 0..1"
+      },
+      {
+        "name": "dust",
+        "type": "boolean",
+        "default": "true",
+        "desc": "光束内是否有漂浮尘埃"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={60} durationInFrames={150}>\n  <AtmSpotlight points={[{x: 960, y: 420, r: 430, at: 0}, {x: 600, y: 800, r: 300, at: 80}]} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/vignettes.tsx"
+  },
+  {
+    "id": "atm-letterbox",
+    "name": "电影黑边",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmLetterbox",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "上下黑边滑入，带内侧柔影、轻微暗角和胶片颗粒；下黑边内逐字打出字幕，到点后滑出。黑边本身是不透明的黑条，其余区域透明。",
+    "usage": "剧情或预告片段、过场的电影感；黑边内可直接放字幕。常驻黑边把 outAt 设为 null。",
+    "props": [
+      {
+        "name": "size",
+        "type": "number",
+        "default": "140",
+        "desc": "黑边高度 px（140 约等于 2.4:1）"
+      },
+      {
+        "name": "inAt",
+        "type": "number",
+        "default": "4",
+        "desc": "黑边开始滑入的帧"
+      },
+      {
+        "name": "outAt",
+        "type": "number | null",
+        "default": "142",
+        "desc": "黑边开始滑出的帧；null 则常驻"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'他终于站在了末地传送门前。'",
+        "desc": "黑边内逐字打出的字幕；空字符串则无字幕"
+      },
+      {
+        "name": "subtitleAt",
+        "type": "number",
+        "default": "40",
+        "desc": "字幕开始出现的帧"
+      },
+      {
+        "name": "grain",
+        "type": "number",
+        "default": "0.5",
+        "desc": "胶片颗粒强度 0..1"
+      },
+      {
+        "name": "vignette",
+        "type": "number",
+        "default": "0.5",
+        "desc": "画面暗角强度 0..1"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <AtmLetterbox subtitle=\"他终于站在了末地传送门前。\" outAt={142} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/vignettes.tsx"
+  },
+  {
+    "id": "atm-shake",
+    "name": "震屏",
+    "kind": "util",
+    "category": "atmosphere",
+    "export": "AtmShake",
+    "frames": 150,
+    "overlayReady": false,
+    "blurb": "轻/中/重三档镜头抖动：首帧猛踢、随后衰减，带方向模糊和残影；中/重档从顶部落下尘土碎石并带冲击音效。画面被轻微放大，抖动时边缘不会露底。",
+    "usage": "爆炸、重击、落地、Boss 出场。包裹型组件（需要被抖动的素材，overlayReady 为 false）：用 <AtmShake> 包住世界画面（镜头素材），血条/字幕放在外面保持稳定。ghost 会把 children 渲染两次，children 含 <Audio> 时设 ghost={false}。只想要尘土可单独用 AtmShakeDust。",
+    "props": [
+      {
+        "name": "hits",
+        "type": "{at: number; level: 'light' | 'medium' | 'heavy'; scale?: number}[]",
+        "default": "四次：14 轻、58 中、102 重、118 中（scale 0.7）",
+        "desc": "抖动列表，可多次触发、叠加"
+      },
+      {
+        "name": "blur",
+        "type": "number",
+        "default": "1",
+        "desc": "方向模糊强度 0..1，0 关闭"
+      },
+      {
+        "name": "ghost",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否叠一份上一帧的残影（会重复渲染 children）"
+      },
+      {
+        "name": "dust",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否叠加顶部落下的尘土碎石（中/重档触发）"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "desc": "要抖动的素材（必填）"
+      }
+    ],
+    "example": "<AtmShake hits={[{at: 14, level: 'light'}, {at: 58, level: 'heavy'}]}>\n  <MyShot />\n</AtmShake>",
+    "source": "src/gallery/fx/atmo/camera.tsx"
+  },
+  {
+    "id": "atm-flash",
+    "name": "闪白 / 闪色",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmFlash",
+    "frames": 48,
+    "overlayReady": true,
+    "blurb": "白闪 / 金闪 / 红闪三种：一帧到峰值，白热核心 + 像素十字光芒 + 带色余辉依次衰减，白/金闪伴随像素火星。一个组件一次闪光。",
+    "usage": "爆炸、升级、获得稀有物品（金）、受击或危险（红）、镜头硬切前的闪光。多次闪光用多个 <Sequence> 各放一个。",
+    "props": [
+      {
+        "name": "kind",
+        "type": "'white' | 'gold' | 'red'",
+        "default": "'white'",
+        "desc": "闪光种类"
+      },
+      {
+        "name": "at",
+        "type": "number",
+        "default": "0",
+        "desc": "触发帧（本地帧）"
+      },
+      {
+        "name": "life",
+        "type": "number",
+        "default": "按种类：白 18 / 金 30 / 红 36",
+        "desc": "衰减帧数"
+      },
+      {
+        "name": "peak",
+        "type": "number",
+        "default": "按种类约 0.9",
+        "desc": "峰值强度 0..1"
+      },
+      {
+        "name": "x",
+        "type": "number",
+        "default": "0.5",
+        "desc": "光源 x（0..1）"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "default": "0.5",
+        "desc": "光源 y（0..1）"
+      },
+      {
+        "name": "sparks",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否有像素火星（红闪无火星）"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={62} durationInFrames={70}>\n  <AtmFlash kind=\"gold\" />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/camera.tsx"
+  },
+  {
+    "id": "atm-hurt",
+    "name": "受伤红边",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmHurt",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "受击瞬间红色边缘脉冲，血丝从边缘向内生长并带轻微抖动；血量见底后红边持续缓慢呼吸，并带受击声与心跳低频音。",
+    "usage": "玩家受伤、低血量警示、剧情中的危险时刻。不想要低血量呼吸传 lowFrom={null}。",
+    "props": [
+      {
+        "name": "hits",
+        "type": "{at: number; power?: number}[]",
+        "default": "[{at:10,power:1},{at:56,power:0.75}]",
+        "desc": "受击时刻与力度"
+      },
+      {
+        "name": "lowFrom",
+        "type": "number | null",
+        "default": "92",
+        "desc": "低血量呼吸开始的帧；null 则没有"
+      },
+      {
+        "name": "lowBpm",
+        "type": "number",
+        "default": "46",
+        "desc": "低血量呼吸频率（次/分钟）"
+      },
+      {
+        "name": "low",
+        "type": "number",
+        "default": "0.8",
+        "desc": "低血量红边强度 0..1"
+      },
+      {
+        "name": "veins",
+        "type": "number",
+        "default": "34",
+        "desc": "血丝根数"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "150",
+        "desc": "总帧数，只决定心跳声铺到哪里"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={90} durationInFrames={150}>\n  <AtmHurt hits={[{at: 10, power: 1}]} lowFrom={60} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/camera.tsx"
+  },
+  {
+    "id": "atm-lens-flare",
+    "name": "镜头光斑",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmLensFlare",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "太阳从画面左上滑向右侧，沿镜头光轴拖出方块感光斑（青/洋红/金的空心与实心块）、十字星芒、横向变形拉丝和暖色眩光；首尾淡入淡出。",
+    "usage": "日出日落、仰拍太阳、英雄镜头、片头片尾的电影感点缀。from/to 用 1920×1080 的 px 坐标，可在画面外起止。",
+    "props": [
+      {
+        "name": "from",
+        "type": "{x: number; y: number}",
+        "default": "{x:-140,y:70}",
+        "desc": "太阳路径起点（px）"
+      },
+      {
+        "name": "to",
+        "type": "{x: number; y: number}",
+        "default": "{x:2060,y:360}",
+        "desc": "太阳路径终点（px）"
+      },
+      {
+        "name": "start",
+        "type": "number",
+        "default": "6",
+        "desc": "开始滑动的帧"
+      },
+      {
+        "name": "dur",
+        "type": "number",
+        "default": "136",
+        "desc": "滑动所用帧数"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "整体强度 0..1"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "150",
+        "desc": "总帧数，决定结尾淡出的位置，应与 Sequence 的 durationInFrames 一致"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <AtmLensFlare strength={1} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/lens.tsx"
+  },
+  {
+    "id": "atm-retro-film",
+    "name": "复古胶片",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmRetroFilm",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "老胶片质感：颗粒、扫描线与缓慢滚动的亮带、暖褐边缘暗角、红青边缘色散、漏光、灰尘划痕与闪烁。不传 children 时是纯透明叠加层；传入 children 则先对素材做 RGB 色散、12fps 画面抖动和暖调，再叠加胶片层。",
+    "usage": "回忆、老录像、历史片段、怀旧风格；也可低强度全程使用增加质感。要真正的色散和抖动必须把素材包进 <AtmRetroFilm>（或 AtmRetroFilmWrap，此时素材不透明，不是纯叠加）。",
+    "props": [
+      {
+        "name": "grain",
+        "type": "number",
+        "default": "1",
+        "desc": "颗粒强度 0..1"
+      },
+      {
+        "name": "scan",
+        "type": "number",
+        "default": "1",
+        "desc": "扫描线强度 0..1"
+      },
+      {
+        "name": "vignette",
+        "type": "number",
+        "default": "1",
+        "desc": "暖褐边缘暗角强度 0..1"
+      },
+      {
+        "name": "leaks",
+        "type": "number",
+        "default": "1",
+        "desc": "漏光强度 0..1"
+      },
+      {
+        "name": "dirt",
+        "type": "number",
+        "default": "1",
+        "desc": "灰尘/毛发/划痕强度 0..1"
+      },
+      {
+        "name": "flicker",
+        "type": "number",
+        "default": "1",
+        "desc": "闪烁强度 0..1"
+      },
+      {
+        "name": "leakAt",
+        "type": "[number, number]",
+        "default": "[44, 112]",
+        "desc": "两次漏光的中心帧"
+      },
+      {
+        "name": "amount",
+        "type": "number",
+        "default": "1",
+        "desc": "仅传 children 时有效：色散 + 抖动 + 暖调的强度"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "desc": "可选：要加胶片效果的素材；不传则只是透明叠加层"
+      }
+    ],
+    "example": "<AtmRetroFilm>\n  <MyShot />\n</AtmRetroFilm>\n// 或者只叠加层：<AtmRetroFilm grain={0.6} />",
+    "source": "src/gallery/fx/atmo/lens.tsx"
+  },
+  {
+    "id": "atm-speed-lines",
+    "name": "速度线",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmSpeedLines",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "漫画式放射速度线：中心留空，锐利楔形长线加发丝细线向画面外扩散，每两帧重绘产生“沸腾”感，边缘带白色爆光；冲入后保持并轻微闪动，再冲出。",
+    "usage": "冲刺、高速移动、爆发瞬间、搞笑夸张的高潮点。需要画面同时推近请给素材自己加 scale。",
+    "props": [
+      {
+        "name": "peak",
+        "type": "number",
+        "default": "1",
+        "desc": "冲入完成时的强度峰值 0..1.2"
+      },
+      {
+        "name": "inAt",
+        "type": "number",
+        "default": "6",
+        "desc": "开始冲入的帧"
+      },
+      {
+        "name": "inDur",
+        "type": "number",
+        "default": "14",
+        "desc": "冲入所用帧数"
+      },
+      {
+        "name": "outAt",
+        "type": "number | null",
+        "default": "106",
+        "desc": "开始冲出的帧；null 则一直保持"
+      },
+      {
+        "name": "outDur",
+        "type": "number",
+        "default": "30",
+        "desc": "冲出所用帧数"
+      },
+      {
+        "name": "cx",
+        "type": "number",
+        "default": "0.5",
+        "desc": "放射中心 x（0..1）"
+      },
+      {
+        "name": "cy",
+        "type": "number",
+        "default": "0.5",
+        "desc": "放射中心 y（0..1）"
+      },
+      {
+        "name": "inner",
+        "type": "number",
+        "default": "360",
+        "desc": "中心空白半径 px"
+      },
+      {
+        "name": "color",
+        "type": "[number, number, number]",
+        "default": "[255,255,255]",
+        "desc": "线条颜色 [r,g,b]"
+      },
+      {
+        "name": "lines",
+        "type": "number",
+        "default": "92",
+        "desc": "基础线条数量"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={40} durationInFrames={140}>\n  <AtmSpeedLines color={[255, 230, 120]} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/lens.tsx"
+  },
+  {
+    "id": "atm-particles-blocks",
+    "name": "方块碎屑",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmBlockDebris",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "石头、泥土、苔藓、橡木板、圆石、沙砾的 4×4 材质碎块从上方翻滚落下，近大远小、近处虚化带投影；顶部与四角弥漫尘土，漂浮尘埃云与细小灰尘。可持续循环。",
+    "usage": "挖掘、坍塌、地震、矿洞与废墟镜头、破坏建筑的片段。换 textures 可得到下界、黑曜石等风格碎块。",
+    "props": [
+      {
+        "name": "density",
+        "type": "number",
+        "default": "1",
+        "desc": "碎块密度 0..1.3"
+      },
+      {
+        "name": "wind",
+        "type": "number",
+        "default": "1.2",
+        "desc": "横向风速（px/帧）"
+      },
+      {
+        "name": "dust",
+        "type": "number",
+        "default": "1",
+        "desc": "尘土浓度 0..1"
+      },
+      {
+        "name": "textures",
+        "type": "string[]",
+        "default": "['stone','dirt','moss_block','oak_planks','cobblestone','gravel','oak_planks','stone']",
+        "desc": "方块贴图 id 数组（public/mc/textures/block/ 下的文件名，不含 .png）"
+      },
+      {
+        "name": "start",
+        "type": "number",
+        "default": "0",
+        "desc": "开始下落的帧"
+      },
+      {
+        "name": "prewarm",
+        "type": "number",
+        "default": "30",
+        "desc": "预热帧数，让第 0 帧就有碎块在空中"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={20} durationInFrames={150}>\n  <AtmBlockDebris density={1} textures={['netherrack', 'obsidian']} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/particles.tsx"
+  },
+  {
+    "id": "atm-particles-xp",
+    "name": "经验球",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmXpOrbs",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "满屏绿色经验球冒出、漂浮闪烁，随后沿弧线加速涌向目标点，每颗到达溅出像素火花，最后一颗落下触发升级星爆。组件只画球和火花，经验条与等级数字需自己做。",
+    "usage": "升级前后、击杀怪物、刷经验、获得成就的收尾。tx/ty 对准你的经验条位置；升级星爆约在最后一颗到达后 2 帧。",
+    "props": [
+      {
+        "name": "count",
+        "type": "number",
+        "default": "44",
+        "desc": "经验球数量"
+      },
+      {
+        "name": "gather",
+        "type": "number",
+        "default": "56",
+        "desc": "开始飞向目标的帧"
+      },
+      {
+        "name": "tx",
+        "type": "number",
+        "default": "960",
+        "desc": "汇聚目标 x（px，默认经验条中心）"
+      },
+      {
+        "name": "ty",
+        "type": "number",
+        "default": "914",
+        "desc": "汇聚目标 y（px，默认经验条位置）"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "3",
+        "desc": "随机种子，换一种分布"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <AtmXpOrbs tx={960} ty={914} count={44} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/particles.tsx"
+  },
+  {
+    "id": "atm-fireflies",
+    "name": "萤火虫 / 余烬",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmFireflies",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "黄绿萤火虫三层景深漂浮闪烁；或橙红火星余烬由白黄冷却到暗红向上飘，底部带暖色火光。设 switchAt 可在某一帧从萤火虫交叉渐变为余烬。可持续循环。",
+    "usage": "夜景、森林营地、篝火余烬、战后废墟、下界氛围。画廊演示用 switchAt={78}。",
+    "props": [
+      {
+        "name": "fireflies",
+        "type": "number",
+        "default": "1",
+        "desc": "萤火虫数量 0..1"
+      },
+      {
+        "name": "embers",
+        "type": "number",
+        "default": "0",
+        "desc": "火星余烬数量 0..1"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "2",
+        "desc": "随机分布种子"
+      },
+      {
+        "name": "switchAt",
+        "type": "number",
+        "desc": "从这一帧起交叉渐变为余烬（萤火虫渐隐、余烬渐显）；省略则不切换"
+      },
+      {
+        "name": "switchDur",
+        "type": "number",
+        "default": "30",
+        "desc": "交叉渐变所用帧数"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带音效（余烬出现时的篝火噼啪声）"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={180}>\n  <AtmFireflies fireflies={1} switchAt={78} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/particles.tsx"
+  },
+  {
+    "id": "atm-rain",
+    "name": "雨",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmRain",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "三层斜雨（远细 / 中 / 近粗长拖尾），雨滴落在地面带上贴地飞散的像素水线与飞溅水花，整体偏冷暗化，底部漂着低雾。无音效。可持续循环。",
+    "usage": "阴雨天、悲伤压抑段落、雷暴前奏、赶路镜头。groundY 对准素材里地面的位置（px）。",
+    "props": [
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1",
+        "desc": "雨量密度 0..1.4"
+      },
+      {
+        "name": "wind",
+        "type": "number",
+        "default": "14",
+        "desc": "斜度（度）"
+      },
+      {
+        "name": "groundY",
+        "type": "number",
+        "default": "720",
+        "desc": "地面带起点 y（px），决定落地水花出现的范围"
+      },
+      {
+        "name": "fog",
+        "type": "number",
+        "default": "1",
+        "desc": "低雾浓度 0..1"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "default": "1",
+        "desc": "冷色暗化程度 0..1"
+      },
+      {
+        "name": "lit",
+        "type": "number",
+        "default": "0",
+        "desc": "额外提亮 0..1（雷暴闪光用）"
+      },
+      {
+        "name": "fade",
+        "type": "number",
+        "default": "22",
+        "desc": "淡入帧数，0 = 第 0 帧就下满"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "0",
+        "desc": "随机种子"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <AtmRain intensity={1} groundY={720} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/weather.tsx"
+  },
+  {
+    "id": "atm-snow",
+    "name": "雪",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmSnow",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "远处像素雪点、中景十字雪花、近景虚化大雪团三层飘落，风向忽强忽弱地摆动；落地的小雪粒淡出，画面底边慢慢堆起像素雪层。无音效。可持续循环（积雪在 frames 帧内长到最高）。",
+    "usage": "冬季、雪山、圣诞主题、冷清安静的氛围段落。不要积雪把 pile 设 0。",
+    "props": [
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1",
+        "desc": "雪量密度 0..1.4"
+      },
+      {
+        "name": "wind",
+        "type": "number",
+        "default": "1.6",
+        "desc": "风速（px/帧，负数向左）"
+      },
+      {
+        "name": "groundY",
+        "type": "number",
+        "default": "800",
+        "desc": "落地雪粒出现的区域起点 y（px）"
+      },
+      {
+        "name": "pile",
+        "type": "number",
+        "default": "0.85",
+        "desc": "底边积雪最终高度 0..1，0 关闭"
+      },
+      {
+        "name": "fog",
+        "type": "number",
+        "default": "1",
+        "desc": "雾气浓度 0..1"
+      },
+      {
+        "name": "fade",
+        "type": "number",
+        "default": "20",
+        "desc": "淡入帧数"
+      },
+      {
+        "name": "frames",
+        "type": "number",
+        "default": "150",
+        "desc": "积雪长到最终高度所用的总帧数"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <AtmSnow intensity={1} pile={0.85} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/weather.tsx"
+  },
+  {
+    "id": "atm-thunder",
+    "name": "雷暴",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmThunder",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "暴雨中天色先压暗，随后分叉的像素闪电劈下：多段闪烁、全屏闪白、云层和雨线被照亮、落点溅出电火花，雷声稍后滚到。内含雨层，不需要再叠 AtmRain。",
+    "usage": "恶劣天气、Boss 出场、恐怖或惊吓节点、剧情转折。strikes 的 x0 为闪电顶端 x，(x1,y1) 为落点，均为 1920×1080 的 px。",
+    "props": [
+      {
+        "name": "strikes",
+        "type": "{at: number; x0: number; x1: number; y1: number; seed: number; power?: number}[]",
+        "default": "两道：{at:36,x0:1340,x1:1040,y1:790,seed:4,power:1}、{at:100,x0:470,x1:610,y1:700,seed:9,power:0.7}",
+        "desc": "落雷列表；seed 决定闪电形状，power 为强度 0..1"
+      },
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1.1",
+        "desc": "背景雨量密度"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带雷声"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={150}>\n  <AtmThunder strikes={[{at: 36, x0: 1340, x1: 1040, y1: 790, seed: 4}]} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/weather.tsx"
+  },
+  {
+    "id": "atm-day-night",
+    "name": "昼夜切换",
+    "kind": "overlay",
+    "category": "atmosphere",
+    "export": "AtmDayNight",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "时钟从黎明走到深夜（默认 4.6→21.8 时）：叠加随时间变化的全屏色调、天顶色偏与地平线霞光，太阳和月亮沿弧线划过，夜里星星闪烁并有流星；右上角有时钟读数。只叠色调，不替换背景。",
+    "usage": "时间流逝、“第N天”、从白天跳到夜晚的叙事。只做日落到夜晚可 from={17} to={22}；固定时刻调色用 hour。",
+    "props": [
+      {
+        "name": "from",
+        "type": "number",
+        "default": "4.6",
+        "desc": "起始小时 0..24"
+      },
+      {
+        "name": "to",
+        "type": "number",
+        "default": "21.8",
+        "desc": "结束小时 0..24"
+      },
+      {
+        "name": "start",
+        "type": "number",
+        "default": "4",
+        "desc": "时钟开始走的帧"
+      },
+      {
+        "name": "dur",
+        "type": "number",
+        "default": "168",
+        "desc": "时钟走完所用帧数"
+      },
+      {
+        "name": "showBodies",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否绘制太阳、月亮、星星"
+      },
+      {
+        "name": "hour",
+        "type": "number",
+        "desc": "固定时刻 0..24，给了就忽略 from/to（静态调色）"
+      },
+      {
+        "name": "clock",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示右上角时钟读数"
+      },
+      {
+        "name": "shootingStarAt",
+        "type": "number | null",
+        "default": "118",
+        "desc": "流星出现的帧（需处于夜晚才可见）；null 则无流星"
+      }
+    ],
+    "example": "<Sequence from={0} durationInFrames={180}>\n  <AtmDayNight from={17} to={22} />\n</Sequence>",
+    "source": "src/gallery/fx/atmo/weather.tsx"
+  }
+]

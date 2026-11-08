@@ -1,0 +1,734 @@
+[
+  {
+    "id": "mcd-t-black-cut",
+    "name": "地下城·压黑硬切",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdBlackCut",
+    "frames": 45,
+    "overlayReady": true,
+    "blurb": "A 推近 5% 并褪色，暗角收紧、两道电影黑边合拢，压成纯黑；停顿约 5 帧后硬切到 B，B 从黑里带着曝光回升（带轻微过冲）和 0.95→1.0 的推近落定。",
+    "usage": "【cut 型（覆盖后切换） · bStart=21（B 在转场第 21 帧出现并开始走它的第 0 帧） · 转场本体 45 帧 · 相邻两镜头重叠 24 帧】章节切换、进入关卡、\"开始任务\"式的镜头衔接；最克制也最像地下城的转场，几乎任何画面之间都能用。 透明叠加层 Overlay：有。只含黑场+暗角+电影黑边的包络（不含 A 的推近褪色和 B 的曝光回升）；第 16–20 帧整屏纯黑不透明，其余帧中间透明。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdBlackCut.frames}><TransitionOverlay t={mcdBlackCut} /></Sequence>。",
+    "props": [],
+    "example": "const ShotA = () => <ScenePlate biome=\"forest-day\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"camp\" />;\nconst shots = [\n  {dur: 45 + mcdBlackCut.frames, C: ShotA},\n  {dur: mcdBlackCut.frames - mcdBlackCut.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdBlackCut];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/blackCut.tsx"
+  },
+  {
+    "id": "mcd-t-loading-label",
+    "name": "地下城·目的地加载转场",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdLoadingLabel",
+    "frames": 99,
+    "overlayReady": true,
+    "blurb": "A 压黑后（第 14 帧）切入一段实景加载画面（浅景深 + 缓推的 ScenePlate），左下角方块图标每 0.6 秒换一张贴图、配\"正在前往\"小字与金橙地名，右上角金色骷髅难度徽章；再压黑，第 85 帧硬切到 B。",
+    "usage": "【cut 型（覆盖后切换） · bStart=85（B 在转场第 85 帧出现并开始走它的第 0 帧） · 转场本体 99 帧 · 相邻两镜头重叠 14 帧】前往新地图/新章节/新关卡的衔接，把地名与难度交代给观众。用 makeMcdLoadingLabel({place, caption, difficulty, biome, plateSeed}) 换文字与加载实景；工厂请在模块顶层调用一次。 透明叠加层 Overlay：有。只含两段压黑 + 左下地名/图标 + 右上难度徽章（不含中间的加载实景，那是 Scene 里的 ScenePlate）；第 12–14 帧和第 82–85 帧附近为纯黑，第 14–74 帧中间透明，可把你自己的\"加载镜头\"放在这段下面。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdLoadingLabel.frames}><TransitionOverlay t={mcdLoadingLabel} /></Sequence>。",
+    "props": [
+      {
+        "name": "place",
+        "type": "string",
+        "default": "'苦力怕森林'",
+        "desc": "工厂参数。地名（金橙像素大字），左下角"
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "default": "'正在前往'",
+        "desc": "工厂参数。地名上方的小字"
+      },
+      {
+        "name": "difficulty",
+        "type": "string",
+        "default": "'I'",
+        "desc": "工厂参数。右上角骷髅徽章里的难度罗马数字"
+      },
+      {
+        "name": "biome",
+        "type": "BiomeId",
+        "default": "'forest-day'",
+        "desc": "工厂参数。中段加载实景用哪个 ScenePlate 群系（forest-day/forest-night/desert/nether/end/snow/world-map/camp）"
+      },
+      {
+        "name": "plateSeed",
+        "type": "number",
+        "default": "31",
+        "desc": "工厂参数。加载实景的地形种子"
+      }
+    ],
+    "example": "const loadMap = makeMcdLoadingLabel({place: '末地城', caption: '正在前往', difficulty: 'III', biome: 'end'}); // 模块顶层调用一次，换文字/参数\nconst ShotA = () => <ScenePlate biome=\"camp\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"forest-night\" />;\nconst shots = [\n  {dur: 45 + loadMap.frames, C: ShotA},\n  {dur: loadMap.frames - loadMap.bStart + 45, C: ShotB},\n];\nconst transitions = [loadMap];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/loadingLabel.tsx"
+  },
+  {
+    "id": "mcd-t-portal-whiteout",
+    "name": "地下城·传送门白闪",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdPortalWhiteout",
+    "frames": 78,
+    "overlayReady": true,
+    "blurb": "紫色光从屏幕上方偏右的传送门位置亮起，紫色像素涡旋（六边形外轮廓、20px 色块）从门里涌出、照亮周围并越转越亮，镜头向门推进并轻微震动，约第 40 帧涡旋铺满、第 44 帧整屏纯白并切到 B，B 从白里分 7 级淡出。",
+    "usage": "【cut 型（覆盖后切换） · bStart=44（B 在转场第 44 帧出现并开始走它的第 0 帧） · 转场本体 78 帧 · 相邻两镜头重叠 34 帧】进入下一章/下一关、片头到正片、\"穿越\"类梗；A 画面里最好在右上方（屏幕坐标约 1272,206）有传送门或光源，涡旋出发点固定在这里，是源码常量 PX/PY，无法由 props 修改。 透明叠加层 Overlay：有。紫色光晕 + 像素涡旋 + 白闪；涡旋中心固定在 (1272,206)；第 44–46 帧整屏纯白不透明，之后白色分 7 级退去。不含 A 的推进和 B 的落定。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdPortalWhiteout.frames}><TransitionOverlay t={mcdPortalWhiteout} /></Sequence>。",
+    "props": [],
+    "example": "const ShotA = () => <ScenePlate biome=\"camp\" camera=\"static\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"forest-day\" />;\nconst shots = [\n  {dur: 45 + mcdPortalWhiteout.frames, C: ShotA},\n  {dur: mcdPortalWhiteout.frames - mcdPortalWhiteout.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdPortalWhiteout];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/portalWhiteout.tsx"
+  },
+  {
+    "id": "mcd-t-chest-beam",
+    "name": "地下城·品红光柱冲屏",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdChestBeam",
+    "frames": 60,
+    "overlayReady": true,
+    "blurb": "A 虚化压暗，地板上弹出一只紫色（末影箱贴图）宝箱，抖动后掀盖，品红 #CD2ECD、白核的光柱在 6 帧内冲出并扩满屏幕，第 33 帧整屏转白并硬切到 B，B 从白里分 7 级淡出。",
+    "usage": "【cut 型（覆盖后切换） · bStart=33（B 在转场第 33 帧出现并开始走它的第 0 帧） · 转场本体 60 帧 · 相邻两镜头重叠 27 帧】\"揭晓/开箱/获得新东西\"之前的转场，把观众的视线引到下一镜；重磅内容公布、抽奖、成品展示。宝箱固定在画面中央偏下（x=960，脚底 y=960），不可移动。 透明叠加层 Overlay：有。光柱 + 火星 + 品红泛光 + 白闪，不含宝箱和 A 的虚化压暗；光柱出口固定在画面中央（约 960,637）；第 33–36 帧整屏纯白不透明。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdChestBeam.frames}><TransitionOverlay t={mcdChestBeam} /></Sequence>。",
+    "props": [],
+    "example": "const ShotA = () => <ScenePlate biome=\"snow\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"forest-day\" />;\nconst shots = [\n  {dur: 45 + mcdChestBeam.frames, C: ShotA},\n  {dur: mcdChestBeam.frames - mcdChestBeam.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdChestBeam];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/chestBeam.tsx"
+  },
+  {
+    "id": "mcd-t-title-scramble",
+    "name": "地下城·像素错位拼字标题",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdTitleScramble",
+    "frames": 74,
+    "overlayReady": false,
+    "blurb": "A 在 2 帧内切成纯黑 #060307，金色像素大字先以错位、缺块的状态闪 2 帧再拼合，带挤出的立体边；火星上飘、四角括号、缓慢推近，约第 52 帧开始碎散，第 60 帧硬切到 B，B 从黑里亮起。",
+    "usage": "【cut 型（覆盖后切换） · bStart=60（B 在转场第 60 帧出现并开始走它的第 0 帧） · 转场本体 74 帧 · 相邻两镜头重叠 14 帧】章节标题、\"第 N 期\"、新版本名；预告片式黑场标题卡。用 makeMcdTitleScramble({title, sub}) 换文字；工厂请在模块顶层调用一次。 透明叠加层 Overlay：有，但不透明：整张黑底标题卡（第 3–60 帧铺满画面），可当独立的黑场标题片段，不能叠在素材上，所以 overlayReady=false。",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'下一章'",
+        "desc": "工厂参数。金色像素大标题（字数多时自动缩小）"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "''（不显示）",
+        "desc": "工厂参数。标题下方的小号大写说明字，默认不显示"
+      }
+    ],
+    "example": "const chapterTitle = makeMcdTitleScramble({title: '第二章', sub: '深入下界'}); // 模块顶层调用一次，换文字/参数\nconst ShotA = () => <ScenePlate biome=\"forest-night\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"nether\" />;\nconst shots = [\n  {dur: 45 + chapterTitle.frames, C: ShotA},\n  {dur: chapterTitle.frames - chapterTitle.bStart + 45, C: ShotB},\n];\nconst transitions = [chapterTitle];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/titleScramble.tsx"
+  },
+  {
+    "id": "mcd-t-god-rays",
+    "name": "地下城·金色体积光扫过",
+    "kind": "transition",
+    "category": "mcd-transition-dual",
+    "export": "mcdGodRays",
+    "frames": 56,
+    "overlayReady": true,
+    "blurb": "一道斜 12 度的金色光墙带着体积光束、泛光与暖雾从左向右扫过，光墙前沿就是切换线（左边 B、右边 A）；金色尘粒跟随前沿升起；B 从强光里带着 1.25 倍曝光和 1.04 推近落定。",
+    "usage": "【dual 型（A、B 各自在动） · bStart=0（B 的第 0 帧 = 转场第 0 帧） · 转场本体 56 帧 · 相邻两镜头重叠 56 帧】进入神殿/日出/\"光明降临\"类场景，从冷色画面切到暖色画面；A、B 同时在走时间。 透明叠加层 Overlay：有。只含光墙、体积光束、暖雾、泛光、尘粒（screen 混合，透明底），不含 A/B 的切换和曝光变化，叠到素材上会得到\"光扫过\"但不换镜头。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdGodRays.frames}><TransitionOverlay t={mcdGodRays} /></Sequence>。",
+    "props": [],
+    "example": "const ShotA = () => <ScenePlate biome=\"snow\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"desert\" />;\nconst shots = [\n  {dur: 45 + mcdGodRays.frames, C: ShotA},\n  {dur: mcdGodRays.frames - mcdGodRays.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdGodRays];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/godRays.tsx"
+  },
+  {
+    "id": "mcd-t-haze-push",
+    "name": "地下城·薄雾推过",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdHazePush",
+    "frames": 64,
+    "overlayReady": true,
+    "blurb": "一团两层视差的体积雾带从右侧推过画面，越近地面越浓，雾最厚处完全盖住切换（第 33 帧）；雾中飘着细小光尘，A/B 在雾里褪色并带一点虚化，雾散后 B 缓缓落定。",
+    "usage": "【cut 型（覆盖后切换） · bStart=33（B 在转场第 33 帧出现并开始走它的第 0 帧） · 转场本体 64 帧 · 相邻两镜头重叠 31 帧】时间流逝、天亮/入夜、潜入/穿越山谷等\"悄悄换景\"的衔接；比黑场更柔和，适合氛围向镜头。用 makeMcdHazePush([r,g,b]) 换雾色（下界可用暖红灰，末地可用紫粉）；工厂请在模块顶层调用一次。 透明叠加层 Overlay：有。只含雾带和光尘；雾核心接近不透明，两侧渐变透明，可直接叠在素材上做\"雾推过\"。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdHazePush.frames}><TransitionOverlay t={mcdHazePush} /></Sequence>。",
+    "props": [
+      {
+        "name": "color",
+        "type": "[number, number, number]",
+        "default": "[176, 196, 218]",
+        "desc": "工厂的第一个（位置）参数。雾色 RGB，默认冷灰蓝"
+      }
+    ],
+    "example": "const warmHaze = makeMcdHazePush([220, 150, 140]); // 模块顶层调用一次，换文字/参数\nconst ShotA = () => <ScenePlate biome=\"forest-night\" frameOffset={70} />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"forest-day\" />;\nconst shots = [\n  {dur: 45 + warmHaze.frames, C: ShotA},\n  {dur: warmHaze.frames - warmHaze.bStart + 45, C: ShotB},\n];\nconst transitions = [warmHaze];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/hazePush.tsx"
+  },
+  {
+    "id": "mcd-t-iso-blocks",
+    "name": "地下城·等距方块升起",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdIsoBlocks",
+    "frames": 61,
+    "overlayReady": true,
+    "blurb": "一根根等距体素方块柱（深板岩砖/石砖/圆石/苔石砖等真实贴图，顶 1.0·左 0.78·右 0.60 的面明暗）从地面沿对角线升起，落地时闪一下并轻震；第 34 帧全覆盖时切到 B，随后方块再从另一个对角被拆去，露出 B。",
+    "usage": "【cut 型（覆盖后切换） · bStart=34（B 在转场第 34 帧出现并开始走它的第 0 帧） · 转场本体 61 帧 · 相邻两镜头重叠 27 帧】章节/场景切换、\"搭建/建造\"主题的衔接、模组方块类视频。方块贴图名单和尺寸是源码常量（W=192），不可由 props 改。 透明叠加层 Overlay：有。只含方块（有方块处不透明，其余透明）；第 34–36 帧画面被方块完全盖住；可叠在任何素材上，自己在盖满时剪切。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdIsoBlocks.frames}><TransitionOverlay t={mcdIsoBlocks} /></Sequence>。",
+    "props": [],
+    "example": "const ShotA = () => <ScenePlate biome=\"end\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"forest-day\" />;\nconst shots = [\n  {dur: 45 + mcdIsoBlocks.frames, C: ShotA},\n  {dur: mcdIsoBlocks.frames - mcdIsoBlocks.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdIsoBlocks];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/isoBlocks.tsx"
+  },
+  {
+    "id": "mcd-t-map-zoom",
+    "name": "地下城·世界地图推近",
+    "kind": "transition",
+    "category": "mcd-transition-dual",
+    "export": "mcdMapZoom",
+    "frames": 100,
+    "overlayReady": false,
+    "blurb": "A 被切成六边形缩进米色羊皮纸世界地图（体素沙盘，内部固定使用 world-map 场景）上的起点节点，镜头沿金色虚线飞向目的地的金色六边形骷髅节点，推近后节点放大（第 66 帧起），B 从六边形里长成整个画面。",
+    "usage": "【dual 型（A、B 各自在动） · bStart=66（B 在转场第 66 帧出现并开始走它的第 0 帧） · 转场本体 100 帧 · 相邻两镜头重叠 34 帧】\"前往下一站/下一个地点\"的旅程转场、章节总览。用 makeMcdMapZoom({from, to}) 标注两个节点的地名；工厂请在模块顶层调用一次。B 在第 66 帧才出现，所以 bStart=66（B 的本地第 0 帧对齐它出现的时刻）；如果想让 B 在转场一开始就开始走时间，可写 {...mcdMapZoom, bStart: 0}。节点在沙盘上的位置固定。 透明叠加层 Overlay：无。该转场没有可叠加的透明层（Overlay 为 undefined）；它整体依赖 A、B 被缩放进地图里。",
+    "props": [
+      {
+        "name": "from",
+        "type": "string",
+        "default": "'营地'",
+        "desc": "工厂参数。起点节点下方的地名标牌"
+      },
+      {
+        "name": "to",
+        "type": "string",
+        "default": "'苦力怕森林'",
+        "desc": "工厂参数。终点节点下方的地名标牌"
+      }
+    ],
+    "example": "const journey = makeMcdMapZoom({from: '主城', to: '沙漠神殿'}); // 模块顶层调用一次，换文字/参数\nconst ShotA = () => <ScenePlate biome=\"forest-day\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"desert\" />;\nconst shots = [\n  {dur: 45 + journey.frames, C: ShotA},\n  {dur: journey.frames - journey.bStart + 45, C: ShotB},\n];\nconst transitions = [journey];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/mapZoom.tsx"
+  },
+  {
+    "id": "mcd-t-souls-sweep",
+    "name": "地下城·灵魂群扫过",
+    "kind": "transition",
+    "category": "mcd-transition-dual",
+    "export": "mcdSoulsSweep",
+    "frames": 62,
+    "overlayReady": true,
+    "blurb": "一群白色小鬼脸灵魂拖着青蓝像素拖尾沿对角线（向右上 25°）飞过画面，台阶状的像素波前把 A 换成 B（波前后面是 B），波带里两边画面都被染冷青色调，前沿有一条灵魂青的细光。",
+    "usage": "【dual 型（A、B 各自在动） · bStart=0（B 的第 0 帧 = 转场第 0 帧） · 转场本体 62 帧 · 相邻两镜头重叠 62 帧】灵魂/亡灵/幽冥主题的衔接、从暖色场景切到冷色场景、\"回忆/往生\"类段落。A、B 同时在走时间。 透明叠加层 Overlay：有。灵魂 + 拖尾 + 冷色光带（screen 混合，透明底）；不含 A→B 的波前切换。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdSoulsSweep.frames}><TransitionOverlay t={mcdSoulsSweep} /></Sequence>。",
+    "props": [],
+    "example": "const ShotA = () => <ScenePlate biome=\"nether\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"snow\" />;\nconst shots = [\n  {dur: 45 + mcdSoulsSweep.frames, C: ShotA},\n  {dur: mcdSoulsSweep.frames - mcdSoulsSweep.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdSoulsSweep];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/soulsSweep.tsx"
+  },
+  {
+    "id": "mcd-t-lightning-flash",
+    "name": "地下城·闪电白闪",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdLightningFlash",
+    "frames": 52,
+    "overlayReady": true,
+    "blurb": "夜雨（蓝色像素雨线）里先落下一道小闪电（双闪 + 震屏），紧接着第二道更粗的阶梯折线闪电（白核 #FAFDF5、蓝边 #42A1E0）劈下，整屏白闪，第 25 帧 B 在白光里接手并按台阶状闪烁退去；雷鸣音效跟随。",
+    "usage": "【cut 型（覆盖后切换） · bStart=25（B 在转场第 25 帧出现并开始走它的第 0 帧） · 转场本体 52 帧 · 相邻两镜头重叠 27 帧】夜战/风暴/恐怖氛围的镜头切换、Boss 登场、惊吓点；两道闪电的落点在源码里固定（x≈1330 与 640）。 透明叠加层 Overlay：有。雨 + 两道闪电 + 白闪；第 24–26 帧附近整屏纯白不透明，其余帧透明；可叠在夜景素材上当\"打雷\"特效。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdLightningFlash.frames}><TransitionOverlay t={mcdLightningFlash} /></Sequence>。",
+    "props": [],
+    "example": "const ShotA = () => <ScenePlate biome=\"snow\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"forest-night\" frameOffset={20} />;\nconst shots = [\n  {dur: 45 + mcdLightningFlash.frames, C: ShotA},\n  {dur: mcdLightningFlash.frames - mcdLightningFlash.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdLightningFlash];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/lightningFlash.tsx"
+  },
+  {
+    "id": "mcd-t-ember-curtain",
+    "name": "地下城·下界灰烬幕",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdEmberCurtain",
+    "frames": 66,
+    "overlayReady": true,
+    "blurb": "灰烬与火星从画面底部密集升起，形成一整面由暗灰、绯红、橙、金白逐层过渡的 24px 体素色块幕，幕完全盖住画面时（第 33 帧）切到 B，再带着火星继续向上升走，留下 B；两个镜头在幕里都被染上热浪色。",
+    "usage": "【cut 型（覆盖后切换） · bStart=33（B 在转场第 33 帧出现并开始走它的第 0 帧） · 转场本体 66 帧 · 相邻两镜头重叠 33 帧】进入下界/熔岩/火焰类场景、爆炸后的清场、\"炼狱\"主题的章节切换。 透明叠加层 Overlay：有。色块幕 + 火星（幕盖住画面期间整屏不透明，幕两侧透明）；可叠在素材上做一次\"火幕扫过\"，自己在盖满时剪切。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdEmberCurtain.frames}><TransitionOverlay t={mcdEmberCurtain} /></Sequence>。",
+    "props": [],
+    "example": "const ShotA = () => <ScenePlate biome=\"forest-day\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"nether\" />;\nconst shots = [\n  {dur: 45 + mcdEmberCurtain.frames, C: ShotA},\n  {dur: mcdEmberCurtain.frames - mcdEmberCurtain.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdEmberCurtain];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/emberCurtain.tsx"
+  },
+  {
+    "id": "mcd-t-top-gradient",
+    "name": "地下城·顶部压暗大字标题",
+    "kind": "transition",
+    "category": "mcd-transition-cut",
+    "export": "mcdTopGradient",
+    "frames": 72,
+    "overlayReady": true,
+    "blurb": "画面顶部落下一层压暗渐变（不挡主体），银灰月桂展开，金色大字逐字弹入并带小字说明，月桂里一个白色像素数字，金色火星在横幅里上飘；停留后画面压暗一下，第 44 帧硬切到 B，横幅在 B 上方收起。",
+    "usage": "【cut 型（覆盖后切换） · bStart=44（B 在转场第 44 帧出现并开始走它的第 0 帧） · 转场本体 72 帧 · 相邻两镜头重叠 28 帧】\"任务/章节完成\"的节点、章节标题卡、胜利结算前后的衔接。用 makeMcdTopGradient({title, sub, count}) 换文字；工厂请在模块顶层调用一次。 透明叠加层 Overlay：有，且几乎全透明：只含顶部渐变 + 月桂 + 标题 + 火星，下方画面不被遮挡，最适合直接叠在素材上做\"章节完成\"横幅。 叠到自己素材：<Sequence from={起点} durationInFrames={mcdTopGradient.frames}><TransitionOverlay t={mcdTopGradient} /></Sequence>。",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'章节完成'",
+        "desc": "工厂参数。金色大字标题，逐字弹入"
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "default": "'准备前往下一站'",
+        "desc": "工厂参数。月桂下方的小字说明"
+      },
+      {
+        "name": "count",
+        "type": "string",
+        "default": "'3'",
+        "desc": "工厂参数。月桂里的白色像素大字（章节序号）；传空字符串则不显示"
+      }
+    ],
+    "example": "const chapterDone = makeMcdTopGradient({title: '第一章 完成', sub: '前往沙漠神殿', count: '1'}); // 模块顶层调用一次，换文字/参数\nconst ShotA = () => <ScenePlate biome=\"desert\" />; // 换成你自己的镜头组件\nconst ShotB = () => <ScenePlate biome=\"camp\" />;\nconst shots = [\n  {dur: 45 + chapterDone.frames, C: ShotA},\n  {dur: chapterDone.frames - chapterDone.bStart + 45, C: ShotB},\n];\nconst transitions = [chapterDone];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcd1/topGradient.tsx"
+  },
+  {
+    "id": "mcd-scene-plate",
+    "name": "3D 场景底板 ScenePlate",
+    "kind": "scene",
+    "category": "mcd-scene",
+    "export": "ScenePlate",
+    "frames": 192,
+    "overlayReady": false,
+    "blurb": "8 个预制的 Minecraft Dungeons 风格体素 3D 场景（Canvas 烘焙：真实方块贴图、纹素光照、阴影、点光源、雾、泛光），镜头缓慢移动，粒子/岩浆/水动画可无缝循环；输出满屏 1920x1080 不透明画面。",
+    "usage": "当背景素材（放在 UI/字幕/叠加层下面），或作为转场的 A/B 镜头（见本组所有转场示例）。8 个 biome 取值：forest-day=斜俯视体素白天森林（草叶面片、云影、金色斜射光柱、光尘）；forest-night=青蓝夜林+橘色篝火+萤火+阶梯闪电（帧 40/52/140）+飘升灵魂；desert=红土峡谷与砂岩神殿，暖黄雾、金色光柱、尘埃、旋转绿宝石；nether=深红下界，熔岩湖照亮岩壁与要塞桥、紫色传送门、灰烬与火星；end=紫色虚空悬浮石砖平台，粉白发光立方与上升方块粒子；snow=冰蓝暮色雪地村庄，暖灯笼与篝火、十字雪花；world-map=米色羊皮纸上的等距悬浮岛沙盘（岛屿剖面、瀑布、熔岩、红蘑菇、方块云），一次性单程飞越，默认 240 帧；camp=靛紫夜营地，篝火帐篷石砖墙，黑曜石传送门，宝箱品红光柱，旋转绿宝石。 首帧要烘焙一次场景（数秒，已用 delayRender 等待，同群系同种子只烘焙一次）；同时挂载的 ScenePlate 越少越快。不透明，不能叠在别的素材上，overlayReady=false。",
+    "props": [
+      {
+        "name": "biome",
+        "type": "BiomeId",
+        "desc": "场景群系（必填）：forest-day 白天森林；forest-night 夜丛林；desert 沙漠神殿；nether 下界熔岩；end 末地；snow 雪地村落；world-map 世界地图沙盘；camp 营地与传送门（逐个说明见 usage）"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "该群系自带（forest-day 11 / forest-night 11 / desert 5 / nether 3 / end 9 / snow 4 / camp 6 / world-map 2）",
+        "desc": "地形种子；换一个数字就是另一块地形（同一种子在整支视频里只会烘焙一次）"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192（world-map 为 240）",
+        "desc": "循环帧数；粒子、水/岩浆动画和 drift 镜头严格按它循环。camera 为 push/pull 或一次性 ease/linear 路径时，镜头恰好在 loop 帧走完，所以把 loop 设成镜头时长"
+      },
+      {
+        "name": "camera",
+        "type": "'drift' | 'push' | 'pull' | 'static' | Partial<CameraSpec>",
+        "default": "'drift'",
+        "desc": "镜头：drift=该群系自带的来回缓移（可无缝循环，world-map 例外：它是一次性单程飞越）；push=缓慢推近；pull=缓慢拉远；static=固定；或传 {from,to,mode:'loop'|'ease'|'linear',persp,tilt,sway} 覆盖"
+      },
+      {
+        "name": "dof",
+        "type": "boolean",
+        "default": "false",
+        "desc": "浅景深（上下边缘虚化），只适合加载画面/特写，较慢"
+      },
+      {
+        "name": "dim",
+        "type": "number",
+        "default": "0",
+        "desc": "0..1，在群系自带暗角之上再加的暗角量；放在 UI/字幕下面时用"
+      },
+      {
+        "name": "frameOffset",
+        "type": "number",
+        "default": "0",
+        "desc": "加到当前帧上，让循环从另一个相位开始（两个同群系镜头错开画面）"
+      }
+    ],
+    "example": "const ShotA = () => <ScenePlate biome=\"forest-day\" camera=\"push\" loop={150} />;\nconst ShotB = () => <ScenePlate biome=\"nether\" dim={0.15} />;\nconst shots = [\n  {dur: 45 + mcdGodRays.frames, C: ShotA},\n  {dur: mcdGodRays.frames - mcdGodRays.bStart + 45, C: ShotB},\n];\nconst transitions = [mcdGodRays];\nexport const Demo = () => <TransitionSeries shots={shots} transitions={transitions} />;\n// 合成 durationInFrames = seriesFrames(shots, transitions)",
+    "source": "src/gallery/fx/mcdscene/scenes.tsx"
+  },
+  {
+    "id": "mcd-scene-canvas",
+    "name": "3D 场景画布 SceneCanvas",
+    "kind": "scene",
+    "category": "mcd-scene",
+    "export": "SceneCanvas",
+    "frames": 192,
+    "overlayReady": false,
+    "blurb": "ScenePlate 底下的渲染组件：传入一个 SceneSpec（内置的 8 个在 SCENES[biome]，也可自己写 build/look/geom/camera/post/fx 做新场景），渲染成满屏 1920x1080 的 canvas。",
+    "usage": "需要比 ScenePlate 更细的控制时用：覆盖 camera（Partial<CameraSpec>）、post（Partial<PostSpec>，如 {vignette, dof, sat, contrast}）、seed、loop；或自己组装 SceneSpec 做新群系。普通背景用 ScenePlate 更省事。不透明。",
+    "props": [
+      {
+        "name": "spec",
+        "type": "SceneSpec",
+        "desc": "场景描述（必填）；内置的：SCENES[\"forest-day\" | \"forest-night\" | \"desert\" | \"nether\" | \"end\" | \"snow\" | \"world-map\" | \"camp\"]"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "spec.loop（192，world-map 240）",
+        "desc": "循环帧数"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "spec.seed",
+        "desc": "地形种子"
+      },
+      {
+        "name": "camera",
+        "type": "Partial<CameraSpec>",
+        "desc": "覆盖镜头：{from:{x,y,zoom}, to:{...}, mode:\"loop\"|\"ease\"|\"linear\", persp, tilt, sway}，浅合并到 spec.camera 上"
+      },
+      {
+        "name": "post",
+        "type": "Partial<PostSpec>",
+        "desc": "覆盖后处理：{bloom, vignette, vignetteColor, wash, lift, sat, contrast, dof, haze}"
+      },
+      {
+        "name": "frameOffset",
+        "type": "number",
+        "default": "0",
+        "desc": "加到当前帧上，改变循环相位"
+      },
+      {
+        "name": "style",
+        "type": "React.CSSProperties",
+        "desc": "附加到 canvas 上的样式"
+      }
+    ],
+    "example": "export const Demo = () => <SceneCanvas spec={SCENES.camp} seed={9} loop={90} camera={{mode: 'linear'}} post={{vignette: 0.6}} />;",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-layer",
+    "name": "通用特效画布 FxLayer",
+    "kind": "util",
+    "category": "mcd-fx",
+    "export": "FxLayer",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "透明的 1920x1080 canvas：每帧清空后调用你传入的 draw(ctx, view)，用 mcdFx 里的图元（beam/embers/fireflies/snowfall/motes/souls/lightning/hitSparks/dustPuff/spinItem/portalMotes/godRays/fogBand/cloudShadows）画特效。下面几个叠加层都是它的薄封装。",
+    "usage": "想要的叠加层没有现成封装时用它拼。FxLayer 里网格坐标就是屏幕像素（x 向右，y 向下，z 向上抬高 y），所有周期运动按 loop 帧整数循环，不使用 Math.random。透明底，可直接叠在素材上。",
+    "props": [
+      {
+        "name": "draw",
+        "type": "(ctx: CanvasRenderingContext2D, v: View) => void",
+        "desc": "每帧绘制函数（必填）；v.frame 是本地帧，v.loop 是循环帧数；图元见 mcdFx"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "循环帧数；图元里的周期运动在 loop 帧内走整数个周期"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "1920",
+        "desc": "canvas 像素宽度"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "1080",
+        "desc": "canvas 像素高度"
+      },
+      {
+        "name": "textures",
+        "type": "string[]",
+        "desc": "绘制前需要预加载的方块/物品贴图名（如 \"item/emerald\"），加载完才出画面"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#1b1030, #4a2a1c)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => (\n  <AbsoluteFill>\n    <Bg />\n    <FxLayer\n      loop={120}\n      draw={(ctx, v) => {\n        mcdFx.beam(ctx, v, {x: 960, y: 900, kind: 'orange', width: 110});\n        mcdFx.hitSparks(ctx, v, {x: 960, y: 860, start: 0, seed: 3, n: 18, scale: 1.4});\n      }}\n    />\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-primitives",
+    "name": "特效图元集合 mcdFx",
+    "kind": "util",
+    "category": "mcd-fx",
+    "export": "mcdFx",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "FxLayer 的 draw 里可用的纯函数图元：lightPool、flame、embers、fireflies、snowfall、motes、souls、lightning、beam、hitSparks、dustPuff、spinItem、portalMotes、godRays、fogBand、cloudShadows，以及 cyc、pulse、frac 小工具。",
+    "usage": "只在 <FxLayer draw={(ctx, v) => mcdFx.xxx(ctx, v, {...})} /> 里使用；每个图元的参数类型直接看 fx.ts（均为 (ctx, view, options) 形式，确定性，无 Math.random）。",
+    "props": [],
+    "example": "export const Demo = () => (\n  <AbsoluteFill style={{background: '#0d0a1c'}}>\n    <FxLayer loop={150} draw={(ctx, v) => mcdFx.snowfall(ctx, v, {n: 90, seed: 2, wind: 0.3})} />\n    <FxLayer loop={150} draw={(ctx, v) => mcdFx.beam(ctx, v, {x: 480, y: 900, kind: 'green', width: 90})} />\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/fx.ts"
+  },
+  {
+    "id": "mcd-fx-loot-beam",
+    "name": "战利品光柱 LootBeam",
+    "kind": "overlay",
+    "category": "mcd-fx",
+    "export": "LootBeam",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "游戏里战利品/宝箱那种竖直光柱：软边外辉 + 彩色柱体 + 白色内芯，带火星，从落点向画面上方延伸；透明底。",
+    "usage": "放在\"获得物品/开箱/奖励\"的位置上；落点 (x,y) 是光柱脚底的屏幕像素。grow 0→1 是冲出动画（游戏里 4 帧），想要冲出效果就用 interpolate 把它在前 4 帧从 0 推到 1。",
+    "props": [
+      {
+        "name": "x",
+        "type": "number",
+        "desc": "光柱脚底的屏幕 x（像素，必填）"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "desc": "光柱脚底的屏幕 y（像素，必填）；光柱从这里向上延伸到画面顶"
+      },
+      {
+        "name": "kind",
+        "type": "'magenta' | 'white' | 'green' | 'orange'",
+        "default": "'magenta'",
+        "desc": "光柱颜色：品红 #CD2ECD / 白 / 绿 / 橙"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "96",
+        "desc": "柱体宽度（像素）"
+      },
+      {
+        "name": "grow",
+        "type": "number",
+        "default": "1",
+        "desc": "0..1 冲出进度；1=完全展开"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "循环帧数（火星的周期）"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#150f2e, #3a2562)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => {\n  const f = useCurrentFrame();\n  return (\n    <AbsoluteFill>\n      <Bg />\n      <LootBeam x={960} y={860} kind=\"magenta\" width={120} grow={interpolate(f, [0, 4], [0, 1], {extrapolateRight: 'clamp'})} />\n    </AbsoluteFill>\n  );\n};",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-ember-field",
+    "name": "上升火星 EmberField",
+    "kind": "overlay",
+    "category": "mcd-fx",
+    "export": "EmberField",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "满屏上升的方形火星与灰烬（金/橙/白金三色，随风飘移），透明底。",
+    "usage": "叠在下界、篝火、爆炸后、熔炉等素材上增加热气氛围；n 越大越密，ash 调灰烬占比。",
+    "props": [
+      {
+        "name": "n",
+        "type": "number",
+        "default": "60",
+        "desc": "粒子数量"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "3",
+        "desc": "随机种子（确定性），换一个数字是另一组分布"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "循环帧数；粒子每 loop 帧完整循环一次"
+      },
+      {
+        "name": "ash",
+        "type": "number",
+        "default": "0",
+        "desc": "0..1，灰色灰烬粒子所占比例"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#240a0a, #6a2210)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => (\n  <AbsoluteFill>\n    <Bg />\n    <EmberField n={90} seed={3} ash={0.3} />\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-firefly-field",
+    "name": "萤火虫 FireflyField",
+    "kind": "overlay",
+    "category": "mcd-fx",
+    "export": "FireflyField",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "在画面中部（x 100–1820，y 200–1000）漂浮明灭的黄绿色萤火虫，带光晕，透明底。",
+    "usage": "叠在夜晚森林、沼泽、洞穴素材上；n 调数量。",
+    "props": [
+      {
+        "name": "n",
+        "type": "number",
+        "default": "24",
+        "desc": "萤火虫数量"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "5",
+        "desc": "随机种子（确定性）"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "循环帧数"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#071a24, #12384a)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => (\n  <AbsoluteFill>\n    <Bg />\n    <FireflyField n={36} seed={7} />\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-snow-field",
+    "name": "十字雪花 SnowField",
+    "kind": "overlay",
+    "category": "mcd-fx",
+    "export": "SnowField",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "满屏飘落的十字形像素雪花（远近两层大小/速度不同，带一点风向漂移），透明底。",
+    "usage": "叠在雪地、冬季、寒冷场景素材上；n 调密度。",
+    "props": [
+      {
+        "name": "n",
+        "type": "number",
+        "default": "70",
+        "desc": "雪花数量"
+      },
+      {
+        "name": "seed",
+        "type": "number",
+        "default": "9",
+        "desc": "随机种子（确定性）"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "循环帧数"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#1a2c58, #6f90be)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => (\n  <AbsoluteFill>\n    <Bg />\n    <SnowField n={140} seed={3} />\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-soul-stream",
+    "name": "灵魂流 SoulStream",
+    "kind": "overlay",
+    "category": "mcd-fx",
+    "export": "SoulStream",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "一群白色小鬼脸灵魂拖着青蓝像素拖尾，沿一条弧线从起点飘向终点（起点处散开、终点处汇聚），循环往复，透明底。",
+    "usage": "灵魂收集、击败敌人后灵魂飞向角色/血条/计数器；from 和 to 是屏幕像素坐标。",
+    "props": [
+      {
+        "name": "from",
+        "type": "[number, number]",
+        "desc": "起点屏幕坐标 [x, y]（必填）"
+      },
+      {
+        "name": "to",
+        "type": "[number, number]",
+        "desc": "终点屏幕坐标 [x, y]（必填）"
+      },
+      {
+        "name": "n",
+        "type": "number",
+        "default": "7",
+        "desc": "灵魂数量，均匀错开相位"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "一次飞行所用帧数（每 loop 帧飞完一趟并循环）"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#0a1424, #1d3a52)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => (\n  <AbsoluteFill>\n    <Bg />\n    <SoulStream from={[320, 820]} to={[1560, 240]} n={8} loop={90} />\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-lightning-bolts",
+    "name": "闪电 LightningBolts",
+    "kind": "overlay",
+    "category": "mcd-fx",
+    "export": "LightningBolts",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "游戏风格的阶梯折线闪电（白核、蓝青边、一条分叉），每次落雷带整屏蓝白闪光和落点地面火花，持续约 9 帧，透明底。",
+    "usage": "叠在夜雨/风暴素材上；frames 是落雷发生的本地帧号（相对 loop 取模），x,y 是落点屏幕像素；每次落雷用不同种子，形状各异。想要音效请自己配 thunder。",
+    "props": [
+      {
+        "name": "x",
+        "type": "number",
+        "desc": "落点屏幕 x（必填）"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "desc": "落点屏幕 y（必填）；闪电从画面顶劈到这里"
+      },
+      {
+        "name": "frames",
+        "type": "number[]",
+        "desc": "落雷发生的帧号数组（本地帧，必填），例如 [20, 32, 100]"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "循环帧数；超过 loop 的帧号会重复触发，想只触发一次就把 loop 设得比片段长"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#070d1e, #1c2f58)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => (\n  <AbsoluteFill>\n    <Bg />\n    <LightningBolts x={1330} y={780} frames={[20, 32, 100]} loop={150} />\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-emerald-spin",
+    "name": "旋转绿宝石 EmeraldSpin",
+    "kind": "overlay",
+    "category": "mcd-fx",
+    "export": "EmeraldSpin",
+    "frames": 192,
+    "overlayReady": true,
+    "blurb": "真实绿宝石物品贴图，绕竖轴旋转并上下浮动，带绿色辉光、地面小阴影和闪烁十字星，透明底。",
+    "usage": "货币/奖励/拾取物的展示位；x,y 是物品中心的屏幕像素。loop 帧内转一整圈。",
+    "props": [
+      {
+        "name": "x",
+        "type": "number",
+        "desc": "物品中心屏幕 x（必填）"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "desc": "物品中心屏幕 y（必填）"
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "default": "120",
+        "desc": "物品边长（像素）"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "旋转一圈所用帧数"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#10281c, #2a5a3c)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => (\n  <AbsoluteFill>\n    <Bg />\n    <EmeraldSpin x={960} y={520} size={220} loop={60} />\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  },
+  {
+    "id": "mcd-fx-hit-sparks",
+    "name": "命中火花 HitSparks",
+    "kind": "overlay",
+    "category": "mcd-fx",
+    "export": "HitSparks",
+    "frames": 14,
+    "overlayReady": true,
+    "blurb": "一次短促的命中火花：细长的黄白色矩形从中心向四周迸出并略下坠，中心一个淡出的十字闪光，约 14 帧，透明底（additive）。",
+    "usage": "打击点、碰撞、挖掘命中；用 <Sequence from=... durationInFrames={14}> 摆放，本地第 0 帧（start=0）就是爆发；loop 默认 192，过长的 Sequence 会每 loop 帧重复一次。",
+    "props": [
+      {
+        "name": "x",
+        "type": "number",
+        "desc": "爆发中心屏幕 x（必填）"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "desc": "爆发中心屏幕 y（必填）"
+      },
+      {
+        "name": "start",
+        "type": "number",
+        "default": "0",
+        "desc": "爆发开始的本地帧"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "192",
+        "desc": "循环帧数（start 对它取模，爆发每 loop 帧重复）"
+      }
+    ],
+    "example": "const Bg = () => <AbsoluteFill style={{background: 'linear-gradient(#1c1c24, #3a3a48)'}} />; // 占位素材，换成你自己的镜头\nexport const Demo = () => (\n  <AbsoluteFill>\n    <Bg />\n    <Sequence from={20} durationInFrames={14}>\n      <HitSparks x={960} y={540} />\n    </Sequence>\n    <Sequence from={50} durationInFrames={14}>\n      <HitSparks x={600} y={700} />\n    </Sequence>\n  </AbsoluteFill>\n);",
+    "source": "src/gallery/fx/mcdscene/engine.tsx"
+  }
+]

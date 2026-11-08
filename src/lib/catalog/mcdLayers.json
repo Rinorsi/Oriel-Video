@@ -1,0 +1,2007 @@
+[
+  {
+    "id": "mcd-l-grade-forest",
+    "name": "地下城调色·森林夜",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeForest",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "multiply 100%",
+    "blurb": "原版白天森林被压成青蓝夜色：中心留一块被光托住的亮区，四周深青暗角，蓝灰体积雾沉在地面。",
+    "usage": "推荐混合：正片叠底(multiply) 100%（组件默认已设好）。叠在真实录屏上，再叠搭档层 McdLGradeForestGlow（滤色 80%），素材饱和度 +15~20、对比度 +8。画布本身不透明（白 = 不变），所以必须用 multiply；lights 默认没有，对准素材里的光源。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'multiply'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1",
+        "desc": "整张光影图向中性白淡出的强度 0–1，1 = 完整调色"
+      },
+      {
+        "name": "coreAt",
+        "type": "[number, number]",
+        "desc": "中心亮区位置 [x, y]（0–1），默认按群系预设（居中偏下）"
+      },
+      {
+        "name": "lights",
+        "type": "McdLGradeLight[]",
+        "desc": "额外亮区 [{x, y, r, color?, a?}]：x/y 为 0–1 屏幕坐标，r 为占画面宽度的半径，用来在贴图里“挖”出灯笼/火把/熔岩照亮的地方；默认没有"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-day\" camera=\"static\" />\n  <McdLGradeForest />\n  <McdLGradeForestGlow />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/grade.tsx"
+  },
+  {
+    "id": "mcd-l-grade-forest-glow",
+    "name": "地下城调色·森林夜 · 雾光层",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeForestGlow",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "screen 80%",
+    "blurb": "森林夜调色的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（加色，透明画布）。",
+    "usage": "推荐混合：滤色(screen) 70–80%（组件默认 80%）。与同群系的 McdLGradeForest 叠用；光源位置用 lights 对准素材里的火把/灯笼/熔岩。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "0.8",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "tone",
+        "type": "'cool' | 'forest' | 'nether' | 'end' | 'snow' | 'desert'",
+        "default": "'forest'",
+        "desc": "雾 / 黑位色调"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "整体强度倍率"
+      },
+      {
+        "name": "lights",
+        "type": "McdLBloomLight[]",
+        "desc": "光源列表 [{x, y, color?, size?, a?}]，0–1 屏幕坐标（y 可为负 = 屏外），每个光源套紧(1%)和宽(5%)两层泛光；默认只有左上屏外一盏主光，请对准素材里的灯"
+      },
+      {
+        "name": "keyAt",
+        "type": "[number, number]",
+        "default": "[0, -0.14]",
+        "desc": "不传 lights 时，唯一主光的位置 [x, y]（0–1）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-day\" camera=\"static\" />\n  <McdLGradeForestGlow lights={[{x: 0.32, y: 0.36, size: 1.2}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/glow.tsx"
+  },
+  {
+    "id": "mcd-l-grade-nether",
+    "name": "地下城调色·下界",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeNether",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "multiply 100%",
+    "blurb": "深红压暗配金橙雾，熔岩一侧的亮区被托起，暗角带红。",
+    "usage": "推荐混合：正片叠底(multiply) 100%（组件默认已设好）。叠在真实录屏上，再叠搭档层 McdLGradeNetherGlow（滤色 80%），素材饱和度 +15~20、对比度 +8。画布本身不透明（白 = 不变），所以必须用 multiply；lights 默认没有，对准素材里的光源。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'multiply'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1",
+        "desc": "整张光影图向中性白淡出的强度 0–1，1 = 完整调色"
+      },
+      {
+        "name": "coreAt",
+        "type": "[number, number]",
+        "desc": "中心亮区位置 [x, y]（0–1），默认按群系预设（居中偏下）"
+      },
+      {
+        "name": "lights",
+        "type": "McdLGradeLight[]",
+        "desc": "额外亮区 [{x, y, r, color?, a?}]：x/y 为 0–1 屏幕坐标，r 为占画面宽度的半径，用来在贴图里“挖”出灯笼/火把/熔岩照亮的地方；默认没有"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"nether\" camera=\"static\" />\n  <McdLGradeNether />\n  <McdLGradeNetherGlow />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/grade.tsx"
+  },
+  {
+    "id": "mcd-l-grade-nether-glow",
+    "name": "地下城调色·下界 · 雾光层",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeNetherGlow",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "screen 80%",
+    "blurb": "下界调色的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（加色，透明画布）。",
+    "usage": "推荐混合：滤色(screen) 70–80%（组件默认 80%）。与同群系的 McdLGradeNether 叠用；光源位置用 lights 对准素材里的火把/灯笼/熔岩。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "0.8",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "tone",
+        "type": "'cool' | 'forest' | 'nether' | 'end' | 'snow' | 'desert'",
+        "default": "'nether'",
+        "desc": "雾 / 黑位色调"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "整体强度倍率"
+      },
+      {
+        "name": "lights",
+        "type": "McdLBloomLight[]",
+        "desc": "光源列表 [{x, y, color?, size?, a?}]，0–1 屏幕坐标（y 可为负 = 屏外），每个光源套紧(1%)和宽(5%)两层泛光；默认只有左上屏外一盏主光，请对准素材里的灯"
+      },
+      {
+        "name": "keyAt",
+        "type": "[number, number]",
+        "default": "[0, -0.14]",
+        "desc": "不传 lights 时，唯一主光的位置 [x, y]（0–1）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"nether\" camera=\"static\" />\n  <McdLGradeNetherGlow lights={[{x: 0.32, y: 0.36, size: 1.2}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/glow.tsx"
+  },
+  {
+    "id": "mcd-l-grade-end",
+    "name": "地下城调色·末地",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeEnd",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "multiply 100%",
+    "blurb": "紫色虚空光影：深紫暗部、粉白亮区、紫雾。",
+    "usage": "推荐混合：正片叠底(multiply) 100%（组件默认已设好）。叠在真实录屏上，再叠搭档层 McdLGradeEndGlow（滤色 80%），素材饱和度 +15~20、对比度 +8。画布本身不透明（白 = 不变），所以必须用 multiply；lights 默认没有，对准素材里的光源。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'multiply'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1",
+        "desc": "整张光影图向中性白淡出的强度 0–1，1 = 完整调色"
+      },
+      {
+        "name": "coreAt",
+        "type": "[number, number]",
+        "desc": "中心亮区位置 [x, y]（0–1），默认按群系预设（居中偏下）"
+      },
+      {
+        "name": "lights",
+        "type": "McdLGradeLight[]",
+        "desc": "额外亮区 [{x, y, r, color?, a?}]：x/y 为 0–1 屏幕坐标，r 为占画面宽度的半径，用来在贴图里“挖”出灯笼/火把/熔岩照亮的地方；默认没有"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"end\" camera=\"static\" />\n  <McdLGradeEnd />\n  <McdLGradeEndGlow />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/grade.tsx"
+  },
+  {
+    "id": "mcd-l-grade-end-glow",
+    "name": "地下城调色·末地 · 雾光层",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeEndGlow",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "screen 80%",
+    "blurb": "末地调色的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（加色，透明画布）。",
+    "usage": "推荐混合：滤色(screen) 70–80%（组件默认 80%）。与同群系的 McdLGradeEnd 叠用；光源位置用 lights 对准素材里的火把/灯笼/熔岩。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "0.8",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "tone",
+        "type": "'cool' | 'forest' | 'nether' | 'end' | 'snow' | 'desert'",
+        "default": "'end'",
+        "desc": "雾 / 黑位色调"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "整体强度倍率"
+      },
+      {
+        "name": "lights",
+        "type": "McdLBloomLight[]",
+        "desc": "光源列表 [{x, y, color?, size?, a?}]，0–1 屏幕坐标（y 可为负 = 屏外），每个光源套紧(1%)和宽(5%)两层泛光；默认只有左上屏外一盏主光，请对准素材里的灯"
+      },
+      {
+        "name": "keyAt",
+        "type": "[number, number]",
+        "default": "[0, -0.14]",
+        "desc": "不传 lights 时，唯一主光的位置 [x, y]（0–1）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"end\" camera=\"static\" />\n  <McdLGradeEndGlow lights={[{x: 0.32, y: 0.36, size: 1.2}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/glow.tsx"
+  },
+  {
+    "id": "mcd-l-grade-snow",
+    "name": "地下城调色·雪地",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeSnow",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "multiply 100%",
+    "blurb": "冰蓝夜雪：压低色温，亮区偏白蓝，暗角钴蓝。",
+    "usage": "推荐混合：正片叠底(multiply) 100%（组件默认已设好）。叠在真实录屏上，再叠搭档层 McdLGradeSnowGlow（滤色 80%），素材饱和度 +15~20、对比度 +8。画布本身不透明（白 = 不变），所以必须用 multiply；lights 默认没有，对准素材里的光源。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'multiply'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1",
+        "desc": "整张光影图向中性白淡出的强度 0–1，1 = 完整调色"
+      },
+      {
+        "name": "coreAt",
+        "type": "[number, number]",
+        "desc": "中心亮区位置 [x, y]（0–1），默认按群系预设（居中偏下）"
+      },
+      {
+        "name": "lights",
+        "type": "McdLGradeLight[]",
+        "desc": "额外亮区 [{x, y, r, color?, a?}]：x/y 为 0–1 屏幕坐标，r 为占画面宽度的半径，用来在贴图里“挖”出灯笼/火把/熔岩照亮的地方；默认没有"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"snow\" camera=\"static\" />\n  <McdLGradeSnow />\n  <McdLGradeSnowGlow />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/grade.tsx"
+  },
+  {
+    "id": "mcd-l-grade-snow-glow",
+    "name": "地下城调色·雪地 · 雾光层",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeSnowGlow",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "screen 80%",
+    "blurb": "雪地调色的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（加色，透明画布）。",
+    "usage": "推荐混合：滤色(screen) 70–80%（组件默认 80%）。与同群系的 McdLGradeSnow 叠用；光源位置用 lights 对准素材里的火把/灯笼/熔岩。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "0.8",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "tone",
+        "type": "'cool' | 'forest' | 'nether' | 'end' | 'snow' | 'desert'",
+        "default": "'snow'",
+        "desc": "雾 / 黑位色调"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "整体强度倍率"
+      },
+      {
+        "name": "lights",
+        "type": "McdLBloomLight[]",
+        "desc": "光源列表 [{x, y, color?, size?, a?}]，0–1 屏幕坐标（y 可为负 = 屏外），每个光源套紧(1%)和宽(5%)两层泛光；默认只有左上屏外一盏主光，请对准素材里的灯"
+      },
+      {
+        "name": "keyAt",
+        "type": "[number, number]",
+        "default": "[0, -0.14]",
+        "desc": "不传 lights 时，唯一主光的位置 [x, y]（0–1）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"snow\" camera=\"static\" />\n  <McdLGradeSnowGlow lights={[{x: 0.32, y: 0.36, size: 1.2}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/glow.tsx"
+  },
+  {
+    "id": "mcd-l-grade-desert",
+    "name": "地下城调色·沙漠",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeDesert",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "multiply 100%",
+    "blurb": "暖黄尘雾：整体偏金，暗角焦褐，亮区发白。",
+    "usage": "推荐混合：正片叠底(multiply) 100%（组件默认已设好）。叠在真实录屏上，再叠搭档层 McdLGradeDesertGlow（滤色 80%），素材饱和度 +15~20、对比度 +8。画布本身不透明（白 = 不变），所以必须用 multiply；lights 默认没有，对准素材里的光源。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'multiply'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1",
+        "desc": "整张光影图向中性白淡出的强度 0–1，1 = 完整调色"
+      },
+      {
+        "name": "coreAt",
+        "type": "[number, number]",
+        "desc": "中心亮区位置 [x, y]（0–1），默认按群系预设（居中偏下）"
+      },
+      {
+        "name": "lights",
+        "type": "McdLGradeLight[]",
+        "desc": "额外亮区 [{x, y, r, color?, a?}]：x/y 为 0–1 屏幕坐标，r 为占画面宽度的半径，用来在贴图里“挖”出灯笼/火把/熔岩照亮的地方；默认没有"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"desert\" camera=\"static\" />\n  <McdLGradeDesert />\n  <McdLGradeDesertGlow />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/grade.tsx"
+  },
+  {
+    "id": "mcd-l-grade-desert-glow",
+    "name": "地下城调色·沙漠 · 雾光层",
+    "kind": "overlay",
+    "category": "调色",
+    "export": "McdLGradeDesertGlow",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "screen 80%",
+    "blurb": "沙漠调色的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（加色，透明画布）。",
+    "usage": "推荐混合：滤色(screen) 70–80%（组件默认 80%）。与同群系的 McdLGradeDesert 叠用；光源位置用 lights 对准素材里的火把/灯笼/熔岩。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "0.8",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "tone",
+        "type": "'cool' | 'forest' | 'nether' | 'end' | 'snow' | 'desert'",
+        "default": "'desert'",
+        "desc": "雾 / 黑位色调"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "整体强度倍率"
+      },
+      {
+        "name": "lights",
+        "type": "McdLBloomLight[]",
+        "desc": "光源列表 [{x, y, color?, size?, a?}]，0–1 屏幕坐标（y 可为负 = 屏外），每个光源套紧(1%)和宽(5%)两层泛光；默认只有左上屏外一盏主光，请对准素材里的灯"
+      },
+      {
+        "name": "keyAt",
+        "type": "[number, number]",
+        "default": "[0, -0.14]",
+        "desc": "不传 lights 时，唯一主光的位置 [x, y]（0–1）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"desert\" camera=\"static\" />\n  <McdLGradeDesertGlow lights={[{x: 0.32, y: 0.36, size: 1.2}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/glow.tsx"
+  },
+  {
+    "id": "mcd-l-bloom-fog",
+    "name": "泛光 + 体积雾",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLBloomFog",
+    "frames": 180,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "给黑位染上群系色相，地面沉一层缓慢飘动的雾，光源周围套紧(1%)和宽(5%)两层泛光。加色，透明画布。",
+    "usage": "推荐混合：滤色(screen) 60–100%（组件默认 100%）。lights 用 0–1 屏幕坐标对准素材里的火把/灯笼/熔岩；不传时只有左上角一盏屏外主光。tone 选与场景匹配的色调。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "180",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "tone",
+        "type": "'cool' | 'forest' | 'nether' | 'end' | 'snow' | 'desert'",
+        "default": "'cool'",
+        "desc": "雾 / 黑位色调"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "整体强度倍率"
+      },
+      {
+        "name": "lights",
+        "type": "McdLBloomLight[]",
+        "desc": "光源列表 [{x, y, color?, size?, a?}]，0–1 屏幕坐标（y 可为负 = 屏外），每个光源套紧(1%)和宽(5%)两层泛光；默认只有左上屏外一盏主光，请对准素材里的灯"
+      },
+      {
+        "name": "keyAt",
+        "type": "[number, number]",
+        "default": "[0, -0.14]",
+        "desc": "不传 lights 时，唯一主光的位置 [x, y]（0–1）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"camp\" camera=\"static\" />\n  <McdLBloomFog tone=\"cool\" lights={[{x: 0.31, y: 0.35, color: '#ffc870', a: 0.7}, {x: 0.66, y: 0.73, color: '#ffc870', a: 0.7}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/glow.tsx"
+  },
+  {
+    "id": "mcd-l-god-rays",
+    "name": "金色 God Rays",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLGodRays",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "#e2ae4b 金色斜射光柱缓慢摆动，光柱里浮着方形尘埃。光源在左上角，flip 可镜像到右上角。",
+    "usage": "推荐混合：滤色(screen) 70–100%（组件默认 100%）。素材里有树荫/窗洞/洞口时最合适。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "强度倍率"
+      },
+      {
+        "name": "n",
+        "type": "number",
+        "default": "6",
+        "desc": "光柱数量"
+      },
+      {
+        "name": "angle",
+        "type": "number",
+        "default": "15",
+        "desc": "倾斜角度（度），负数向另一侧倾斜"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "'#e2ae4b'",
+        "desc": "光柱主色"
+      },
+      {
+        "name": "dust",
+        "type": "boolean",
+        "default": "true",
+        "desc": "光柱里是否飘方形尘埃"
+      },
+      {
+        "name": "flip",
+        "type": "boolean",
+        "default": "false",
+        "desc": "水平镜像：true 时光从右上角射入（默认左上角）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"camp\" camera=\"static\" />\n  <McdLGodRays angle={18} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/light.tsx"
+  },
+  {
+    "id": "mcd-l-tiltshift",
+    "name": "移轴浅景深",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLTiltShift",
+    "frames": 180,
+    "overlayReady": false,
+    "blend": "normal 100%（包裹素材，不是叠加层）",
+    "blurb": "上下边缘渐隐模糊 + 冷色雾化 + 轻微暗角，把大场景压成“小积木世界”。",
+    "usage": "特写/过场镜头。这是「包裹组件」：把素材作为 children 放进 <McdLTiltShift>，用 backdrop-filter 得到真模糊，所以不能当独立透明叠加层。只想要雾化 + 暗角（不含模糊）时用 McdLTiltHaze（normal 100%，另有导出）。",
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "desc": "要做移轴的素材（上下边缘会变模糊）"
+      },
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "180",
+        "desc": "雾化/暗角层的循环周期（帧）"
+      },
+      {
+        "name": "blur",
+        "type": "number",
+        "default": "7",
+        "desc": "最大模糊像素"
+      },
+      {
+        "name": "top",
+        "type": "number",
+        "default": "0.26",
+        "desc": "上方模糊带占画面高度比例"
+      },
+      {
+        "name": "bottom",
+        "type": "number",
+        "default": "0.24",
+        "desc": "下方模糊带占画面高度比例"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "冷色雾化与暗角强度倍率"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <McdLTiltShift blur={9}>\n    <ScenePlate biome=\"forest-day\" camera=\"static\" />\n  </McdLTiltShift>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/light.tsx"
+  },
+  {
+    "id": "mcd-l-loot-beams",
+    "name": "稀有度光柱",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLLootBeams",
+    "frames": 180,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "白 / 绿 / 橙 / 品红光柱 4 帧冲出，白核硬边，底部光斑，细十字粒子上喷。",
+    "usage": "推荐混合：滤色(screen) 100%（组件默认）。beams 指定落地点（1920×1080 像素坐标）和颜色，at 指定冲出帧。默认 4 根光柱的位置只是对着画廊底板写的示例，请换成你素材里的点。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "180",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "beams",
+        "type": "McdLBeam[]",
+        "default": "4 根示例光柱",
+        "desc": "光柱列表 [{x, y, kind?, at?, end?, width?}]：x/y 落地点像素坐标(1920×1080)，kind 'white'|'green'|'orange'|'magenta'，at 冲出帧，end 开始渐隐的帧，width 宽度（默认 92）"
+      },
+      {
+        "name": "fadeOut",
+        "type": "number",
+        "default": "14",
+        "desc": "消失渐隐帧数"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"camp\" camera=\"static\" />\n  <McdLLootBeams beams={[{x: 700, y: 800, kind: 'orange', at: 10}, {x: 1300, y: 760, kind: 'magenta', at: 30}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/fx.tsx"
+  },
+  {
+    "id": "mcd-l-souls-drift",
+    "name": "灵魂飘浮",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLSoulsDrift",
+    "frames": 240,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "白色小鬼脸带青蓝拖尾，沿弧线缓慢飘过画面，远近两条通道。",
+    "usage": "推荐混合：滤色(screen) 100%（组件默认）。夜景、击败敌人、墓地/下界类镜头。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "240",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "强度（透明度倍率）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdLSoulsDrift />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/fx.tsx"
+  },
+  {
+    "id": "mcd-l-embers",
+    "name": "下界灰烬火星",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLEmbers",
+    "frames": 180,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "红橙火星与灰红碎屑三层景深上飘，小方块、细长片，大颗带光晕。",
+    "usage": "推荐混合：滤色(screen) 100%（组件默认）。下界、熔炉、Boss 战。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "180",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "density",
+        "type": "number",
+        "default": "1.8",
+        "desc": "粒子密度倍率"
+      },
+      {
+        "name": "wind",
+        "type": "number",
+        "default": "0.22",
+        "desc": "横向风"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"nether\" camera=\"static\" />\n  <McdLEmbers density={2.2} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/fx.tsx"
+  },
+  {
+    "id": "mcd-l-embers-gold",
+    "name": "金色火星",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLEmbersGold",
+    "frames": 180,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "金色火星上飘（同一套粒子，金色色带，无灰烬碎屑）。",
+    "usage": "推荐混合：滤色(screen) 100%（组件默认）。标题卡、胜利结算、营地篝火。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "180",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "density",
+        "type": "number",
+        "default": "1.8",
+        "desc": "粒子密度倍率"
+      },
+      {
+        "name": "wind",
+        "type": "number",
+        "default": "0.22",
+        "desc": "横向风"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"camp\" camera=\"static\" />\n  <McdLEmbersGold />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/fx.tsx"
+  },
+  {
+    "id": "mcd-l-lightning-storm",
+    "name": "夜丛林闪电",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLLightningStorm",
+    "frames": 240,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "阶梯折线闪电、双次泛闪、远处地平线泛光，间隔不规则。",
+    "usage": "推荐混合：滤色(screen) 100%（组件默认）。夜丛林/暴风雨/Boss 登场。strikes 的 frame 按 loop 循环；默认 6 次雷击的位置只是示例，x/y 为 0–1 落点。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "240",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "strikes",
+        "type": "McdLStrike[]",
+        "default": "6 次示例雷击",
+        "desc": "雷击列表 [{frame, x, y, seed, kind?}]：frame 落雷帧，x/y 为 0–1 落点，seed 决定闪电形状，kind 'bolt'(默认,完整闪电) | 'far'(远处地平线泛光)"
+      },
+      {
+        "name": "flash",
+        "type": "number",
+        "default": "1",
+        "desc": "全屏泛闪强度倍率"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdLLightningStorm strikes={[{frame: 30, x: 0.6, y: 0.62, seed: 3}, {frame: 120, x: 0.25, y: 0.4, seed: 5, kind: 'far'}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/fx.tsx"
+  },
+  {
+    "id": "mcd-l-hurt-vignette",
+    "name": "受伤/低血量晕影",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLHurtVignette",
+    "frames": 180,
+    "overlayReady": true,
+    "blend": "normal 100%",
+    "blurb": "四周猩红径向晕影随心跳（双搏）脉动，开头一次受击重闪。",
+    "usage": "推荐混合：正常(normal) 100%（组件默认，普通 alpha 叠加）。低血量/受击段落。hitAt 传 null 去掉受击闪。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "180",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'normal'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "hp",
+        "type": "number",
+        "default": "0.85",
+        "desc": "危险度 0–1（越大晕影越深）"
+      },
+      {
+        "name": "beats",
+        "type": "number",
+        "default": "3",
+        "desc": "一个循环内心跳次数"
+      },
+      {
+        "name": "hitAt",
+        "type": "number | null",
+        "default": "14",
+        "desc": "受击重闪发生的帧；null = 没有受击闪"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "'#b02636'",
+        "desc": "晕影主色"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-day\" camera=\"static\" />\n  <McdLHurtVignette hp={0.9} hitAt={12} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/light.tsx"
+  },
+  {
+    "id": "mcd-l-dust-motes",
+    "name": "空气尘埃光斑",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLDustMotes",
+    "frames": 210,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "三层景深的方形尘埃缓慢漂浮，前景是柔和的六边形光斑。",
+    "usage": "推荐混合：滤色(screen) 60–100%（组件默认 100%）。沙漠神殿、矿洞、光束下。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "210",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "'#f6d98a'",
+        "desc": "尘埃主色"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "强度倍率"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"camp\" camera=\"static\" />\n  <McdLDustMotes />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/light.tsx"
+  },
+  {
+    "id": "mcd-l-torch-glow",
+    "name": "火把/篝火暖光",
+    "kind": "overlay",
+    "category": "氛围光效",
+    "export": "McdLTorchGlow",
+    "frames": 180,
+    "overlayReady": true,
+    "blend": "screen 100%",
+    "blurb": "台阶状方块光斑（菱形光域）+ 柔和暖光 + 白热核心 + 上飘火星，摇曳闪烁。",
+    "usage": "推荐混合：滤色(screen) 100%（组件默认）。torches 对准素材中的火把/篝火（1920×1080 像素坐标）；默认 5 个位置只是对着画廊底板写的示例。",
+    "props": [
+      {
+        "name": "loop",
+        "type": "number",
+        "default": "180",
+        "desc": "循环周期（帧）：效果每 loop 帧精确循环一次，片段比它长就无缝重复"
+      },
+      {
+        "name": "blend",
+        "type": "CSSProperties[\"mixBlendMode\"]",
+        "default": "'screen'",
+        "desc": "混合模式（CSS mix-blend-mode）；默认是该层推荐模式。导出透明层到剪辑软件自己混合时传 'normal'"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "desc": "整层不透明度 0–1"
+      },
+      {
+        "name": "torches",
+        "type": "McdLTorch[]",
+        "default": "5 个示例火源",
+        "desc": "火源列表 [{x, y, size?, kind?}]：x/y 火焰像素位置(1920×1080)，size 大小倍率(默认 1)，kind 'torch'|'camp'|'soul'|'lava'"
+      },
+      {
+        "name": "strength",
+        "type": "number",
+        "default": "1",
+        "desc": "强度倍率"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"camp\" camera=\"static\" />\n  <McdLTorchGlow torches={[{x: 600, y: 400, kind: 'torch'}, {x: 1290, y: 800, kind: 'camp'}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd3/fx.tsx"
+  },
+  {
+    "id": "mcd-v-modpack-brief",
+    "name": "整合包简报卡",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVModpackBrief",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "红棕晕光上的斜切暗面板：场景头图与标签、硬阴影包名逐字砸下，模组数滚动、推荐配置、I–VII 六边形难度条上选中节点逐级跳升并挂上书签尾，奖励物品槽依次弹出，最后绿色「出发」按钮点亮。",
+    "usage": "整合包/冒险地图视频开场介绍配置、难度和奖励。背景透明（面板自身不透明），可叠在任何画面上；全部文字、数字、物品都是 props。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'深渊远征'",
+        "desc": "整合包名（逐字砸下）"
+      },
+      {
+        "name": "tagline",
+        "type": "string",
+        "default": "'从主世界到末地的硬核冒险，247 个模组，一个存档。'",
+        "desc": "一句话简介"
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "default": "'v2.4.1'",
+        "desc": "版本号徽章"
+      },
+      {
+        "name": "mods",
+        "type": "number",
+        "default": "247",
+        "desc": "模组数量（会滚动计数）"
+      },
+      {
+        "name": "spec",
+        "type": "string",
+        "default": "'16 GB 内存 · 4 核心'",
+        "desc": "推荐配置"
+      },
+      {
+        "name": "gameVer",
+        "type": "string",
+        "default": "'1.21.1 NeoForge'",
+        "desc": "游戏版本与加载器"
+      },
+      {
+        "name": "difficulty",
+        "type": "number",
+        "default": "4",
+        "desc": "难度 1–7，难度条选中的节点（I–VII）"
+      },
+      {
+        "name": "rewards",
+        "type": "string[]",
+        "default": "['netherite_ingot','totem_of_undying','enchanted_book','diamond_sword','golden_apple']",
+        "desc": "奖励物品 id（item 贴图名），建议 5–6 个"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "default": "'整合包简报'",
+        "desc": "头图左上标签"
+      },
+      {
+        "name": "button",
+        "type": "string",
+        "default": "'出发'",
+        "desc": "绿色按钮文字"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "default": "'nether'",
+        "desc": "头图场景群系"
+      },
+      {
+        "name": "modsLabel",
+        "type": "string",
+        "default": "'MODS 模组数量'",
+        "desc": "小标题"
+      },
+      {
+        "name": "specLabel",
+        "type": "string",
+        "default": "'RECOMMENDED 推荐配置'",
+        "desc": "小标题"
+      },
+      {
+        "name": "versionLabel",
+        "type": "string",
+        "default": "'VERSION 游戏版本'",
+        "desc": "小标题"
+      },
+      {
+        "name": "difficultyLabel",
+        "type": "string",
+        "default": "'难度 DIFFICULTY'",
+        "desc": "难度条上方小标题"
+      },
+      {
+        "name": "levelPrefix",
+        "type": "string",
+        "default": "'冒险'",
+        "desc": "难度名称前缀，后接罗马数字"
+      },
+      {
+        "name": "facts",
+        "type": "string[]",
+        "desc": "难度条下方三行说明（第一行大字）；不传按 difficulty 自动算出「推荐战力 / 难度倍率 / 预计时长」"
+      },
+      {
+        "name": "rewardsLabel",
+        "type": "string",
+        "default": "'奖励 REWARDS'",
+        "desc": "奖励栏小标题"
+      },
+      {
+        "name": "threatMobs",
+        "type": "MobId[]",
+        "default": "['creeper','zombie','skeleton']",
+        "desc": "头图里红描边的怪物"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVModpackBrief name=\"星海远航\" tagline=\"五十个模组，一座漂浮的星港。\" version=\"v1.3.0\" mods={58} difficulty={5} rewards={['diamond_sword','golden_apple','totem_of_undying']} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/modpackBrief.tsx"
+  },
+  {
+    "id": "mcd-v-episode-list",
+    "name": "本期目录",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVEpisodeList",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "左侧斜切暗面板里的章节列表：六边形序号沿竖向进度轨道逐项点亮，已完成的变绿打勾，当前章节金色高亮并扫光、标 NOW，其余变暗；右侧金框菱形显示当前章节的物品预览。",
+    "usage": "视频开头的章节预览，或中途「我们现在到第几章」的进度提示；背景透明，直接盖在素材上（面板自带半透明暗底）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'本期目录'",
+        "desc": "标题"
+      },
+      {
+        "name": "episode",
+        "type": "string",
+        "default": "'EPISODE 07'",
+        "desc": "期数标签"
+      },
+      {
+        "name": "items",
+        "type": "McdVEpisodeItem[]",
+        "default": "5 个示例章节",
+        "desc": "章节数组 [{title, time}]，建议 4–6 项"
+      },
+      {
+        "name": "current",
+        "type": "number",
+        "default": "2",
+        "desc": "当前章节序号（0 起）：之前的打勾，之后的变暗"
+      },
+      {
+        "name": "preview",
+        "type": "string",
+        "default": "'netherite_pickaxe'",
+        "desc": "右侧菱形里的预览物品 id"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "default": "'forest-night'",
+        "desc": "预览底板群系（bg 为 true 时）"
+      },
+      {
+        "name": "countText",
+        "type": "string",
+        "desc": "副标题；不传为「共 N 章」"
+      },
+      {
+        "name": "nowTag",
+        "type": "string",
+        "default": "'NOW'",
+        "desc": "当前章节高亮上的小标签"
+      },
+      {
+        "name": "progressLabel",
+        "type": "string",
+        "default": "'正在进行'",
+        "desc": "右侧预览下方小标题"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVEpisodeList episode=\"EPISODE 12\" current={1} preview=\"diamond_sword\" items={[{title: '开箱与出生点', time: '00:00'}, {title: '第一个据点', time: '03:20'}, {title: '洞穴探险', time: '08:05'}, {title: '终局之战', time: '14:40'}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/episodeList.tsx"
+  },
+  {
+    "id": "mcd-v-objectives",
+    "name": "目标清单",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVObjectives",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "屏幕右上角的任务目标：金色章节行加骷髅六边形，目标条目逐条从右侧滑入，完成时方框变绿打勾并划线置灰；新增一条目标时整行金色闪烁、迸出火星，同时画面上方居中浮出「新目标」大字再淡出。",
+    "usage": "冒险/整合包视频里提示「现在要做什么」：叠在录屏右上角即可，背景透明；用 items 的 appear/done 帧号对齐剧情（appear 最晚的一条会触发金闪与居中提示）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "chapter",
+        "type": "string",
+        "default": "'第三章 · 末地要塞'",
+        "desc": "金色章节/地点行"
+      },
+      {
+        "name": "items",
+        "type": "McdVObjective[]",
+        "default": "4 条示例目标",
+        "desc": "目标数组 [{text, appear, done?}]：appear 出现帧、done 打勾帧"
+      },
+      {
+        "name": "announceLabel",
+        "type": "string",
+        "default": "'新目标'",
+        "desc": "居中提示的金色小标题"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "default": "'forest-night'",
+        "desc": "预览底板群系（bg 为 true 时）"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVObjectives chapter=\"第一章 · 出生点\" announceLabel=\"新任务\" items={[{text: '砍 10 块木头', appear: 10, done: 70}, {text: '合成工作台', appear: 30, done: 100}, {text: '在天黑前造好庇护所', appear: 110}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/objectives.tsx"
+  },
+  {
+    "id": "mcd-v-stats-tally",
+    "name": "本期数据结算",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVStatsTally",
+    "frames": 190,
+    "overlayReady": true,
+    "blurb": "金色「本期完成」+白色标题，左右各两张深色统计卡（死亡次数、击杀数、用时、探索度）逐张滚动计数并金边闪一下；中间菱形框里是玩家头像，计数结束后评级 S/A/B 带白闪、像素十字光与碎屑砸落，菱形变金、月桂展开；底部橙色总评条、绿宝石/灵魂计数与右下金框宝箱收尾。",
+    "usage": "一期视频/一次挑战的结尾结算，做挑战类视频的片尾最合适。默认背景透明（原画廊版带黑场淡入，bg=true 时才有）；整屏布局，建议盖在压暗的素材或纯色上，标 overlayReady:true 但不适合叠在亮画面上。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'本期完成'",
+        "desc": "金色小标题"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "default": "'深渊远征 · 第七期'",
+        "desc": "白色大标题"
+      },
+      {
+        "name": "player",
+        "type": "string",
+        "default": "'阿远'",
+        "desc": "玩家名"
+      },
+      {
+        "name": "skin",
+        "type": "string",
+        "default": "'efe'",
+        "desc": "玩家皮肤 id（steve/alex/efe/zuri/kai…）"
+      },
+      {
+        "name": "level",
+        "type": "number",
+        "default": "12",
+        "desc": "等级徽章"
+      },
+      {
+        "name": "rank",
+        "type": "'S' | 'A' | 'B' | 'C'",
+        "default": "'S'",
+        "desc": "评级：金/橙/绿/银 菱形与月桂"
+      },
+      {
+        "name": "stats",
+        "type": "{deaths: number; kills: number; seconds: number; explore: number}",
+        "default": "{deaths: 3, kills: 1284, seconds: 1342, explore: 87}",
+        "desc": "四个统计目标值，按顺序滚动（seconds 显示为 mm:ss，explore 为百分比）"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "default": "'camp'",
+        "desc": "预览底板群系（bg 为 true 时）"
+      },
+      {
+        "name": "labels",
+        "type": "[string, string, string, string]",
+        "default": "['死亡次数','击杀数','用时','探索度']",
+        "desc": "四张统计卡标题"
+      },
+      {
+        "name": "summaryLabel",
+        "type": "string",
+        "default": "'本期总评'",
+        "desc": "橙色总评条左侧标题"
+      },
+      {
+        "name": "nextText",
+        "type": "string",
+        "desc": "总评条右侧小字；不传为「下一等级 Next Rank: ${level+1}」"
+      },
+      {
+        "name": "progress",
+        "type": "number",
+        "default": "0.78",
+        "desc": "总评条填充比例 0–1"
+      },
+      {
+        "name": "emeralds",
+        "type": "number",
+        "default": "842",
+        "desc": "绿宝石计数目标值"
+      },
+      {
+        "name": "souls",
+        "type": "number",
+        "default": "36",
+        "desc": "灵魂计数目标值"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVStatsTally title=\"挑战完成\" subtitle=\"无伤通关挑战\" player=\"小林\" skin=\"steve\" rank=\"A\" level={20} stats={{deaths: 0, kills: 312, seconds: 905, explore: 64}} emeralds={120} souls={8} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/statsTally.tsx"
+  },
+  {
+    "id": "mcd-v-mob-card",
+    "name": "生物/Boss介绍卡",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVMobCard",
+    "frames": 168,
+    "overlayReady": true,
+    "blurb": "左侧红描边黑色剪影被四角括号锁定、红光脉动，随后真实 Minecraft 贴图自脚底向上分格扫出（末影人眼睛亮紫光）；右侧斜切卡片滑入：红色类别标签、硬阴影名牌逐字落下、简介、生命/伤害/速度三个六边形自底向上填充并滚数，最后是橙框弱点物品槽。",
+    "usage": "视频里第一次出现某个怪物或 Boss 时的介绍；boss=true 会在顶部加 Boss 血条。不传文案时按 mob 使用该生物的默认中文文案，可逐项覆盖。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "mob",
+        "type": "'creeper' | 'zombie' | 'husk' | 'skeleton' | 'wither_skeleton' | 'enderman'",
+        "default": "'creeper'",
+        "desc": "决定使用哪张真实贴图和默认文案"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "desc": "中文名；不传用该生物默认名"
+      },
+      {
+        "name": "en",
+        "type": "string",
+        "desc": "英文小标题"
+      },
+      {
+        "name": "kind",
+        "type": "string",
+        "desc": "红色类别标签（如「敌对生物」）"
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "desc": "一句简介"
+      },
+      {
+        "name": "stats",
+        "type": "McdVMobStat[]",
+        "desc": "三个六边形属性 [{label, value, ratio(0–1 填充高度), color, icon(像素点阵行)}]；不传用该生物默认"
+      },
+      {
+        "name": "weak",
+        "type": "string[]",
+        "desc": "弱点物品 id（item 贴图名）"
+      },
+      {
+        "name": "boss",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否画顶部 Boss 血条"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "desc": "预览底板群系（bg 为 true 时）；不传用该生物默认"
+      },
+      {
+        "name": "weakLabel",
+        "type": "string",
+        "default": "'弱点 WEAKNESS'",
+        "desc": "弱点栏小标题"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVMobCard mob=\"wither_skeleton\" boss name=\"凋灵骷髅队长\" desc=\"要塞的守卫。带上牛奶，别站在原地不动。\" />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/mobCard.tsx"
+  },
+  {
+    "id": "mcd-v-compare",
+    "name": "对比卡 A 对 B",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVCompare",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "两块斜切面板夹着中间的 VS 六边形：两个装备/模组的菱形稀有度框与名字，攻击/速度/范围三条属性条从中线向外逐行增长并滚动数字，每行胜出的一方变金并挂菱形标记；最后综合分滚动，胜者菱形框变鎏金、弹出 WINNER 标签、十字光与碎屑，败者压暗。",
+    "usage": "评测、选择类视频：模组 A vs 模组 B、两把武器、两套护甲谁更强，一屏讲清楚。背景透明（面板自身不透明）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "a",
+        "type": "McdVCompareSide",
+        "default": "下界合金剑",
+        "desc": "A 方 {name, item(物品贴图 id), rarity: 'common'|'rare'|'unique', stats: number[](0–100), tag?}"
+      },
+      {
+        "name": "b",
+        "type": "McdVCompareSide",
+        "default": "钻石剑",
+        "desc": "B 方，结构同 a。stats 长度需与 a、labels 一致（建议 3 行）"
+      },
+      {
+        "name": "labels",
+        "type": "string[]",
+        "default": "['攻击','速度','范围']",
+        "desc": "每行属性名"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'装备对比'",
+        "desc": "顶部金色小标题"
+      },
+      {
+        "name": "winner",
+        "type": "'a' | 'b'",
+        "desc": "不传则按综合分自动判定"
+      },
+      {
+        "name": "totalLabel",
+        "type": "string",
+        "default": "'综合'",
+        "desc": "综合分前的小标题"
+      },
+      {
+        "name": "winnerText",
+        "type": "string",
+        "default": "'WINNER 胜出'",
+        "desc": "胜者金色标签文字"
+      },
+      {
+        "name": "vsText",
+        "type": "string",
+        "default": "'VS'",
+        "desc": "中间六边形里的字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVCompare title=\"弓对弩\" labels={['伤害', '射速', '精准']} a={{name: '长弓', item: 'bow', rarity: 'rare', stats: [70, 85, 60]}} b={{name: '弩', item: 'crossbow_standby', rarity: 'unique', stats: [88, 45, 80]}} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/compareCard.tsx"
+  },
+  {
+    "id": "mcd-v-day-counter",
+    "name": "生存第 N 天",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVDayCounter",
+    "frames": 120,
+    "overlayReady": true,
+    "blurb": "夜色里的大六边形显示前一天的数字，日出的金色斜射光从右上角铺开；数字像翻牌一样分三格滚出、新天数滚入，六边形外圈由钢灰变金，像素十字闪光与金色碎屑爆开，下方升起一行字幕和三个小数据。",
+    "usage": "生存/整合包系列视频换天时的标题：「生存第 42 天」。只有光效、六边形和字，背景透明，可叠在任意日出镜头上；bg=true 才画夜景渐变白天的预览底板。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "day",
+        "type": "number",
+        "default": "42",
+        "desc": "新的天数（自动按位数缩放字号），旧数字为 day-1"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "'DAY'",
+        "desc": "六边形里数字上方的小字"
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "default": "'太阳又升起来了，继续活下去'",
+        "desc": "大字幕"
+      },
+      {
+        "name": "facts",
+        "type": "string[]",
+        "default": "['据点 3 个','钻石 28 颗','死亡 0 次']",
+        "desc": "下方小数据"
+      },
+      {
+        "name": "flipAt",
+        "type": "number",
+        "default": "44",
+        "desc": "翻牌发生的帧，其余动画跟随它"
+      },
+      {
+        "name": "leftTag",
+        "type": "string",
+        "default": "'生存模式'",
+        "desc": "六边形左侧小牌文字"
+      },
+      {
+        "name": "rightTag",
+        "type": "string",
+        "default": "'困难难度'",
+        "desc": "六边形右侧小牌文字"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVDayCounter day={100} caption=\"第一百天，我们还活着\" facts={['村民 12 个', '铁傀儡 3 只', '死亡 5 次']} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/dayCounter.tsx"
+  },
+  {
+    "id": "mcd-v-player-join",
+    "name": "玩家加入/离开提示",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVPlayerJoin",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "屏幕左上角斜切暗条从边缘滑入：玩家色竖条、六边形里是真实皮肤头像、金色「加入了冒险」或红色「离开了冒险」加粗体像素名字、右端 +/- 菱形；加入时头像处迸出金色火花与十字光，条上扫过高光，停留后滑出；离开的条头像发灰并掉下灰红碎屑。三条依次错开叠放，右上角在线名单同步变化。",
+    "usage": "联机冒险/整合包合作视频里有人进出时的提示；背景透明，叠在录屏左上角即可，用 events 的 at/hold 对齐真实时间点。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "events",
+        "type": "McdVJoinEvent[]",
+        "default": "3 个示例事件",
+        "desc": "事件 [{kind:'join'|'leave', name, skin(steve/alex/kai/zuri/efe…), color(玩家色), at(出现帧), hold(停留帧)}]，按顺序占用上下槽位"
+      },
+      {
+        "name": "present",
+        "type": "McdVPresent[]",
+        "default": "3 个示例玩家",
+        "desc": "开场已在线的玩家 [{skin, color}]（右上角在线名单用）"
+      },
+      {
+        "name": "rosterLabel",
+        "type": "string",
+        "default": "'在线'",
+        "desc": "在线名单标题"
+      },
+      {
+        "name": "roster",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否显示右上角在线名单"
+      },
+      {
+        "name": "joinText",
+        "type": "string",
+        "default": "'加入了冒险'",
+        "desc": "加入提示文案"
+      },
+      {
+        "name": "leaveText",
+        "type": "string",
+        "default": "'离开了冒险'",
+        "desc": "离开提示文案"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "default": "'camp'",
+        "desc": "预览底板群系（bg 为 true 时）"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVPlayerJoin joinText=\"进入了服务器\" leaveText=\"离开了服务器\" roster={false} events={[{kind: 'join', name: '小明', skin: 'steve', color: '#48D8A8', at: 8, hold: 60}, {kind: 'leave', name: '阿杰', skin: 'kai', color: '#E058B8', at: 50, hold: 60}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/playerJoin.tsx"
+  },
+  {
+    "id": "mcd-v-waypoint",
+    "name": "路标/坐标标记",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVWaypoint",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "地面上竖起一道光柱（白/绿/橙/品红），脚下是发光的扁平六边形底座，光柱中段浮着稀有度菱形标记和像素图标，上方是地名牌，下方是实时递减的距离数字和小号坐标；整套随镜头缓慢左右漂移，标记按步进上下浮动，光柱里有上升的光点。",
+    "usage": "在录屏上标注基地、村庄、传送门、Boss 巢穴等地点。背景透明，按画面里地点的位置设 x/ground（1920×1080 像素坐标）；默认 3 个路标只是示例位置。totalFrames 请设成 <Sequence> 的时长，结尾淡出才对得上。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "waypoints",
+        "type": "McdVWaypointItem[]",
+        "default": "3 个示例路标",
+        "desc": "路标 [{x, ground(地面点 y), kind:'white'|'green'|'orange'|'magenta', name, dist(起始米数，会递减), coords?, icon?:'base'|'flag'|'portal'|'skull', size?(1 大/0.7 小), delay?}]"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "default": "'snow'",
+        "desc": "预览底板群系（bg 为 true 时）"
+      },
+      {
+        "name": "fadeOutFrames",
+        "type": "number",
+        "default": "12",
+        "desc": "结尾淡出帧数（0 为不淡出）"
+      },
+      {
+        "name": "totalFrames",
+        "type": "number",
+        "default": "150",
+        "desc": "片段总帧数，用来算结尾淡出的起点；请设成 <Sequence> 的 durationInFrames"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVWaypoint totalFrames={150} waypoints={[{x: 700, ground: 880, kind: 'green', name: '村庄', dist: 620, coords: 'X 120  Y 70  Z -40', icon: 'flag', size: 1}, {x: 1400, ground: 820, kind: 'orange', name: 'Boss 巢穴', dist: 2050, icon: 'skull', size: 0.7, delay: 14}]} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/waypoint.tsx"
+  },
+  {
+    "id": "mcd-v-like-chest",
+    "name": "点赞解锁宝箱",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVLikeChest",
+    "frames": 190,
+    "overlayReady": true,
+    "blurb": "顶部三个六边形（点赞 / 投币 / 收藏）依次自下而上填满金色并带十字光；末影宝箱先轻跳、随进度发紫光，三连完成后剧烈抖动，然后品红光柱 4 帧内冲出、白闪加像素喷泉，约 1 秒后深色物品卡弹出：鎏金菱形框里的物品、「感谢支持」硬阴影大字、斜体说明和绿色按钮。",
+    "usage": "视频中途或结尾的「一键三连」互动：比普通的关注提示更有仪式感；也可只截开箱部分作为奖励展示。背景透明（bg=true 才画暗紫预览底板）。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "labels",
+        "type": "string[]",
+        "default": "['点赞','投币','收藏']",
+        "desc": "三个节点名"
+      },
+      {
+        "name": "headline",
+        "type": "string",
+        "default": "'三连解锁'",
+        "desc": "顶部标题"
+      },
+      {
+        "name": "thanks",
+        "type": "string",
+        "default": "'感谢支持'",
+        "desc": "物品卡主标题"
+      },
+      {
+        "name": "note",
+        "type": "string",
+        "default": "'每一个三连，都是我继续冒险的动力'",
+        "desc": "物品卡斜体说明"
+      },
+      {
+        "name": "item",
+        "type": "string",
+        "default": "'nether_star'",
+        "desc": "金框里的物品 id（item 贴图名）"
+      },
+      {
+        "name": "button",
+        "type": "string",
+        "default": "'继续观看'",
+        "desc": "绿色按钮文字"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "default": "'特别奖励'",
+        "desc": "物品卡金色标签"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVLikeChest labels={['点赞', '关注', '转发']} headline=\"三连有礼\" item=\"diamond\" thanks=\"谢谢你们\" note=\"下期见\" />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/likeChest.tsx"
+  },
+  {
+    "id": "mcd-v-toast",
+    "name": "成就/提示弹条",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVToast",
+    "frames": 150,
+    "overlayReady": true,
+    "blurb": "右侧屏幕边缘滑入斜切暗条：金框菱形物品图标 + 金色「成就解锁!」+ 成就名 + 紫色 XP，带扫光与像素十字闪；下面再叠一条紫色「提示 按 M 打开地图」；右下角「按住 E 跳过」提示条，按键帽自下而上被金色填满，填满时白闪并收起。各自有入场过冲、停留、滑出。",
+    "usage": "剧情过场、解锁新内容、教学提示：成就和提示条叠在录屏右侧，「按住跳过」放在过场右下角。背景透明；parts 可只留其中一块。时间点固定：成就 8–82、提示 40–118、跳过 30–132，用 <Sequence from> 整体平移。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "画一层预览用的场景底板（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'成就解锁!'",
+        "desc": "成就条金色标题"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'深渊的第一步'",
+        "desc": "成就名"
+      },
+      {
+        "name": "xp",
+        "type": "string",
+        "default": "'+50 XP'",
+        "desc": "紫色经验文字"
+      },
+      {
+        "name": "item",
+        "type": "string",
+        "default": "'diamond_pickaxe'",
+        "desc": "成就条菱形里的物品 id"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "default": "'提示'",
+        "desc": "提示条紫色标签"
+      },
+      {
+        "name": "tip",
+        "type": "string",
+        "default": "'按下'",
+        "desc": "提示条前半句"
+      },
+      {
+        "name": "keyLabel",
+        "type": "string",
+        "default": "'M'",
+        "desc": "提示条按键帽字母"
+      },
+      {
+        "name": "tipSuffix",
+        "type": "string",
+        "default": "'打开地图'",
+        "desc": "提示条后半句"
+      },
+      {
+        "name": "skipHint",
+        "type": "string",
+        "default": "'按住'",
+        "desc": "跳过提示前缀"
+      },
+      {
+        "name": "skipKey",
+        "type": "string",
+        "default": "'E'",
+        "desc": "跳过提示按键帽字母"
+      },
+      {
+        "name": "skipText",
+        "type": "string",
+        "default": "'跳过'",
+        "desc": "跳过提示文字"
+      },
+      {
+        "name": "parts",
+        "type": "('achievement' | 'hint' | 'skip')[]",
+        "default": "['achievement','hint','skip']",
+        "desc": "要显示哪几块：成就条 / 提示条 / 右下「按住跳过」"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "default": "'nether'",
+        "desc": "预览底板群系（bg 为 true 时，带过场黑边）"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上音效"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"forest-night\" camera=\"static\" />\n  <McdVToast parts={['achievement']} title=\"成就达成\" name=\"第一滴血\" xp=\"+20 XP\" item=\"iron_sword\" />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/toast.tsx"
+  },
+  {
+    "id": "mcd-kit",
+    "name": "MCD 界面套件（McdKit）",
+    "kind": "util",
+    "category": "界面套件",
+    "export": "McdKit",
+    "frames": 90,
+    "overlayReady": false,
+    "blurb": "Minecraft Dungeons 风格界面零件集合（gallery/fx/mcdkit/kit），以命名空间 McdKit 导出：硬像素文字、斜切面板、六边形/菱形徽章、物品槽、主按钮、计数器、HUD、背景、闪光等，全部 1920×1080 屏幕像素、整数像素网格。",
+    "usage": "写自定义界面时用：import {McdKit} from \"./lib\"，然后 <McdKit.PxText .../>、<McdKit.BevelSlot .../> 等。主要组件——文字：PxText(像素大字，硬阴影)/McdTitle/PxChars(逐字动画)/GlitchTitle/McdText(正文)；框与徽章：BevelSlot(物品槽)/KeyCap(按键帽)/HexBadge、LevelBadge、PowerBadge、SkullBadge、DifficultyBar(I–VII 难度条)/DiamondFrame(稀有度菱形框)/EnchantSlot/DiamondTag/CutPanel(斜切面板)/ParchmentScroll/RarityTag/Laurel(月桂)/StatCard；按钮：MainButton(绿/红/金/幽灵/禁用)；物品与角色：ItemIcon3D(真实物品贴图体素化)/PotionIcon/ChestIcon/PlayerFigure/PlayerBust/CreeperFigure/SkeletonFigure；计数与 HUD：EmeraldCounter/SoulCounter/XpBar/HudBase(底部 HUD)；背景与动效：McdBackdrop(暗色马赛克底)/Embers(金色火星)/WhiteFlash/BlackCut/Pop/Rise 与 win/countUp/stepFade 时间线小工具；像素画：PxArt 与 EMERALD_*/SOUL_ROWS/SKULL_ROWS 等现成点阵；常量 MCD(调色板)、itemTex(物品贴图路径)。完整签名见 src/gallery/fx/mcdkit/kit.tsx 头部注释。它是零件库而不是单个效果：没有 props 表，按各组件参数使用。",
+    "props": [
+      {
+        "name": "McdKit",
+        "type": "namespace",
+        "desc": "命名空间导出：McdKit.PxText / McdKit.BevelSlot / McdKit.MainButton / McdKit.HexBadge / McdKit.DiamondFrame / McdKit.CutPanel / McdKit.ItemIcon3D / McdKit.McdBackdrop / McdKit.MCD / McdKit.itemTex 等（完整清单见 usage）"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  <McdKit.McdBackdrop kind=\"inventory\" />\n  <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 40}}>\n    <McdKit.BevelSlot size={140} rarity=\"unique\">\n      <McdKit.ItemIcon3D src={McdKit.itemTex('diamond_sword')} size={90} depth={6} />\n    </McdKit.BevelSlot>\n    <McdKit.PxText text=\"MCD KIT\" px={8} />\n    <McdKit.MainButton label=\"出发\" w={360} h={96} tone=\"green\" textPx={5} />\n  </AbsoluteFill>\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcdkit/kit.tsx"
+  }
+]

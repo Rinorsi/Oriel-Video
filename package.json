@@ -1,0 +1,31 @@
+{
+  "name": "youyiku",
+  "version": "0.1.0",
+  "private": true,
+  "description": "优易库：Minecraft 风格转场与特效动画库（Remotion）",
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "dev": "remotion studio src/index.ts",
+    "still": "remotion still src/index.ts",
+    "render": "node scripts/render.mjs",
+    "typecheck": "tsc --noEmit",
+    "fx": "node scripts/fx.mjs",
+    "catalog": "node scripts/catalog.mjs",
+    "promo:clips": "node scripts/promo-clips.mjs public/promo/clips",
+    "promo": "remotion render src/index.ts Promo out/promo.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.484",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.484",
+    "skinview3d": "3.4.2",
+    "three": "0.156.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.17",
+    "@types/three": "0.156.0",
+    "fflate": "0.8.2",
+    "typescript": "6.0.3"
+  }
+}

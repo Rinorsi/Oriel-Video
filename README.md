@@ -1,0 +1,81 @@
+# 优易库
+
+Minecraft / Minecraft 地下城风格的**转场、特效、标题卡、信息层**动画库，基于 Remotion（React）。
+画廊里有 216 个效果，其中 197 个整理成了可以直接调用的库组件，150 个可以导出透明层，直接拖进剪映 / Premiere 叠在录屏上。
+
+源码就是素材：每个效果都是一个 React 组件，所有文字、颜色、时间点都是 props，改参数就能换内容，所以很适合交给 AI 来改、来拼。
+
+## 能做什么
+
+| 类型 | 例子 |
+|---|---|
+| 转场 | 暗场切镜、下界传送门、白闪、紫红光柱、TNT 爆破、苦力怕冲脸、史莱姆糊脸、爱心像素波、维度跳转（主世界 / 下界 / 末地） |
+| 地下城风格 | Boss 登场、章节卡、通关结算页、目标栏、地图旅程 |
+| 调色与氛围层 | 森林 / 下界调色、光柱、灵魂、火星、体素场景背景 |
+| 标题与片头片尾 | 体素大标题、片尾卡、系列标题 |
+| 原版音效 | 效果默认带 Minecraft 原版音效，`audio={false}` 可关 |
+
+完整清单：[`docs/库目录.md`](docs/库目录.md)（人读）、[`docs/效果索引.md`](docs/效果索引.md)、[`src/lib/catalog.json`](src/lib/catalog.json)（机器读，含真实 props 和可复制示例）。
+
+## 快速开始
+
+需要 Node.js 20+，以及本机装过 Minecraft（Java 版）客户端或 Gradle 的 loom 缓存，用来提取贴图和音效。
+
+```bash
+npm install
+npm run setup          # 从本机 Minecraft 提取贴图和原版音效到 public/（不进 git）
+npm run dev            # 打开 Remotion Studio，边看边改
+```
+
+Mojang 的贴图和音效**不随仓库分发**，由 `npm run setup` 从你本机的游戏里提取。字体（OFL 协议）已随仓库带上。
+
+## 怎么用
+
+### 让 AI 来用（推荐）
+
+1. 把 [`docs/AI使用手册.md`](docs/AI使用手册.md) 和 `src/lib/catalog.json` 交给 AI。
+2. 用大白话讲你的想法，例如「开场用传送门转场，中间加下界调色，结尾放片尾卡」。AI 会从目录里挑效果、排时间轴，写出一个新的合成。
+3. 让 AI 渲染：
+
+```bash
+npx remotion render src/index.ts <合成ID> out/my.mp4
+```
+
+### 导出透明层，拖进剪映
+
+```bash
+npm run fx -- export <效果id> --alpha     # 输出 ProRes 4444 的 .mov
+```
+
+把 `.mov` 拖进剪映 / Premiere 的上方轨道，直接叠在你的素材上。
+
+### 自己写
+
+从 `src/lib/examples/episode.tsx` 复制一集完整示例开始，所有组件都从 `src/lib` 引用。
+
+## 目录
+
+```
+src/lib/        可直接调用的库组件、catalog.json、示例
+src/gallery/    画廊里的全部效果（展示用代码）
+src/mc/ src/mg/ 底层积木（主题、字体、体素、转场骨架）
+src/promo/      「优易库」宣传片的完整源码（时间轴、画面、字幕）
+promo/          宣传片的台词稿、配音与对齐脚本
+scripts/        setup、渲染、导出、目录生成
+docs/           使用手册、目录、视觉方法
+```
+
+## 宣传片是怎么做的
+
+宣传片本身就是用这个库做的，源码在 `src/promo/`：
+
+- 台词稿 `promo/script.v2.json` → `promo/tts.py` 用微软中文女声合成配音。
+- `promo/align.py` 用 Whisper 识别配音拿到字级时间戳，并和台词稿逐句比对，保证读出来的就是稿子。
+- 对齐后的时间轴写进 `src/promo/timeline.json`，字幕和镜头切换都按它走。
+- 画面用库里的效果预渲染成片段（`npm run promo:clips`），再由 `Promo` 合成统一拼接。
+
+```bash
+npm run promo     # 渲染宣传片（需要先准备 public/promo/ 下的片段和音频）
+```
+
+BGM 和配音文件不在仓库里，需要自行准备。
