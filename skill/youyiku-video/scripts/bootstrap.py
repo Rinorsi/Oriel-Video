@@ -1,37 +1,34 @@
 #!/usr/bin/env python3
-"""Unpack the bundled Youyiku kit and prepare it.
+"""Extract the bundled kit into an empty directory and prepare it."""
+import argparse
+from pathlib import Path, PurePosixPath
+import shutil, subprocess, zipfile
 
-usage: python scripts/bootstrap.py <target-dir> [--no-install] [--no-setup]
-
-Extracts assets/youyiku-kit.zip into <target-dir> (skipped when it already holds a project),
-then runs `npm install` and `npm run setup`. Needs Node.js 20+; `setup` reads the textures and
-sounds from a local Minecraft Java install and keeps them out of git.
-"""
-import subprocess, sys, zipfile
-from pathlib import Path
-
-args = [a for a in sys.argv[1:] if not a.startswith('--')]
-flags = {a for a in sys.argv[1:] if a.startswith('--')}
-target = Path(args[0] if args else 'youyiku').resolve()
-zip_path = Path(__file__).resolve().parent.parent / 'assets' / 'youyiku-kit.zip'
-
-if (target / 'package.json').exists():
-    print(f'bootstrap: project already at {target}, skipping extract')
-else:
-    if not zip_path.exists():
-        sys.exit(f'bootstrap: missing {zip_path}')
+parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+parser.add_argument('target', type=Path)
+parser.add_argument('--no-install', action='store_true')
+parser.add_argument('--no-setup', action='store_true')
+args = parser.parse_args()
+target = args.target.resolve()
+if target.exists() and any(target.iterdir()):
+    parser.error('target must be empty; use an existing project directly instead')
+archive = Path(__file__).resolve().parent.parent / 'assets' / 'youyiku-kit.zip'
+if not archive.is_file():
+    parser.error(f'missing bundled kit: {archive}; use the built download package')
+with zipfile.ZipFile(archive) as bundle:
+    for info in bundle.infolist():
+        name = PurePosixPath(info.filename)
+        if name.is_absolute() or '..' in name.parts or ':' in info.filename or chr(92) in info.filename or (info.external_attr >> 16) & 0o170000 == 0o120000:
+            parser.error(f'unsafe archive entry: {info.filename}')
+    if 'package.json' not in bundle.namelist():
+        parser.error('bundle has no package.json')
     target.mkdir(parents=True, exist_ok=True)
-    with zipfile.ZipFile(zip_path) as z:
-        z.extractall(target)
-    print(f'bootstrap: extracted to {target}')
-
-def run(cmd):
-    print('bootstrap: $', cmd)
-    if subprocess.run(cmd, cwd=target, shell=True).returncode:
-        sys.exit(f'bootstrap: failed: {cmd}')
-
-if '--no-install' not in flags:
-    run('npm install')
-if '--no-setup' not in flags:
-    run('npm run setup')
-print(f'bootstrap: done. Next: read {target / "docs" / "AI使用手册.md"}')
+    bundle.extractall(target)
+print(f'bootstrap: extracted to {target}', flush=True)
+npm = shutil.which('npm.cmd') or shutil.which('npm')
+if not npm and not (args.no_install and args.no_setup):
+    parser.error('npm not found; install Node.js 20+ first')
+for enabled, command in [(not args.no_install, ['ci']), (not args.no_setup, ['run', 'setup'])]:
+    if enabled:
+        subprocess.run([npm, *command], cwd=target, check=True)
+print(f'Next: read {target / "docs" / "AI使用手册.md"}')

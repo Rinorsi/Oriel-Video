@@ -28,6 +28,7 @@ import {PlayerJoin, type JoinEvent, type Present} from '../gallery/fx/mcd5/playe
 import {StatsTally} from '../gallery/fx/mcd5/statsTally';
 import {ToastStack} from '../gallery/fx/mcd5/toast';
 import {WaypointMark, type BeamKind, type IconKey, type Waypoint} from '../gallery/fx/mcd5/waypoint';
+import {GildedForge, type GildedEnchantSpec, type GildedStatSpec, type McdVGildedForgeProps} from '../gallery/fx/mcd5/gildedForge';
 import type {BiomeId} from '../gallery/fx/mcd5/common';
 import * as McdKitNs from '../gallery/fx/mcdkit/kit';
 
@@ -600,3 +601,7 @@ export type McdVToastProps = VBase & {
 };
 /** 成就/提示弹条：右侧斜切暗条滑入（成就、提示），右下角「按住 E 跳过」按键帽被填满后白闪收起。透明。帧数默认 150（固定时间点：成就 8–82、提示 40–118、跳过 30–132）。 */
 export const McdVToast: FC<McdVToastProps> = (p) => <ToastStack {...p} />;
+
+export type {GildedEnchantSpec as McdVGildedEnchantSpec, GildedStatSpec as McdVGildedStatSpec, McdVGildedForgeProps};
+/** 远古锻台 · 镀金神兵觉醒：三枚催化圣物共鸣注入真实 3D 铁砧，第 48 帧重击触发像素十字冲击波与双色光柱，16 层 3D 体素武器旋转升起；右侧斜切面板展开 UNIQUE + GILDED 双标签、逐字标题、内置镀金词条、三属性条与三枚附魔菱形连环觉醒，左下角色卡（云诺羲Rinorsi）同步换装。默认不画场景底板（透明叠加），帧数默认 180。 */
+export const McdVGildedForge: FC<McdVGildedForgeProps> = (p) => <GildedForge {...p} />;

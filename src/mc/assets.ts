@@ -11,7 +11,7 @@ export const item = (id: string) => tex(`item/${id}.png`);
 export const block = (id: string) => tex(`block/${id}.png`);
 /** Sound by name without extension, e.g. sound('random/levelup'). Must be listed in scripts/setup.mjs. */
 export const sound = (id: string) => staticFile(`mc/sounds/${id}.ogg`);
-/** Background music copied by `npm run setup` (Mixkit free licence). */
+/** User-provided background music in public/audio/bgm/. */
 export const bgm = (file: string) => staticFile(`audio/bgm/${file}`);
-/** Sound effect copied into public/audio/sfx/ (not committed; see the clip that uses it for sources). */
+/** User-provided sound effect in public/audio/sfx/ (not distributed). */
 export const sfx = (file: string) => staticFile(`audio/sfx/${file}`);

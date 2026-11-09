@@ -5,7 +5,7 @@
   "description": "优易库：Minecraft 风格转场与特效动画库（Remotion）",
   "scripts": {
     "setup": "node scripts/setup.mjs",
-    "dev": "remotion studio src/index.ts",
+    "dev": "remotion studio src/lib-entry.tsx",
     "still": "remotion still src/index.ts",
     "render": "node scripts/render.mjs",
     "typecheck": "tsc --noEmit",
@@ -13,7 +13,10 @@
     "catalog": "node scripts/catalog.mjs",
     "skill:build": "python scripts/build-skill.py",
     "promo:prep": "python promo/prep.py all",
-    "promo": "remotion render src/index.ts Promo2 out/promo.mp4"
+    "promo": "remotion render src/index.ts Promo2 out/promo.mp4",
+    "dev:gallery": "remotion studio src/entry-all.tsx",
+    "dev:project": "remotion studio src/index.ts",
+    "test:packaging": "python scripts/packaging.test.py"
   },
   "dependencies": {
     "@remotion/cli": "4.0.484",
@@ -21,12 +24,19 @@
     "react-dom": "19.2.7",
     "remotion": "4.0.484",
     "skinview3d": "3.4.2",
-    "three": "0.156.1"
+    "three": "0.156.1",
+    "@remotion/bundler": "4.0.484",
+    "@remotion/renderer": "4.0.484"
   },
   "devDependencies": {
     "@types/react": "19.2.17",
     "@types/three": "0.156.0",
     "fflate": "0.8.2",
     "typescript": "6.0.3"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rinorsi/Oriel-Video.git"
   }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Effect gallery tooling. Everything is written to the workspace (never into the repo).
+// Effect gallery tooling. Generated files go to ignored out/ and gallery/ directories.
 //
 //   node scripts/fx.mjs sheet <area|all> [id,id]      6-frame review sheets (one PNG per effect)
 //   node scripts/fx.mjs previews <area|all> [id,id]   half-size mp4 + poster for the gallery, updates manifest.json
@@ -60,6 +60,10 @@ if (cmd === 'sheet') {
   const serveUrl = await bundleFor(area);
   const all = await getCompositions(serveUrl);
   const manifest = readManifest();
+  if (area === 'all' && !ids) {
+    const valid = new Set(all.filter(c => c.id.startsWith('fx-') && !c.id.endsWith('-alpha')).map(c => c.id.slice(3)));
+    for (const id of Object.keys(manifest)) if (!valid.has(id)) delete manifest[id];
+  }
   for (const c of await pick(serveUrl, ids)) {
     const id = c.id.slice(3);
     const composition = await selectComposition({serveUrl, id: c.id});
@@ -70,6 +74,8 @@ if (cmd === 'sheet') {
     fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
     console.log('preview', id);
   }
+  const {buildGallery} = await import('./gallery-html.mjs');
+  buildGallery({ROOT, GAL, manifest});
 } else if (cmd === 'frame') {
   // frame <area> <id> <n,n,...>  -> half-size PNG stills of the demo (or id-alpha with --alpha)
   const [area, id, list] = pos;
@@ -99,7 +105,9 @@ if (cmd === 'sheet') {
   }
 } else if (cmd === 'html') {
   const { buildGallery } = await import('./gallery-html.mjs');
-  buildGallery({ROOT, GAL, manifest: readManifest()});
+  const manifest = readManifest();
+  if (!Object.keys(manifest).length) throw new Error('No gallery manifest; run npm run fx -- previews all first');
+  buildGallery({ROOT, GAL, manifest});
   console.log('gallery', path.join(GAL, 'index.html'));
 } else {
   console.error('usage: node scripts/fx.mjs sheet|previews|html|export ...');

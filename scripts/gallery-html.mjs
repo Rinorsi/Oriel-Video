@@ -31,6 +31,7 @@ export function buildGallery({ROOT, GAL, manifest}) {
     .map((m) => ({...m, seconds: +(m.frames / 30).toFixed(1), hasVideo: fs.existsSync(path.join(GAL, 'previews', `${m.id}.mp4`))}))
     .sort((a, b) => order(a) - order(b));
 
+  fs.copyFileSync(path.join(ROOT, 'public/fonts/fusion-pixel-OFL.txt'), path.join(GAL, 'assets/fonts/fusion-pixel-OFL.txt'));
   const data = JSON.stringify({categories: CATEGORIES, items});
   const html = `<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -226,7 +227,7 @@ function openModal(id){
    '<div class="mbody"><div class="vwrap">'+(m.hasVideo?'<video src="previews/'+esc(m.id)+'.mp4" controls autoplay loop muted playsinline></video>':'<div class="empty">暂无预览</div>')+'</div>'+
    '<div class="cols"><section><h4>效果</h4><p>'+esc(m.blurb)+'</p><h4>用在哪</h4><p>'+esc(m.usage)+'</p><h4>标签</h4><div class="tags">'+m.tags.map(t=>'<span class="tag" style="cursor:default">#'+esc(t)+'</span>').join('')+'</div></section>'+
    '<section>'+(m.params&&m.params.length?'<h4>可调参数</h4><ul class="params">'+m.params.map(p=>'<li><code>'+esc(p.name)+'</code><span>'+esc(p.desc)+'</span></li>').join('')+'</ul>':'')+
-   '<h4>导出成片（在 video/ 目录运行）</h4><div class="cmds"><div class="cmd"><code>'+esc(c1)+'</code><button class="btn n" data-copy="'+esc(c1)+'">复制</button></div>'+(m.alpha?'<div class="cmd"><code>'+esc(c2)+'</code><button class="btn n" data-copy="'+esc(c2)+'">复制</button></div>':'')+'</div>'+
+   '<h4>导出成片（在项目根目录运行）</h4><div class="cmds"><div class="cmd"><code>'+esc(c1)+'</code><button class="btn n" data-copy="'+esc(c1)+'">复制</button></div>'+(m.alpha?'<div class="cmd"><code>'+esc(c2)+'</code><button class="btn n" data-copy="'+esc(c2)+'">复制</button></div>':'')+'</div>'+
    '<h4>Remotion 里直接用</h4><p>组合 id：<code style="font-family:Consolas,monospace;color:#cfe8c5">fx-'+esc(m.id)+'</code>'+(m.alpha?'；透明层：<code style="font-family:Consolas,monospace;color:#cfe8c5">fx-'+esc(m.id)+'-alpha</code>':'')+'</p></section></div></div>';
   $('#shell').classList.add('open');document.body.style.overflow='hidden';
 }

@@ -11,6 +11,7 @@ import {PlayerJoin} from './playerJoin';
 import {StatsTally} from './statsTally';
 import {ToastStack} from './toast';
 import {WaypointMark} from './waypoint';
+import {GildedForge, GILDED_FORGE_FRAMES} from './gildedForge';
 
 /** Entries for the mcd5 area: dungeon-style showcase motion for adventure / modpack videos. */
 export const entries: FxEntry[] = [
@@ -221,5 +222,24 @@ export const entries: FxEntry[] = [
     },
     Demo: (() => <ToastStack bg />) as FC,
     Layer: (() => <ToastStack />) as FC,
+  },
+  {
+    meta: {
+      id: 'mcd-v-gilded-forge',
+      name: '远古锻台 · 镀金神兵觉醒',
+      category: 'rpg',
+      tags: ['地下城', '锻造', '镀金', '附魔', '3D', '展示'],
+      frames: GILDED_FORGE_FRAMES,
+      blurb: '三枚催化圣物菱形环绕真实 3D 铁砧共鸣蓄力，重击瞬间像素十字冲击波与双色光柱冲天，16 层体素神兵旋转升起；右侧斜切面板展开 UNIQUE + GILDED 双标签、逐字硬阴影标题、内置镀金词条、三属性条与三枚附魔菱形连环觉醒，左下角玩家角色卡同步换装。',
+      usage: '展示整合包终极神器合成、重大版本核心功能发布或毕业装备成型的高潮镜头；Layer 版透明，可直接叠在实机画面上。',
+      params: [
+        {name: 'item / name / desc', desc: '锻造出的物品贴图 id、神兵名称、简介'},
+        {name: 'player / skin / level', desc: '左下角色卡的玩家名（默认「云诺羲Rinorsi」）、皮肤与等级'},
+        {name: 'basePower / power', desc: '锻造前后的战力滚动区间（默认 108 → 260）'},
+        {name: 'catalysts / traits / stats / enchants', desc: '三件催化物品、三条词条、三项属性条与三枚附魔槽配置'},
+      ],
+    },
+    Demo: (() => <GildedForge bg />) as FC,
+    Layer: (() => <GildedForge />) as FC,
   },
 ];

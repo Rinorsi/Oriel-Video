@@ -7,7 +7,7 @@ import {DIM_END_PORTAL_ACTIVATE_FRAMES, DIM_PEARL_TELEPORT_FRAMES, DimEndPortalA
 /**
  * Runnable examples for the classicTrans group; each becomes composition `lib-<id>` (see src/lib-entry.tsx).
  * Generated from the catalog's `example` field: two placeholder shots (ShotA / ShotB) around the effect, 20 frames of lead and tail.
- * GENERATED FILE - edit the generator (see the generator notes in docs) or keep catalog and examples in sync by hand.
+ * Keep catalog and runnable examples in sync when changing an effect.
  */
 
 /** Placeholder footage; in a real video these are your own shot components. */

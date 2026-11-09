@@ -34,6 +34,7 @@ import {
   McdVStatsTally,
   McdVToast,
   McdVWaypoint,
+  McdVGildedForge,
   McdKit,
 } from '../mcdLayers';
 
@@ -350,6 +351,15 @@ const Ex32: FC = () => (
   </AbsoluteFill>
 );
 
+// mcd-v-gilded-forge
+const Ex33: FC = () => (
+  <AbsoluteFill>
+    {/* ScenePlate 是占位素材，换成你自己的视频 */}
+    <ScenePlate biome="nether" camera="push" />
+    <McdVGildedForge item="netherite_sword" name="风暴 · 破界重剑" player="云诺羲Rinorsi" basePower={108} power={260} />
+  </AbsoluteFill>
+);
+
 export const examples: {id: string; Component: FC; frames: number}[] = [
   {id: 'mcd-l-grade-forest', Component: Ex0, frames: 210},
   {id: 'mcd-l-grade-forest-glow', Component: Ex1, frames: 210},
@@ -383,5 +393,6 @@ export const examples: {id: string; Component: FC; frames: number}[] = [
   {id: 'mcd-v-waypoint', Component: Ex29, frames: 150},
   {id: 'mcd-v-like-chest', Component: Ex30, frames: 190},
   {id: 'mcd-v-toast', Component: Ex31, frames: 150},
+  {id: 'mcd-v-gilded-forge', Component: Ex33, frames: 180},
   {id: 'mcd-kit', Component: Ex32, frames: 90},
 ];

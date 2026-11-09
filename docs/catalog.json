@@ -9266,6 +9266,124 @@
     "group": "mcdLayers"
   },
   {
+    "id": "mcd-v-gilded-forge",
+    "name": "远古锻台 · 镀金神兵觉醒",
+    "kind": "card",
+    "category": "冒险整合包",
+    "export": "McdVGildedForge",
+    "frames": 180,
+    "overlayReady": true,
+    "blurb": "三枚催化圣物菱形环绕真实 3D 铁砧共鸣蓄力，第 48 帧重击触发像素十字冲击波与双色光柱，16 层 3D 体素武器旋转升起；右侧斜切面板展开 UNIQUE + GILDED 双标签、逐字硬阴影标题、内置镀金词条、三属性条与三枚附魔菱形连环觉醒，左下玩家角色卡同步换装。",
+    "usage": "展示整合包终极神器合成、重大版本核心功能发布或毕业装备成型的高潮镜头。默认不画背景（透明），可直接叠在实机画面上；传 bg=true 自带 3D 下界熔岩锻台背景。",
+    "props": [
+      {
+        "name": "bg",
+        "type": "boolean",
+        "default": "false",
+        "desc": "是否绘制 3D 下界熔岩锻台背景（真实视频保持 false 以便叠在素材上）"
+      },
+      {
+        "name": "audio",
+        "type": "boolean",
+        "default": "true",
+        "desc": "是否带上原版音效"
+      },
+      {
+        "name": "item",
+        "type": "string",
+        "default": "'netherite_sword'",
+        "desc": "锻造出的武器贴图 id（item 贴图名）"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'风暴 · 破界重剑'",
+        "desc": "武器主名称（逐字硬阴影砸落）"
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "default": "'深渊黑石与下界之星重铸的远古神兵，斩裂维度壁垒。'",
+        "desc": "武器一句话描述"
+      },
+      {
+        "name": "header",
+        "type": "string",
+        "default": "'ANCIENT FORGE · 远古锻台'",
+        "desc": "顶部左上祭坛标题"
+      },
+      {
+        "name": "player",
+        "type": "string",
+        "default": "'云诺羲Rinorsi'",
+        "desc": "玩家名称（左下角色卡）"
+      },
+      {
+        "name": "skin",
+        "type": "string",
+        "default": "'efe'",
+        "desc": "玩家皮肤 id（steve/alex/efe/zuri/kai…）"
+      },
+      {
+        "name": "level",
+        "type": "number",
+        "default": "35",
+        "desc": "玩家等级徽章数字"
+      },
+      {
+        "name": "basePower",
+        "type": "number",
+        "default": "108",
+        "desc": "锻造前起始战力"
+      },
+      {
+        "name": "power",
+        "type": "number",
+        "default": "260",
+        "desc": "锻造觉醒后目标战力"
+      },
+      {
+        "name": "catalysts",
+        "type": "[string, string, string]",
+        "default": "['netherite_ingot','echo_shard','nether_star']",
+        "desc": "三件催化圣物贴图 id（左/右/上）"
+      },
+      {
+        "name": "traits",
+        "type": "[string, string, string]",
+        "default": "['480 - 720 近战神圣伤害','独特词条：破界十字斩（暴击触发像素十字爆裂）','内置镀金：风暴重击 III（全属性伤害 +45%）']",
+        "desc": "三条核心词条文案：[白字基础伤害, 橙字独特词条, 金字镀金内置词条]"
+      },
+      {
+        "name": "stats",
+        "type": "McdVGildedStatSpec[]",
+        "default": "[{label:'威力 POWER',ratio:0.96,value:'96'},{label:'攻速 SPEED',ratio:0.82,value:'82'},{label:'范围 AREA',ratio:0.9,value:'90'}]",
+        "desc": "三项属性条数据 [{label, ratio, value}]"
+      },
+      {
+        "name": "enchants",
+        "type": "McdVGildedEnchantSpec[]",
+        "default": "[{name:'炽焰灼烧',tag:'POWERFUL 强力',tier:'III',icon:'flame'},{name:'破甲穿刺',tag:'POWERFUL 强力',tier:'III',icon:'pierce'},{name:'致命暴击',tag:'MAX TIER 满级',tier:'III',icon:'skull'}]",
+        "desc": "三枚附魔菱形槽配置"
+      },
+      {
+        "name": "button",
+        "type": "string",
+        "default": "'装备神兵 · EQUIP'",
+        "desc": "底部主按钮文字"
+      },
+      {
+        "name": "biome",
+        "type": "McdVBiome",
+        "default": "'nether'",
+        "desc": "预览场景群系"
+      }
+    ],
+    "example": "<AbsoluteFill>\n  {/* ScenePlate 是占位素材，换成你自己的视频 */}\n  <ScenePlate biome=\"nether\" camera=\"push\" />\n  <McdVGildedForge item=\"netherite_sword\" name=\"风暴 · 破界重剑\" player=\"云诺羲Rinorsi\" basePower={108} power={260} />\n</AbsoluteFill>",
+    "source": "src/gallery/fx/mcd5/gildedForge.tsx",
+    "group": "mcdLayers"
+  },
+  {
     "id": "mcd-kit",
     "name": "MCD 界面套件（McdKit）",
     "kind": "util",

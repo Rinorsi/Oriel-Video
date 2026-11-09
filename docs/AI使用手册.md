@@ -6,7 +6,7 @@
 ## 0. 先读这三样
 
 1. 本手册。
-2. `src/lib/catalog.json`：**全部 197 个效果的机器可读目录**（id、导出名、种类、时长、是否可叠加、用在哪、真实 props 表、可复制示例）。找效果就在这里 grep。人读版：`docs/库目录.md`。
+2. `src/lib/catalog.json`：**全部 198 个效果的机器可读目录**（id、导出名、种类、时长、是否可叠加、用在哪、真实 props 表、可复制示例）。找效果就在这里 grep。人读版：`docs/库目录.md`。
 3. `src/lib/examples/episode.tsx`：一集完整视频的示例（素材占位 → 调色层 → 标题 → 目标 → 转场 → 终卡）。**复制它当起点。**
 
 ## 1. 只从 `src/lib` 引用
@@ -20,7 +20,7 @@ import {TransitionSeries, seriesFrames, mcdBlackCut, makeMcdLoadingLabel, SceneP
 
 - **时间**：所有效果由 `useCurrentFrame()` 驱动。用 `<Sequence from={起点帧} durationInFrames={帧数}>` 摆放，效果的本地第 0 帧就是它的第一帧。`durationInFrames` 用目录里的 `frames`（很多效果的淡出点按默认时长写死，缩短会截断淡出）。
 - **背景**：组件默认**不画预设背景**（透明，可直接叠在你的素材上）。目录里 `overlayReady:false` 的必须有背景才成立（标题卡、结算页、整屏地图、`ScenePlate` 等），它们有 `bg` 开关或自带背景。
-- **文字/数据**：所有文字、物品、数字、颜色、时间点都是 props，默认值就是画廊演示值。改 props 即可。
+- **文字/数据**：已开放的文字、物品、数字、颜色、时间点通过 props 修改，以目录和实际类型为准，默认值就是画廊演示值。改 props 即可。
 - **音效**：默认带原版音效，`audio={false}` 关闭（转场用 `TransitionSeries audio={false}`）。
 - **素材**：你自己的录屏放进 `public/footage/`，用 `<OffthreadVideo src={staticFile('footage/part1.mp4')} />`（来自 `remotion`）。库里示例的 `ScenePlate` 只是占位，替换它，其余不动。
 - **分辨率/帧率**：1920×1080，30fps（`src/mc/theme.ts`）。
@@ -71,7 +71,7 @@ node -e "const c=require('./src/lib/catalog.json');console.log(c.filter(e=>e.ove
 ## 5. 渲染与导出
 
 ```bash
-cd C:\Storage\Minecraft\project\Mods\Oriel-UI-Workspace\video\studio
+# 在当前工程根目录运行
 npx remotion render src/index.ts <CompositionId> out.mp4          # 你自己的整集（在 Root 里注册后）
 npm run fx -- export <id>                                          # 导出某个画廊效果的完整 mp4
 npm run fx -- export <id> --alpha                                  # 导出透明层 .mov (ProRes 4444)，叠到剪映/Premiere
@@ -89,16 +89,16 @@ npx remotion studio src/lib-entry.tsx                              # 预览所�
 - **Boss 击败的结尾白闪**会盖住素材；**白闪峰值**在用到爆发类效果时可调低。
 - **中文大字**在像素字里笔画多的字会糊（如「红」「僵」），标题字数少时清楚；字数多用小字号。
 - **有的效果淡出点按默认时长写死**（`durationInFrames` 应取目录的 `frames`）。
-- 缺原版音效：村民「嗯」、末影人叫声、雨声，用别的声音代替。
+- 未提取的音效应先补全 setup 的 SOUNDS 列表，不让缺失资源悄悄变成静音。
 
-## 7. 改/加效果时的禁忌（用户多次强调）
+## 7. 效果制作约定
 
 - 不要扩散圆环（冲击用 `Shockwave`：像素十字闪光+阶梯碎片，在 `src/mc/Fx.tsx`）。
 - 不要拟声字、不要用文字代替动作；功能性文字（标题/数字/名字）可以有。
 - Minecraft 生物/方块/物品用真实贴图（`public/mc/textures/entity/*`，裁切助手 `src/gallery/mob.tsx`），不要手绘山寨。
 - 文字居中不出框不重叠；画面饱满有层次；不堆砌「AI 味」装饰（乱放射线、乱飞星星爱心、多重光晕）。
 - 稀有度颜色（地下城风）白 / 绿 / 橙；地下城 UI 没有圆角，几何是六边形/菱形/斜切角。
-- 音效：转场里**不要用**素材库的 `whoosh-fast`(又细又长的扫过声)、`impact-cine`(4 秒冲击)、`transition-soft`/`transition-snap`(柔和脉冲)——用户明确反感。声音一律用原版 Minecraft 真实音效(`mc:` 前缀，文件在 `public/mc/sounds`，来自资源索引，`scripts/setup.mjs` 的 SOUNDS 列表负责提取)：村民用 `mob/villager/yes*|no*|idle*`，翻页用 `item/book/open_flip*`，传送门 `portal/travel`，箱子 `block/chest/*`。想听候选：`daily/<日期>/audition`。
+- 音效：转场里**不要用**素材库的 `whoosh-fast`(又细又长的扫过声)、`impact-cine`(4 秒冲击)、`transition-soft`/`transition-snap`(柔和脉冲)。声音一律用原版 Minecraft 真实音效(`mc:` 前缀，文件在 `public/mc/sounds`，来自资源索引，`scripts/setup.mjs` 的 SOUNDS 列表负责提取)：村民用 `mob/villager/yes*|no*|idle*`，翻页用 `item/book/open_flip*`，传送门 `portal/travel`，箱子 `block/chest/*`。
 - 不用 `Math.random`，用 `mulberry32(seed)`；所有运动由 `useCurrentFrame()` 推出。
 - 新效果先登记到画廊（`src/gallery/fx/<area>/index.tsx`），再整理进 `src/lib/<group>.tsx` + `src/lib/catalog/<group>.json` + `src/lib/examples/<group>.tsx`，`npm run catalog` 必须 0 问题，`npx tsc --noEmit` 必须零报错。
 
@@ -110,9 +110,13 @@ npx remotion studio src/lib-entry.tsx                              # 预览所�
 | `src/lib/types.ts`、`transition.tsx` | 约定与转场工具（`TransitionSeries`、`fromDef`、`seriesFrames`、`TransitionOverlay`） |
 | `src/lib/mcdTrans.tsx` | 地下城转场 13 + 3D 场景引擎(`ScenePlate` 等) |
 | `src/lib/mcdShow.tsx` | 地下城展示动效 15 + 标题卡/片头片尾 11 |
-| `src/lib/mcdLayers.tsx` | 地下城氛围/调色层 21 + 冒险整合包常用 11 + `McdKit` |
+| `src/lib/mcdLayers.tsx` | 地下城氛围、调色、冒险信息、镀金锻造与 `McdKit` |
 | `src/lib/classicTrans.tsx` | 通用/可爱/进阶/维度跳转转场 50 |
 | `src/lib/classicOthers/*` | 地图旅程、互动关注、合成物品、信息字幕、氛围层 63 |
 | `src/lib/catalog.json` | 机器可读目录（`npm run catalog` 重建） |
 | `src/lib/examples/` | 每个效果的可运行示例 + `episode.tsx` 整集示例 |
 | `src/gallery/` | 画廊（展示用）；`fx/*` 是原始实现 |
+
+## 9. 安装、预览与改源码
+
+安装与 Skill 调用见 [README](../README.md)。默认 npm run dev 预览库示例，npm run dev:gallery 预览全部展示效果。新建合成入口、修改物品动画、扩展接口和重新打包见 [开发指南](开发指南.md)。

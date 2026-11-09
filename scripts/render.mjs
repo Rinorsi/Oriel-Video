@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// Render a composition to the workspace daily folder (never into the repo).
+// Render a composition to ignored out/ or VIDEO_OUT.
 //
-//   npm run render                       -> NetheriteSword, with and without BGM
+//   npm run render                       -> complete library example
+//   npm run render -- MyVideo --entry src/my-video-entry.tsx
 //   npm run render -- T-Loading          -> one template
 //   npm run render -- NetheriteSword --frames 0-120
 //   npm run render -- NetheriteSword --stills 30,200,400   (quick contact sheet frames)
@@ -15,14 +16,15 @@ const outDir = process.env.VIDEO_OUT ?? path.join(ROOT, 'out');
 fs.mkdirSync(outDir, {recursive: true});
 
 const args = process.argv.slice(2);
-const id = args[0] && !args[0].startsWith('--') ? args.shift() : 'NetheriteSword';
+const id = args[0] && !args[0].startsWith('--') ? args.shift() : 'lib-example-episode';
 const opt = (n) => {
   const i = args.indexOf(n);
   return i >= 0 ? args[i + 1] : undefined;
 };
 
 const remotion = (cliArgs) => {
-  const r = spawnSync('npx', ['remotion', ...cliArgs], {cwd: ROOT, stdio: 'inherit', shell: process.platform === 'win32'});
+  const cli = path.join(ROOT, 'node_modules', '@remotion', 'cli', 'remotion-cli.js');
+  const r = spawnSync(process.execPath, [cli, ...cliArgs], {cwd: ROOT, stdio: 'inherit'});
   if (r.status !== 0) process.exit(r.status ?? 1);
 };
 
@@ -32,15 +34,16 @@ if (!fs.existsSync(path.join(ROOT, 'public', 'mc', 'textures'))) {
 }
 
 const stills = opt('--stills');
+const entry = opt('--entry') ?? (id.startsWith('lib-') ? 'src/lib-entry.tsx' : 'src/index.ts');
 if (stills) {
   for (const f of stills.split(',')) {
-    remotion(['still', 'src/index.ts', id, path.join(outDir, `${id}-f${f}.png`), `--frame=${f}`]);
+    remotion(['still', entry, id, path.join(outDir, `${id}-f${f}.png`), `--frame=${f}`]);
   }
   process.exit(0);
 }
 
 const frames = opt('--frames');
-const base = ['render', 'src/index.ts', id];
+const base = ['render', entry, id];
 const extra = frames ? [`--frames=${frames}`] : [];
 remotion([...base, path.join(outDir, `${id}.mp4`), ...extra]);
 if (id === 'NetheriteSword' && !frames) {

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Prepares everything the video kit needs locally. Nothing produced here is committed.
 //
-//   npm run setup                      extract MC textures + sounds, copy fonts and BGM
+//   npm run setup                      extract MC textures + sounds, verify bundled assets
 //   npm run setup -- --mc 26.3         pick a Minecraft version (default: newest found)
 //   npm run setup -- --jar <path>      use a specific client jar
 //   npm run setup -- --with-refs       also clone the reference template repos into vendor/
@@ -17,7 +17,6 @@ import {unzipSync} from 'fflate';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
-const REPO = path.resolve(ROOT, '..', '..', '..', 'Oriel-UI'); // the mod repo (fonts and Ore textures are copied from it)
 const PUBLIC = path.join(ROOT, 'public');
 const args = process.argv.slice(2);
 const arg = (name) => {
@@ -32,7 +31,7 @@ const die = (msg) => {
 
 // ---------------------------------------------------------------- 1. Minecraft client jar
 const LOOM = path.join(os.homedir(), '.gradle', 'caches', 'fabric-loom');
-const DOT_MC = path.join(process.env.APPDATA ?? path.join(os.homedir(), '.minecraft'), '.minecraft');
+const DOT_MC = path.resolve(arg('--minecraft') ?? (process.env.APPDATA ? path.join(process.env.APPDATA, '.minecraft') : path.join(os.homedir(), '.minecraft')));
 
 const versionKey = (v) => v.split(/[.-]/).map((n) => Number(n) || 0);
 const newestFirst = (a, b) => {
@@ -197,73 +196,11 @@ function copySounds(version) {
   console.log(`setup: ${SOUNDS.length} sounds -> public/mc/sounds (index ${path.basename(store.index)})`);
 }
 
-// ---------------------------------------------------------------- 3. Fonts (from kit/, OFL)
-const FONTS = [
-  ['fusion_pixel_12.ttf', 'fusion-pixel-OFL.txt'],
-  ['fusion_pixel_8.ttf', 'fusion-pixel-OFL.txt'],
-  ['smiley_sans_oblique.ttf', null],
-];
-
-function copyFonts() {
-  const fontDir = path.join(REPO, 'kit', 'src', 'main', 'resources', 'assets', 'oriel', 'font');
-  const licDir = path.join(REPO, 'kit', 'src', 'main', 'resources', 'META-INF', 'licenses', 'fonts');
-  const out = path.join(PUBLIC, 'fonts');
-  if (!fs.existsSync(fontDir)) {
-    console.log('setup: fonts are bundled in public/fonts (OFL), nothing to copy');
-    return;
+// ---------------------------------------------------------------- 3. Bundled, redistributable assets
+function verifyBundledAssets() {
+  for (const file of ['fonts/fusion_pixel_12.ttf', 'fonts/fusion_pixel_8.ttf', 'fonts/noto_sans_sc_black.otf', 'fonts/smiley_sans_oblique.ttf', 'fonts/fusion-pixel-OFL.txt', 'fonts/noto-sans-cjk-OFL.txt', 'fonts/smiley-sans-OFL.txt', 'oriel/ore/panel.png']) {
+    if (!fs.existsSync(path.join(PUBLIC, file))) die('bundled asset missing: public/' + file);
   }
-  fs.mkdirSync(out, {recursive: true});
-  for (const [font, lic] of FONTS) {
-    const src = path.join(fontDir, font);
-    if (!fs.existsSync(src)) die(`font not found: ${src}`);
-    fs.copyFileSync(src, path.join(out, font));
-    if (lic && fs.existsSync(path.join(licDir, lic))) fs.copyFileSync(path.join(licDir, lic), path.join(out, lic));
-  }
-  console.log(`setup: ${FONTS.length} fonts -> public/fonts`);
-}
-
-// ---------------------------------------------------------------- 4. BGM (video-shotcraft skill)
-function copyBgm() {
-  const src = path.join(os.homedir(), '.claude', 'skills', 'video-shotcraft', 'assets', 'audio', 'bgm');
-  const out = path.join(PUBLIC, 'audio', 'bgm');
-  if (!fs.existsSync(src)) {
-    console.warn(`setup: WARNING no BGM source at ${src}; put your own mp3 into public/audio/bgm/`);
-    return;
-  }
-  fs.mkdirSync(out, {recursive: true});
-  const files = fs.readdirSync(src).filter((f) => f.endsWith('.mp3'));
-  for (const f of files) fs.copyFileSync(path.join(src, f), path.join(out, f));
-  console.log(`setup: ${files.length} BGM tracks -> public/audio/bgm (Mixkit free licence, see video-shotcraft ATTRIBUTION.md)`);
-}
-
-// ---------------------------------------------------------------- 4b. Oriel's own Ore theme textures (drawn by us, not Mojang's)
-function copyOre() {
-  const src = path.join(REPO, 'kit', 'src', 'main', 'resources', 'assets', 'oriel', 'textures', 'ore');
-  const out = path.join(PUBLIC, 'oriel', 'ore');
-  if (!fs.existsSync(src)) {
-    console.log('setup: Ore textures are bundled in public/oriel/ore, nothing to copy');
-    return;
-  }
-  fs.mkdirSync(out, {recursive: true});
-  const files = fs.readdirSync(src).filter((f) => f.endsWith('.png'));
-  for (const f of files) fs.copyFileSync(path.join(src, f), path.join(out, f));
-  console.log(`setup: ${files.length} Ore textures -> public/oriel/ore`);
-}
-
-// ---------------------------------------------------------------- 4c. Sound effects (video-shotcraft template, Mixkit)
-// Only files whose Mixkit Free License record is traceable (see the skill's template/public/audio/ATTRIBUTION.md).
-const SFX = ['impact-cine.mp3', 'whoosh-fast.mp3', 'transition-snap.mp3', 'transition-soft.mp3'];
-
-function copySfx() {
-  const src = path.join(os.homedir(), '.claude', 'skills', 'video-shotcraft', 'template', 'public', 'audio');
-  const out = path.join(PUBLIC, 'audio', 'sfx');
-  if (!fs.existsSync(src)) {
-    console.warn(`setup: WARNING no SFX source at ${src}; clips that use sfx() will fail to load audio`);
-    return;
-  }
-  fs.mkdirSync(out, {recursive: true});
-  for (const f of SFX) fs.copyFileSync(path.join(src, f), path.join(out, f));
-  console.log(`setup: ${SFX.length} sound effects -> public/audio/sfx (Mixkit Free License)`);
 }
 
 // ---------------------------------------------------------------- 5. Optional reference repos
@@ -294,9 +231,6 @@ function cloneRefs() {
 const mc = findJar();
 extractTextures(mc);
 copySounds(mc.version);
-copyFonts();
-copyBgm();
-copyOre();
-copySfx();
+verifyBundledAssets();
 if (args.includes('--with-refs')) cloneRefs();
 console.log('setup: done. Next: npm run dev  (Remotion Studio)');
