@@ -13,16 +13,16 @@ class BootstrapTests(unittest.TestCase):
         self.skill = self.root / 'skill'
         (self.skill / 'scripts').mkdir(parents=True)
         (self.skill / 'assets').mkdir()
-        shutil.copyfile(ROOT / 'skill/youyiku-video/scripts/bootstrap.py', self.skill / 'scripts/bootstrap.py')
+        shutil.copyfile(ROOT / 'skill/oriel-video/scripts/bootstrap.py', self.skill / 'scripts/bootstrap.py')
         self.target = self.root / 'target with spaces'
     def tearDown(self): self.temp.cleanup()
     def archive(self, entries):
-        with zipfile.ZipFile(self.skill / 'assets/youyiku-kit.zip', 'w') as z:
+        with zipfile.ZipFile(self.skill / 'assets/oriel-video-kit.zip', 'w') as z:
             for name, value in entries.items(): z.writestr(name, value)
     def run_bootstrap(self, *extra):
         return subprocess.run([sys.executable, str(self.skill / 'scripts/bootstrap.py'), str(self.target), '--no-install', '--no-setup', *extra], capture_output=True, text=True)
     def test_extract_to_path_with_spaces(self):
-        self.archive({'package.json':'{"name":"youyiku"}', 'src/a.ts':'export const a=1;'})
+        self.archive({'package.json':'{"name":"oriel-video"}', 'src/a.ts':'export const a=1;'})
         self.assertEqual(self.run_bootstrap().returncode, 0)
         self.assertTrue((self.target / 'src/a.ts').is_file())
     def test_refuses_existing_project(self):

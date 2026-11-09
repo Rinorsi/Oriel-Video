@@ -12,7 +12,7 @@ args = parser.parse_args()
 target = args.target.resolve()
 if target.exists() and any(target.iterdir()):
     parser.error('target must be empty; use an existing project directly instead')
-archive = Path(__file__).resolve().parent.parent / 'assets' / 'youyiku-kit.zip'
+archive = Path(__file__).resolve().parent.parent / 'assets' / 'oriel-video-kit.zip'
 if not archive.is_file():
     parser.error(f'missing bundled kit: {archive}; use the built download package')
 with zipfile.ZipFile(archive) as bundle:

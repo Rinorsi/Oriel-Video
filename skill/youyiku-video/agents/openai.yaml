@@ -1,4 +1,0 @@
-interface:
-  display_name: "优易库"
-  short_description: "Minecraft 风格转场与特效，用 Remotion 做视频"
-  default_prompt: "用 $youyiku-video 给我的 Minecraft 视频加几个转场，并导出渲染。"

@@ -35,7 +35,7 @@ export function buildGallery({ROOT, GAL, manifest}) {
   const data = JSON.stringify({categories: CATEGORIES, items});
   const html = `<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>优易库 · 视频动效画廊</title>
+<title>Oriel Video（优易库）· 视频动效画廊</title>
 <style>
 @font-face{font-family:Px12;src:url(assets/fonts/fusion_pixel_12.ttf)}
 @font-face{font-family:Px8;src:url(assets/fonts/fusion_pixel_8.ttf)}
@@ -158,9 +158,9 @@ ul.params code{font-family:Consolas,monospace;font-size:13px;color:#cfe8c5;backg
   header h1{font-size:20px}
 }
 </style></head><body><div class="app">
-<div class="top"><header><h1><b>优易库</b> · 视频动效画廊</h1>
+<div class="top"><header><h1><b>Oriel Video</b> · 优易库 视频动效画廊</h1>
 <label class="search"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></svg><input id="q" placeholder="搜索名称、用途、标签…" autocomplete="off"></label>
-<span class="hint" id="count"></span></header>
+<span class="hint" id="count"></span><span class="hint" style="margin-left:auto"><a href="https://github.com/Rinorsi/Oriel-Video" style="color:inherit">GitHub</a> · 作者 <a href="https://afdian.com/a/Rinorsi" style="color:inherit">云诺羲 Rinorsi</a></span></header>
 <div class="fbar"><div class="fcats" id="fcats"></div><div class="frow"><div class="toggle" id="alpha2"><i></i>只看透明层</div><button class="tag" id="tagbtn">标签</button><div class="active" id="active2" style="margin:0"></div></div><div class="tagpop" id="tagpop"><div class="tags" id="tags2"></div></div></div></div>
 <div class="layout">
 <aside>

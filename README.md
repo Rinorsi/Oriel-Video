@@ -1,4 +1,4 @@
-# 优易库
+# Oriel Video（优易库）
 
 Minecraft / Minecraft 地下城风格的 Remotion 动画库：217 个展示效果，198 个可复用库条目，59 个转场，151 个支持透明层导出。
 
@@ -8,6 +8,8 @@ Minecraft / Minecraft 地下城风格的 Remotion 动画库：217 个展示效�
 | 物品动画 | 合成、熔炼、锻造、附魔、酿造、掉落、拾取、战利品 |
 | 标题与信息 | 片头片尾、章节卡、Boss 登场、结算页、目标栏、字幕 |
 | 背景与氛围 | 体素场景、地图旅程、调色、光柱、雨雪、粒子 |
+
+**[在线示例库：浏览并播放全部效果](https://rinorsi.github.io/Oriel-Video/)**
 
 [效果目录](docs/库目录.md) · [全部展示效果](docs/效果索引.md) · [AI 使用手册](docs/AI使用手册.md)
 
@@ -32,19 +34,19 @@ npm run setup -- --minecraft "你的游戏目录" --jar "客户端.jar的完整�
 
 ## 用 Skill 做视频
 
-下载包的文件夹名应为 `youyiku-video`，里面包含 `SKILL.md`、`scripts/` 和 `assets/`。
+下载包的文件夹名应为 `oriel-video`，里面包含 `SKILL.md`、`scripts/` 和 `assets/`。
 
-- **Cindy**：将整个文件夹放入项目的 `.agents/skills/`，重新开启 Agent 会话，在 Skill 列表选择「优易库」。
+- **Cindy**：将整个文件夹放入项目的 `.agents/skills/`，重新开启 Agent 会话，在 Skill 列表选择「Oriel Video」。
 - **其他支持 Skills 的 Agent**：将整个文件夹放入该工具的 Skills 目录。
 - **直接交给 AI**：提供 `SKILL.md` 的完整路径，让 AI 读取并按它操作。
 
 调用示例：
 
-> 使用 $youyiku-video，把我的录屏做成一段 Minecraft 视频：传送门开场，合成物品时加动画，最后加片尾卡。
+> 使用 $oriel-video，把我的录屏做成一段 Minecraft 视频：传送门开场，合成物品时加动画，最后加片尾卡。
 
 只需要转场：
 
-> 使用 $youyiku-video，预览苦力怕冲脸转场，然后导出透明层给剪映。
+> 使用 $oriel-video，预览苦力怕冲脸转场，然后导出透明层给剪映。
 
 [从源码构建 Skill 下载包](docs/开发指南.md#skill-下载包)
 
@@ -73,7 +75,7 @@ npm run fx -- previews all
 
 生成 `gallery/index.html`，可搜索、分类、播放动画和复制导出命令。首次需要渲染全部预览，耗时较长。
 
-[在线示例库的部署方法](docs/示例库.md)
+在线版：<https://rinorsi.github.io/Oriel-Video/> · [部署方法](docs/示例库.md)
 
 ## 作者与使用
 

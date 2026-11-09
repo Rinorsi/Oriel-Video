@@ -1,17 +1,19 @@
 ---
-name: youyiku-video
+name: oriel-video
 description: 用「优易库」的 Minecraft / Minecraft 地下城风格转场、特效、标题卡和叠加层，通过 Remotion 做 Minecraft 视频，或导出透明层给剪映等剪辑软件。用户要给 Minecraft 视频加转场、片头片尾、地下城风格动效，或明确要使用优易库动画时使用。不用于 Minecraft 模组或服务器开发。
 ---
 
-# 优易库（Youyiku）
+# Oriel Video（优易库）
 
 作者：云诺羲 Rinorsi · 爱发电 https://afdian.com/a/Rinorsi
+
+在线示例库（可播放全部效果，供用户挑选）：https://rinorsi.github.io/Oriel-Video/ ，仓库：https://github.com/Rinorsi/Oriel-Video
 
 Minecraft 风格的转场与特效动画库，Remotion（React）工程。画廊共 217 个效果：59 个转场，151 个带透明层，其中 198 个已整理成可直接调用的库组件。可修改参数以 catalog 和实际 TypeScript 类型为准，部分位置仍写死。
 
 ## 开工
 
-1. 首次使用：用本 Skill 的完整路径运行脚本，例如 python "<Skill目录>/scripts/bootstrap.py" "<空的目标目录>"。必须使用构建好的下载包，assets/youyiku-kit.zip 应存在。脚本解压工程后执行 npm ci 和 npm run setup。需要 Python 3、Node.js 20+ 和本机完整的 Minecraft Java 版客户端资源。已有工程直接使用，不重新解压。自定义游戏目录：先加 --no-setup，再在工程运行 npm run setup -- --minecraft "<游戏目录>" --jar "<客户端.jar>"。提取资源不提交、不转发。
+1. 首次使用：用本 Skill 的完整路径运行脚本，例如 python "<Skill目录>/scripts/bootstrap.py" "<空的目标目录>"。必须使用构建好的下载包，assets/oriel-video-kit.zip 应存在。脚本解压工程后执行 npm ci 和 npm run setup。需要 Python 3、Node.js 20+ 和本机完整的 Minecraft Java 版客户端资源。已有工程直接使用，不重新解压。自定义游戏目录：先加 --no-setup，再在工程运行 npm run setup -- --minecraft "<游戏目录>" --jar "<客户端.jar>"。提取资源不提交、不转发。
 2. 工程里先读 `docs/AI使用手册.md`；用 `src/lib/catalog.json` 查效果（id、导出名、时长、是否可叠加、用途、真实 props 和示例，直接 grep）；从 `src/lib/examples/episode.tsx` 复制起步。props 和时长以这几个文件为准，不要凭记忆写。
 3. 用户的录屏放 `public/footage/`，按 docs/开发指南.md 新建自己的合成入口（根合成用 withFonts 包一层），渲染：`npx remotion render <自己的入口.tsx> <合成ID> out/my.mp4`。
 4. 只要效果、不用 Remotion 拼整集：`npm run fx -- export <效果id> --alpha` 导出 ProRes 4444 透明层 `.mov`，用户拖进剪映 / Premiere 叠在素材上。
