@@ -1,0 +1,6391 @@
+{
+  "mosaic": {
+    "id": "mosaic",
+    "category": "transition",
+    "frames": 76,
+    "name": "方块马赛克",
+    "tags": [
+      "像素",
+      "章节切换",
+      "方块"
+    ],
+    "blurb": "一格格方块纹理从中心向外弹出盖住画面，再反向弹开。",
+    "usage": "两个场景之间的标准转场，节奏明快。",
+    "alpha": true
+  },
+  "push": {
+    "id": "push",
+    "category": "transition",
+    "frames": 64,
+    "name": "推拉",
+    "tags": [
+      "平移",
+      "快切"
+    ],
+    "blurb": "A 画面向左推出，B 画面从右推入，带绿色边线。",
+    "usage": "同一话题下的连续镜头，快节奏切换。",
+    "alpha": false
+  },
+  "zoom": {
+    "id": "zoom",
+    "category": "transition",
+    "frames": 68,
+    "name": "缩放穿越",
+    "tags": [
+      "冲击",
+      "进入"
+    ],
+    "blurb": "A 画面放大虚化穿过，B 画面从小变大落定，中间一层光。",
+    "usage": "进入新地点、新话题，有\"冲进去\"的感觉。",
+    "alpha": false
+  },
+  "curtain": {
+    "id": "curtain",
+    "category": "transition",
+    "frames": 80,
+    "name": "石砖幕布",
+    "tags": [
+      "厚重",
+      "章节切换"
+    ],
+    "blurb": "两扇石砖幕布从左右合拢，撞出火花，再向两边拉开。",
+    "usage": "章节切换、片头片尾，比较庄重。",
+    "alpha": true
+  },
+  "loading": {
+    "id": "loading",
+    "category": "transition",
+    "frames": 88,
+    "name": "加载界面",
+    "tags": [
+      "游戏感",
+      "等待"
+    ],
+    "blurb": "泥土背景加进度条和\"正在加载地形…\"，复刻游戏加载屏。",
+    "usage": "地点切换、读档、时间跳转的玩梗转场。",
+    "alpha": true
+  },
+  "tnt": {
+    "id": "tnt",
+    "category": "transition",
+    "frames": 70,
+    "name": "TNT 爆破",
+    "tags": [
+      "爆炸",
+      "高潮",
+      "震屏"
+    ],
+    "blurb": "画面抖动升温，闪白后爆炸序列帧盖过，B 画面带余震落定。",
+    "usage": "高潮点、反转、开战。",
+    "alpha": false
+  },
+  "portal": {
+    "id": "portal",
+    "category": "transition",
+    "frames": 82,
+    "name": "下界传送门",
+    "tags": [
+      "传送",
+      "像素"
+    ],
+    "blurb": "紫色像素漩涡从中心扩散吞没画面，再向中心收缩露出 B。",
+    "usage": "换地点、换世界线、回忆与现实切换。",
+    "alpha": true
+  },
+  "sweep": {
+    "id": "sweep",
+    "category": "transition",
+    "frames": 74,
+    "name": "方块纹理扫落",
+    "tags": [
+      "方块",
+      "落下"
+    ],
+    "blurb": "十二列方块纹理从上向下依次落满，再向下扫出。",
+    "usage": "换章节、换话题，有分栏的节奏感。",
+    "alpha": true
+  },
+  "glitch": {
+    "id": "glitch",
+    "category": "transition",
+    "frames": 66,
+    "name": "末影错位",
+    "tags": [
+      "故障",
+      "紫青"
+    ],
+    "blurb": "画面切成横条左右错位，带紫青色故障条，换成 B。",
+    "usage": "末地、异常、反常事件。",
+    "alpha": false
+  },
+  "scene-title-drop": {
+    "id": "scene-title-drop",
+    "name": "标题砸落与暗角",
+    "category": "scene",
+    "frames": 140,
+    "blurb": "黑边滑入，暗角收紧，标题逐字砸下，标签与快捷栏依次弹出。",
+    "usage": "视频开场标题。",
+    "tags": [
+      "开场",
+      "标题",
+      "暗角"
+    ],
+    "alpha": false
+  },
+  "scene-hotbar-tooltip": {
+    "id": "scene-hotbar-tooltip",
+    "name": "快捷栏与提示框",
+    "category": "scene",
+    "frames": 150,
+    "blurb": "选中框扫过快捷栏，附魔流光，提示框逐字打出。",
+    "usage": "介绍物品、装备。",
+    "tags": [
+      "物品",
+      "提示框"
+    ],
+    "alpha": false
+  },
+  "scene-craft": {
+    "id": "scene-craft",
+    "name": "合成",
+    "category": "scene",
+    "frames": 160,
+    "blurb": "材料沿弧线飞入，进度条走满，成品砸出带粒子。",
+    "usage": "讲合成配方。",
+    "tags": [
+      "合成",
+      "配方"
+    ],
+    "alpha": false
+  },
+  "scene-toast-xp": {
+    "id": "scene-toast-xp",
+    "name": "成就与经验",
+    "category": "scene",
+    "frames": 140,
+    "blurb": "三张成就弹窗依次滑入，经验球飞向经验条。",
+    "usage": "达成里程碑、升级。",
+    "tags": [
+      "成就",
+      "经验"
+    ],
+    "alpha": false
+  },
+  "scene-settings": {
+    "id": "scene-settings",
+    "name": "设置界面交互",
+    "category": "scene",
+    "frames": 160,
+    "blurb": "鼠标移动点击、开关、滑块、标签切换、按钮按下。",
+    "usage": "演示功能、教程。",
+    "tags": [
+      "界面",
+      "鼠标",
+      "Ore"
+    ],
+    "alpha": false
+  },
+  "scene-menu": {
+    "id": "scene-menu",
+    "name": "主菜单",
+    "category": "scene",
+    "frames": 150,
+    "blurb": "按钮交替滑入，鼠标逐个悬停，点击开始。",
+    "usage": "开场、选择页。",
+    "tags": [
+      "菜单",
+      "Ore"
+    ],
+    "alpha": false
+  },
+  "scene-day-cycle": {
+    "id": "scene-day-cycle",
+    "name": "昼夜延时",
+    "category": "scene",
+    "frames": 150,
+    "blurb": "清晨到夜晚连续渐变，时钟与进度条同步走动。",
+    "usage": "时间流逝、天数跳转。",
+    "tags": [
+      "昼夜",
+      "延时"
+    ],
+    "alpha": false
+  },
+  "scene-enchant": {
+    "id": "scene-enchant",
+    "name": "附魔",
+    "category": "scene",
+    "frames": 150,
+    "blurb": "物品悬浮发光，符文环绕，提示框逐字显示。",
+    "usage": "展示附魔与稀有物品。",
+    "tags": [
+      "附魔",
+      "符文"
+    ],
+    "alpha": false
+  },
+  "scene-hud-hurt": {
+    "id": "scene-hud-hurt",
+    "name": "受伤与复活",
+    "category": "scene",
+    "frames": 130,
+    "blurb": "红色暗角、震屏、血心碎裂，图腾复活金光回血。",
+    "usage": "战斗、生死时刻。",
+    "tags": [
+      "血量",
+      "图腾",
+      "暗角"
+    ],
+    "alpha": false
+  },
+  "scene-end-card": {
+    "id": "scene-end-card",
+    "name": "片尾感谢",
+    "category": "scene",
+    "frames": 140,
+    "blurb": "感谢观看面板，点击关注按钮，黑边合拢渐黑。",
+    "usage": "视频结尾。",
+    "tags": [
+      "片尾",
+      "关注"
+    ],
+    "alpha": false
+  },
+  "scene-intro-title": {
+    "id": "scene-intro-title",
+    "name": "标题炸裂片头",
+    "category": "scene",
+    "frames": 150,
+    "blurb": "MINECRAFT 石质 logo 砸下，TNT 炸碎，章节标题冲出。",
+    "usage": "系列视频的固定片头。",
+    "tags": [
+      "片头",
+      "爆炸",
+      "标题"
+    ],
+    "alpha": false
+  },
+  "sky-dawn": {
+    "id": "sky-dawn",
+    "name": "清晨天空",
+    "category": "atmosphere",
+    "frames": 240,
+    "blurb": "像素天空、云、太阳月亮和草地，无光芒无方块，可无缝循环。",
+    "usage": "视频背景。预览为前 8 秒，完整循环 80 秒。",
+    "tags": [
+      "背景",
+      "循环",
+      "天空"
+    ],
+    "alpha": false
+  },
+  "sky-noon": {
+    "id": "sky-noon",
+    "name": "正午天空",
+    "category": "atmosphere",
+    "frames": 240,
+    "blurb": "像素天空、云、太阳月亮和草地，无光芒无方块，可无缝循环。",
+    "usage": "视频背景。预览为前 8 秒，完整循环 80 秒。",
+    "tags": [
+      "背景",
+      "循环",
+      "天空"
+    ],
+    "alpha": false
+  },
+  "sky-dusk": {
+    "id": "sky-dusk",
+    "name": "黄昏天空",
+    "category": "atmosphere",
+    "frames": 240,
+    "blurb": "像素天空、云、太阳月亮和草地，无光芒无方块，可无缝循环。",
+    "usage": "视频背景。预览为前 8 秒，完整循环 80 秒。",
+    "tags": [
+      "背景",
+      "循环",
+      "天空"
+    ],
+    "alpha": false
+  },
+  "sky-night": {
+    "id": "sky-night",
+    "name": "夜晚天空",
+    "category": "atmosphere",
+    "frames": 240,
+    "blurb": "像素天空、云、太阳月亮和草地，无光芒无方块，可无缝循环。",
+    "usage": "视频背景。预览为前 8 秒，完整循环 80 秒。",
+    "tags": [
+      "背景",
+      "循环",
+      "天空"
+    ],
+    "alpha": false
+  },
+  "cute-creeper-rush": {
+    "id": "cute-creeper-rush",
+    "category": "cute",
+    "frames": 100,
+    "name": "苦力怕冲脸",
+    "tags": [
+      "可爱",
+      "苦力怕",
+      "爆炸",
+      "转场",
+      "像素",
+      "搞笑"
+    ],
+    "blurb": "一排排圆滚滚的苦力怕脸从底部蹦上来挤满整个画面，然后从左下到右上依次点燃：一个个鼓胀、抖动、越来越快地闪白，最后从中心向外炸成绿色像素碎屑和烟团，露出下一个画面。",
+    "usage": "搞笑或节奏点转场、章节切换、梗点；与爆炸/惊吓相关的内容前后都很合适。",
+    "params": [
+      {
+        "name": "ROWS",
+        "desc": "苦力怕行数（默认 5）"
+      },
+      {
+        "name": "PX",
+        "desc": "精灵像素尺寸（默认 24，越大脸越大）"
+      },
+      {
+        "name": "BOOM",
+        "desc": "爆炸帧（默认 30，即转场中点，B 在此换入）"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-block-rain": {
+    "id": "cute-block-rain",
+    "category": "cute",
+    "frames": 100,
+    "name": "方块雨",
+    "tags": [
+      "可爱",
+      "方块",
+      "俄罗斯方块",
+      "堆叠",
+      "转场",
+      "像素"
+    ],
+    "blurb": "草方块、钻石块、金块、红石、青金石块像俄罗斯方块一样一列列落下，每块落地都挤压回弹、扬起一小撮灰尘；堆满全屏后整排闪白消行、整堆下蹲，随后由中心向外弹开，带着碎屑和烟尘露出下一个画面。",
+    "usage": "搜集/建造/合成类内容的转场，或者节奏明快的章节切换。",
+    "params": [
+      {
+        "name": "BLAST",
+        "desc": "方块堆弹开的帧（默认 30）"
+      },
+      {
+        "name": "CELL",
+        "desc": "方块边长（默认 120 = 16x9 网格，需整除 1920/1080）"
+      },
+      {
+        "name": "TYPES",
+        "desc": "使用的方块精灵列表，可增删"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-cloud-push": {
+    "id": "cute-cloud-push",
+    "category": "cute",
+    "frames": 100,
+    "name": "云朵推开",
+    "tags": [
+      "可爱",
+      "云",
+      "彩虹",
+      "太阳",
+      "天空",
+      "转场",
+      "像素"
+    ],
+    "blurb": "一排排扁平像素云（有的带笑脸）压着蓝天条带从左右两侧挤进来盖满画面，太阳和彩虹探出头，然后一阵风（白色风线）把整片天空吹向右边，露出下一个画面。",
+    "usage": "日出/天气/轻松治愈段落的转场，或者从一天切到另一天、从地面飞向天空。",
+    "params": [
+      {
+        "name": "ROWS",
+        "desc": "云朵行数（默认 4）"
+      },
+      {
+        "name": "GUST",
+        "desc": "起风帧（默认 30）"
+      },
+      {
+        "name": "SKY",
+        "desc": "天空条带两种蓝色"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-slime-splat": {
+    "id": "cute-slime-splat",
+    "category": "cute",
+    "frames": 100,
+    "name": "史莱姆糊脸",
+    "tags": [
+      "可爱",
+      "史莱姆",
+      "果冻",
+      "气泡",
+      "转场",
+      "像素",
+      "搞笑"
+    ],
+    "blurb": "绿色史莱姆从屏幕上方一块块流下来糊满全屏（里面有气泡和高光，果冻般抖动），中间弹出一只原版史莱姆；随后它被压扁、分裂成四只小史莱姆弹飞，整片黏液碎成方块从中心向外一格格掉落，露出下一个画面。",
+    "usage": "搞怪/沙雕转场、史莱姆或沼泽相关内容，或者需要“糊脸”式强冲击的切换。",
+    "params": [
+      {
+        "name": "COL",
+        "desc": "滴落列宽（默认 24 像素）"
+      },
+      {
+        "name": "POP",
+        "desc": "碎裂、分裂帧（默认 30）"
+      },
+      {
+        "name": "CUBE",
+        "desc": "碎裂方块的边长（默认 60，需整除 1920/1080）"
+      },
+      {
+        "name": "SLIME / SLIME_DEEP",
+        "desc": "史莱姆主色与底边深色"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-heart-wave": {
+    "id": "cute-heart-wave",
+    "category": "cute",
+    "frames": 100,
+    "name": "爱心像素波",
+    "tags": [
+      "可爱",
+      "爱心",
+      "粉色",
+      "菱形波",
+      "转场",
+      "像素",
+      "告白"
+    ],
+    "blurb": "16×9 的粉色方砖，每块一颗像素爱心，从画面中心按菱形波纹一层层弹出来铺满，正中一颗大红心；铺满后整屏“砰砰”跳两下（格子闪烁），然后爱心由中心向外飞散、方砖逐格缩没，露出下一个画面。",
+    "usage": "感谢/告白/治愈内容、点赞关注段落，或者想要甜甜的强节奏转场时。",
+    "params": [
+      {
+        "name": "CELL",
+        "desc": "方砖边长（默认 120 = 16×9 网格，需整除 1920/1080）"
+      },
+      {
+        "name": "PX",
+        "desc": "爱心像素大小（默认 8）"
+      },
+      {
+        "name": "BURST",
+        "desc": "爆散帧（默认 33）"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-polaroid": {
+    "id": "cute-polaroid",
+    "category": "cute",
+    "frames": 106,
+    "name": "拍立得翻页",
+    "tags": [
+      "可爱",
+      "拍立得",
+      "相机",
+      "照片",
+      "转场",
+      "回忆",
+      "相册"
+    ],
+    "blurb": "取景框对焦，快门闪白（像素十字光芒 + 格子闪烁），画面缩成一张贴着胶带的拍立得飘向右上角；下一张拍立得从左下角滑入、显影，再放大铺满全屏。",
+    "usage": "回忆、相册、旅行/建筑展示、截图集，或者一个场景定格后切到下一个场景。",
+    "params": [
+      {
+        "name": "SHUTTER",
+        "desc": "快门闪光帧（默认 12）"
+      },
+      {
+        "name": "FR / BOT",
+        "desc": "拍立得白边宽度 / 底部加宽（像素）"
+      },
+      {
+        "name": "BACKDROP",
+        "desc": "背景底色（默认淡紫）"
+      }
+    ],
+    "alpha": false
+  },
+  "cute-star-flip": {
+    "id": "cute-star-flip",
+    "category": "cute",
+    "frames": 100,
+    "name": "星星卷帘",
+    "tags": [
+      "可爱",
+      "星星",
+      "翻牌",
+      "网格",
+      "卡片",
+      "转场",
+      "糖果色"
+    ],
+    "blurb": "12×7 的糖果色星星卡片按对角线一排排翻出来铺满屏幕，铺满后格子沿对角线闪白并再换一轮颜色翻一遍，最后随机侧翻消失（带彩色碎屑），露出下一个画面。",
+    "usage": "章节切换、清单/收集类内容、抽卡或翻牌的玩法段落。",
+    "params": [
+      {
+        "name": "COLS / ROWS / S",
+        "desc": "网格列数、行数、卡片间距（默认 12×7、160 像素）"
+      },
+      {
+        "name": "FACE1 / FACE2",
+        "desc": "两轮翻面的卡片配色"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-chest-pop": {
+    "id": "cute-chest-pop",
+    "category": "cute",
+    "frames": 106,
+    "name": "箱子弹出",
+    "tags": [
+      "可爱",
+      "箱子",
+      "宝箱",
+      "物品",
+      "收纳",
+      "转场",
+      "像素",
+      "原版贴图"
+    ],
+    "blurb": "一个原版贴图的箱子从画面底部蹦上来掀开盖子，旧画面缩小旋转着被吸进箱子里；盖子合上并扬起灰尘、剧烈抖动，然后猛地弹开，钻石、金苹果、附魔书、剑等原版物品贴图喷泉般冲出，新画面从箱子里弹出来放大到全屏。",
+    "usage": "开箱/掉落/收藏/背包类内容的转场，或者“装起来再拿出来”的整理、盘点、整合包切换。",
+    "params": [
+      {
+        "name": "POP",
+        "desc": "二次弹开的帧（默认 38）"
+      },
+      {
+        "name": "BY",
+        "desc": "箱子底座上沿的 y 坐标（默认 690）"
+      },
+      {
+        "name": "PXC",
+        "desc": "箱子一个贴图像素的屏幕尺寸（默认 36，箱子宽 504）"
+      }
+    ],
+    "alpha": false
+  },
+  "cute-item-wheel": {
+    "id": "cute-item-wheel",
+    "category": "cute",
+    "frames": 100,
+    "name": "苹果转盘",
+    "tags": [
+      "可爱",
+      "苹果",
+      "转盘",
+      "物品",
+      "旋转",
+      "转场",
+      "像素"
+    ],
+    "blurb": "以一个大苹果为中心，四圈苹果、钻石、书、剑、爱心、南瓜依次冒出来，反向旋转着放大，直到把屏幕撑满；然后一根时钟指针（起点一个十字光芒）顺时针扫过，把整个转盘一格格擦掉，露出下一个画面。",
+    "usage": "物品盘点、合成配方、抽奖/转盘玩法，或者想要“一个接一个”撑满画面的节奏感转场。",
+    "params": [
+      {
+        "name": "RINGS",
+        "desc": "每圈的半径与物品数量"
+      },
+      {
+        "name": "ITEMS",
+        "desc": "转盘上出现的精灵列表，可增删"
+      },
+      {
+        "name": "SWEEP",
+        "desc": "指针开始扫的帧（默认 32）"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-animal-dash": {
+    "id": "cute-animal-dash",
+    "category": "cute",
+    "frames": 100,
+    "name": "猪猪冲刺",
+    "tags": [
+      "可爱",
+      "小猪",
+      "小鸡",
+      "绵羊",
+      "动物",
+      "冲刺",
+      "尘土",
+      "转场",
+      "像素"
+    ],
+    "blurb": "六条跑道上的原版贴图的小猪、小鸡、绵羊从左右交替冲进来，身后拖着彩色尘土条带，挤满画面原地蹦几下，然后一起冲向另一侧，把画面带走。",
+    "usage": "农场/生存/动物主题，或者节奏轻快的“冲过去”式转场、冲刺/赶路的段落。",
+    "params": [
+      {
+        "name": "LANES",
+        "desc": "跑道数（默认 6，需整除 1080）"
+      },
+      {
+        "name": "DUST",
+        "desc": "每条跑道的尘土颜色"
+      },
+      {
+        "name": "SPACING",
+        "desc": "动物间距（像素，默认 205）"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-food-frame": {
+    "id": "cute-food-frame",
+    "category": "cute",
+    "frames": 96,
+    "name": "水果拼盘",
+    "tags": [
+      "可爱",
+      "水果",
+      "食物",
+      "西瓜",
+      "南瓜",
+      "萝卜",
+      "野餐",
+      "转场",
+      "像素"
+    ],
+    "blurb": "红白格野餐布像相框一样从四周向中间合拢，每个盘子随布边扫过依次蹦出原版贴图的苹果、胡萝卜、西瓜片、南瓜派、面包，一圈圈向中心收紧；画面铺满后抖一抖，再从中心打开，盘子一圈圈弹走。",
+    "usage": "美食/农场/生存做饭段落，或者想要“摆盘 → 开饭”式节奏的转场。",
+    "params": [
+      {
+        "name": "COLS / ROWS / S",
+        "desc": "盘子网格（默认 12×7、间距 160）"
+      },
+      {
+        "name": "CLOTH_A / CLOTH_B",
+        "desc": "桌布两种颜色"
+      },
+      {
+        "name": "FOODS",
+        "desc": "盘子里的食物物品贴图列表（item(id)）"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-rainbow-sweep": {
+    "id": "cute-rainbow-sweep",
+    "category": "cute",
+    "frames": 88,
+    "name": "彩虹条带",
+    "tags": [
+      "可爱",
+      "彩虹",
+      "条带",
+      "扫光",
+      "斜切",
+      "转场",
+      "糖果色"
+    ],
+    "blurb": "七条描边加高光的胖胶囊彩虹条带，每条带着一颗星星，依次斜着扫进画面铺满，一道白色高光划过，然后条带按顺序冲出画面，露出下一个画面。",
+    "usage": "最通用的可爱风转场，适合章节切换、片头片尾、节奏点，几乎不挑内容。",
+    "params": [
+      {
+        "name": "ANGLE",
+        "desc": "扫过的倾斜角度（默认 -22 度）"
+      },
+      {
+        "name": "COLORS",
+        "desc": "条带配色，从上到下"
+      },
+      {
+        "name": "BH / PITCH",
+        "desc": "条带厚度 / 间距"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-bubble-pop": {
+    "id": "cute-bubble-pop",
+    "category": "cute",
+    "frames": 100,
+    "name": "气泡爆开",
+    "tags": [
+      "可爱",
+      "气泡",
+      "泡泡",
+      "水",
+      "清新",
+      "转场",
+      "像素"
+    ],
+    "blurb": "一层波浪水面从底部涨起，大大小小描边的肥皂泡漂满屏幕；随后泡泡一个接一个破开成方块碎片，每次破裂都在水膜上撕开一个越来越大的像素方洞，直到整片水膜裂光，露出下一个画面。",
+    "usage": "水下/海洋/清洁/轻松治愈的段落，或者想要清新、爽快的连续破裂节奏转场。",
+    "params": [
+      {
+        "name": "BUBBLES",
+        "desc": "泡泡数量（默认 34）"
+      },
+      {
+        "name": "WATER_A / WATER_B",
+        "desc": "水面前后两层颜色"
+      },
+      {
+        "name": "POP0",
+        "desc": "第一个泡泡破开的帧（默认 27）"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-ribbon-curtain": {
+    "id": "cute-ribbon-curtain",
+    "category": "cute",
+    "frames": 94,
+    "name": "门帘扯开",
+    "tags": [
+      "可爱",
+      "门帘",
+      "彩带",
+      "布条",
+      "幕布",
+      "转场",
+      "糖果色"
+    ],
+    "blurb": "十六条糖果色燕尾彩带从金色挂杆上一条条砸下来挂满整个画面，轻轻摇晃；一阵风（白色风线 + 彩色碎屑）把它们从中间向左右两边卷拢、推出画面，露出下一个画面。",
+    "usage": "开场、揭晓、舞台感的“拉开帘子”转场，适合新内容登场、公布结果、片头。",
+    "params": [
+      {
+        "name": "N",
+        "desc": "彩带数量（默认 16）"
+      },
+      {
+        "name": "COLORS",
+        "desc": "彩带颜色循环"
+      },
+      {
+        "name": "OPEN",
+        "desc": "被风吹开的帧（默认 27）"
+      }
+    ],
+    "alpha": true
+  },
+  "cute-dice-flip": {
+    "id": "cute-dice-flip",
+    "category": "cute",
+    "frames": 84,
+    "name": "骰子翻面",
+    "tags": [
+      "可爱",
+      "骰子",
+      "立方体",
+      "翻转",
+      "3D",
+      "转场",
+      "像素"
+    ],
+    "blurb": "整个画面变成一块圆角骰子面（深色描边、白色高光边、四角骰子点），先蹲一下再跳起来向前翻 90 度落到下一面，落地带过冲和挤压，落地时底边扬起灰尘、四角崩出碎屑。",
+    "usage": "章节切换、“下一个/下一期”的翻页，抽卡、随机、游戏类内容尤其合适。",
+    "params": [
+      {
+        "name": "FLIP0 / FLIP1",
+        "desc": "翻转开始 / 结束的帧（默认 7 / 25）"
+      },
+      {
+        "name": "RADIUS",
+        "desc": "圆角半径（默认 72）"
+      },
+      {
+        "name": "PERSP",
+        "desc": "透视距离（默认 2400，越小越夸张）"
+      }
+    ],
+    "alpha": false
+  },
+  "cute-heart-iris": {
+    "id": "cute-heart-iris",
+    "category": "cute",
+    "frames": 94,
+    "name": "像素爱心框",
+    "tags": [
+      "可爱",
+      "爱心",
+      "遮罩",
+      "收缩",
+      "粉色",
+      "转场",
+      "像素",
+      "告白"
+    ],
+    "blurb": "粉色波点画框带着白边和描边，从四周向中心收成一个像素爱心形的洞，洞在中心变成一颗砰砰跳的红心（十字光芒 + 格子闪烁）并炸出爱心，然后爱心形的洞再张开、变大，把画框整个吃掉，露出下一个画面。",
+    "usage": "感谢/告白/恋爱氛围，或者聚焦主体（收缩）再展开新场景的“虹膜”式转场。",
+    "params": [
+      {
+        "name": "CELL0",
+        "desc": "全开时爱心网格单元大小（默认 400 像素）"
+      },
+      {
+        "name": "FRAME",
+        "desc": "画框主色（默认粉色）"
+      }
+    ],
+    "alpha": true
+  },
+  "t2-end-portal": {
+    "id": "t2-end-portal",
+    "category": "transition",
+    "frames": 106,
+    "name": "末地传送门",
+    "tags": [
+      "末地",
+      "传送门",
+      "星空",
+      "质感",
+      "章节切换",
+      "神秘"
+    ],
+    "blurb": "画面变暗，末地传送门框的 12 只眼睛逐个亮起，紫青星点涌出吞没整个画面，再从中心裂开散去，露出下一幕。",
+    "usage": "进入末地 / 异世界 / 神秘章节、穿越类剧情的转场。",
+    "params": [
+      {
+        "name": "BLOCK",
+        "desc": "传送门框方块边长（像素），默认 192"
+      },
+      {
+        "name": "STAR_COLORS",
+        "desc": "星点色板（青、蓝、紫、白）"
+      },
+      {
+        "name": "frames",
+        "desc": "转场长度，默认 66 帧；中点 p=0.5 为完全覆盖"
+      }
+    ],
+    "alpha": true
+  },
+  "t2-enchant-veil": {
+    "id": "t2-enchant-veil",
+    "category": "transition",
+    "frames": 90,
+    "name": "附魔光幕",
+    "tags": [
+      "附魔",
+      "符文",
+      "光幕",
+      "紫色",
+      "质感",
+      "扫过"
+    ],
+    "blurb": "一道带附魔光斑纹理的紫色斜光幕从左扫到右，幕上有标准银河字母符文滚动，前缘迸出符文和星光粒子，光幕过后是下一幕。",
+    "usage": "附魔 / 魔法 / 神秘道具出场，或需要华丽感的章节切换。",
+    "params": [
+      {
+        "name": "BW",
+        "desc": "光幕宽度，默认 960px"
+      },
+      {
+        "name": "TILT",
+        "desc": "光幕倾斜度，默认 0.22"
+      },
+      {
+        "name": "frames",
+        "desc": "转场长度，默认 50 帧"
+      }
+    ],
+    "alpha": false
+  },
+  "t2-lava-rise": {
+    "id": "t2-lava-rise",
+    "category": "transition",
+    "frames": 100,
+    "name": "熔岩涌上",
+    "tags": [
+      "熔岩",
+      "下界",
+      "火焰",
+      "质感",
+      "像素",
+      "章节切换"
+    ],
+    "blurb": "真贴图的像素熔岩从底部翻涌而上，顶部气泡鼓起破裂、火星飞溅，淹没画面；退去时表面冷却成带发光裂纹的黑曜石硬壳。",
+    "usage": "进入下界 / 熔岩洞穴 / 高温、危险、爆发类场景的转场。",
+    "params": [
+      {
+        "name": "CRUST",
+        "desc": "黑曜石硬壳厚度（低分辨率像素），默认 34"
+      },
+      {
+        "name": "NB",
+        "desc": "气泡数量，默认 18"
+      },
+      {
+        "name": "frames",
+        "desc": "转场长度，默认 60 帧"
+      }
+    ],
+    "alpha": true
+  },
+  "t2-chest-open": {
+    "id": "t2-chest-open",
+    "category": "transition",
+    "frames": 116,
+    "name": "箱子开盖",
+    "tags": [
+      "箱子",
+      "宝箱",
+      "金光",
+      "质感",
+      "惊喜",
+      "开箱"
+    ],
+    "blurb": "游戏原版箱子贴图拼成的 3D 木箱从画面下方升起落地，缝隙漏出金光，箱盖绕后铰链掀开，光柱冲天，宝物弹出；原画面被吸进箱口，金光铺满屏幕后下一幕从光里展开。",
+    "usage": "开箱 / 获得奖励 / 揭晓答案 / 战利品展示前的转场。",
+    "params": [
+      {
+        "name": "S",
+        "desc": "每个贴图像素的屏幕大小，默认 36（箱子宽 504px）"
+      },
+      {
+        "name": "LID_OPEN / TILT / YAW",
+        "desc": "箱盖最大开角、俯视角、箱子偏转角"
+      },
+      {
+        "name": "OPEN_X / OPEN_Y",
+        "desc": "箱口位置，A 被吸入、B 展开的中心点"
+      },
+      {
+        "name": "LIGHT / LOOT",
+        "desc": "光的配色与弹出的物品"
+      }
+    ],
+    "alpha": false
+  },
+  "t2-book-flip": {
+    "id": "t2-book-flip",
+    "name": "像素翻页",
+    "category": "transition",
+    "tags": [
+      "书",
+      "翻页",
+      "魔法书",
+      "质感",
+      "章节切换",
+      "故事"
+    ],
+    "frames": 112,
+    "blurb": "画面是一本厚书的书页：皮革书脊带缝线、右侧叠出页边厚度。书页被切成 40 条竖条，沿一条弯曲的曲线逐条做透视旋转，像纸一样卷起、翻过；每条带曲面明暗和高光，翻动边有亮纸边，下一页上有跟随移动的柔和投影，翻过垂直线后露出纸背；露出的羊皮纸页再翻一次，露出下一幕。翻页速度缓入缓出。",
+    "usage": "章节切换、讲故事 / 背景介绍、教程「下一页」的转场。",
+    "params": [
+      {
+        "name": "HX",
+        "desc": "书脊位置（像素），默认 128"
+      },
+      {
+        "name": "N",
+        "desc": "竖条数量，默认 40（越多越顺滑）"
+      },
+      {
+        "name": "PERSP / LARC",
+        "desc": "透视距离（越小越夸张，默认 3600）、卷起处的弧长（越大越松，默认 640px）"
+      },
+      {
+        "name": "TEXT",
+        "desc": "羊皮纸页上的正文行（可改）"
+      }
+    ],
+    "alpha": false
+  },
+  "t2-villager-hmm": {
+    "id": "t2-villager-hmm",
+    "category": "transition",
+    "frames": 106,
+    "name": "村民点头",
+    "tags": [
+      "村民",
+      "玩梗",
+      "点头",
+      "像素",
+      "搞笑",
+      "章节切换"
+    ],
+    "blurb": "一排排真实贴图的大鼻子村民脑袋（3D 方块）从两侧挤进来铺满屏幕，齐刷刷点头两下，然后同时转向侧脸，一行一行走开，露出下一幕。",
+    "usage": "吐槽 / 疑惑 / 「懂了」「就这？」之类玩梗的转场，无文字，配音效使用。",
+    "params": [
+      {
+        "name": "S",
+        "desc": "每个贴图像素的屏幕大小，默认 22（头宽 176px）"
+      },
+      {
+        "name": "COLS / ROWS",
+        "desc": "每行头数量（偶数行）与行数"
+      },
+      {
+        "name": "BEATS",
+        "desc": "点头的时间点（占转场比例）"
+      }
+    ],
+    "alpha": true
+  },
+  "t2-enderman-stare": {
+    "id": "t2-enderman-stare",
+    "category": "transition",
+    "frames": 106,
+    "name": "末影人盯着我看",
+    "tags": [
+      "末影人",
+      "玩梗",
+      "紫色",
+      "恐怖",
+      "凝视",
+      "惊吓"
+    ],
+    "blurb": "画面沉入黑暗，真实贴图的末影人脑袋（3D 方块）在黑暗中亮起两只发光的紫色眼睛，缓缓左右转头扫视后正对镜头死死盯住你，紫色粒子涌来；脑袋猛扑镜头吞没画面，一眨眼后紫雾像瞬移一样碎成像素散去。",
+    "usage": "悬疑 / 惊吓 / 「别看它」「它在看着你」类的玩梗转场，也适合末地、夜晚场景。",
+    "params": [
+      {
+        "name": "S",
+        "desc": "头部每个贴图像素的屏幕大小，默认 56（头宽 448px）"
+      },
+      {
+        "name": "PARTS",
+        "desc": "紫色粒子数量，默认 260"
+      },
+      {
+        "name": "PURPLES",
+        "desc": "粒子配色"
+      }
+    ],
+    "alpha": true
+  },
+  "t2-creeper-hiss": {
+    "id": "t2-creeper-hiss",
+    "category": "transition",
+    "frames": 112,
+    "name": "苦力怕引爆",
+    "tags": [
+      "苦力怕",
+      "爆炸",
+      "玩梗",
+      "蓄力",
+      "章节切换"
+    ],
+    "blurb": "画面像引爆前的苦力怕一样逐渐膨胀、越抖越凶、白光越闪越快，真实贴图的苦力怕脸从中间越鼓越大压满屏幕；最后画面向内一压，轰地炸开，脸碎成 64 个原版像素块飞向镜头，原版爆炸与烟雾接管，下一幕带着冲击闪现。",
+    "usage": "危险降临 / 反转前的蓄力 / 「完了」「要炸了」的玩梗转场。无任何文字，靠音效 + 画面。",
+    "params": [
+      {
+        "name": "TS",
+        "desc": "脸完全鼓满时每个贴图像素的大小，默认 200（脸宽 1600px）"
+      },
+      {
+        "name": "BOOM",
+        "desc": "爆炸发生在转场的比例位置，默认 0.5"
+      },
+      {
+        "name": "beat()",
+        "desc": "闪白节奏曲线（越来越快）"
+      }
+    ],
+    "alpha": true
+  },
+  "t2-pickaxe-break": {
+    "id": "t2-pickaxe-break",
+    "category": "transition",
+    "frames": 100,
+    "name": "挖掘后退",
+    "tags": [
+      "镐子",
+      "挖掘",
+      "裂纹",
+      "碎裂",
+      "方块",
+      "玩梗"
+    ],
+    "blurb": "一把铁镐连续凿击画面四下，原版挖掘裂纹贴图一阶一阶爬满屏幕，前几下先崩出几格缺口，最后一击整个画面碎成石块碎片四散飞溅，下一幕从缺口里露出来。",
+    "usage": "挖掘 / 破局 / 「打破僵局」「开凿」类转场，或表现一块一块拆开的内容。",
+    "params": [
+      {
+        "name": "TOOL",
+        "desc": "镐子的物品 id，默认 iron_pickaxe（可换 diamond_pickaxe 等）"
+      },
+      {
+        "name": "HITS",
+        "desc": "四次凿击发生的位置（0~1），最后一次为破碎"
+      },
+      {
+        "name": "CW / CH",
+        "desc": "碎裂格子大小，默认 120"
+      },
+      {
+        "name": "CHIP",
+        "desc": "飞散碎片的方块贴图"
+      }
+    ],
+    "alpha": false
+  },
+  "t2-text-flood": {
+    "id": "t2-text-flood",
+    "category": "transition",
+    "frames": 94,
+    "name": "文字刷屏",
+    "tags": [
+      "文字",
+      "字幕",
+      "跑马灯",
+      "章节切换",
+      "字幕带",
+      "干净"
+    ],
+    "blurb": "八条等高的字幕带（黑底黄字 / 黄底黑字 / 米白底黑字三色）从左右交替扫入铺满屏幕，带内文字「下一幕 / NEXT SCENE」整齐滚动；盖满后下一幕在后面接管，字幕带顺着各自方向依次扫出。",
+    "usage": "章节切换、快节奏段落过渡、「下一幕 / 敬请期待」类转场。",
+    "params": [
+      {
+        "name": "WORDS",
+        "desc": "两个交替出现的字幕词，默认「下一幕 / NEXT SCENE」"
+      },
+      {
+        "name": "ROW_COLORS",
+        "desc": "每条字幕带的底色和字色（保持 2~3 个主色）"
+      },
+      {
+        "name": "FONT_SIZE / CELL / SPEED",
+        "desc": "字号、词间距、滚动速度（像素/帧）"
+      }
+    ],
+    "alpha": true
+  },
+  "map-route-a2b": {
+    "id": "map-route-a2b",
+    "name": "地图旅程 · 经典 A→B",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "步行",
+      "路线",
+      "像素",
+      "藏宝图"
+    ],
+    "frames": 300,
+    "blurb": "羊皮纸像素地图铺满全屏，镜头先拉远再推近，头像踩着脚印沿虚线从起点图钉走到终点，旗帜升起、标牌弹出。",
+    "usage": "介绍“从某地前往某地”、探险路线、跑图开场、下期预告地点。",
+    "params": [
+      {
+        "name": "nodes",
+        "desc": "MapNode[]：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [0..1, 0..1] / icon 图标（pixel 精灵名或物品 id）/ sub 副标题"
+      },
+      {
+        "name": "frames",
+        "desc": "总帧数（默认随演示），结尾镜头自动拉远"
+      },
+      {
+        "name": "seed",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt / legFrames / pauseFrames",
+        "desc": "出发帧 / 每段用时（可传数组）/ 中途停站帧数"
+      },
+      {
+        "name": "followZ",
+        "desc": "跟随镜头的缩放，越大越近"
+      },
+      {
+        "name": "title / subtitle",
+        "desc": "左上角标题牌文字"
+      }
+    ],
+    "alpha": false
+  },
+  "map-route-chain": {
+    "id": "map-route-chain",
+    "name": "地图旅程 · 多站串联",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "多节点",
+      "串联",
+      "路线",
+      "像素"
+    ],
+    "frames": 480,
+    "blurb": "四个节点依次到站：每站图标不同、路径累计延伸、进度条逐站点亮，每到一站弹出标牌和冲击波。",
+    "usage": "多地点探险路线、攻略“一路经过哪些点”、系列视频目录。",
+    "params": [
+      {
+        "name": "nodes",
+        "desc": "MapNode[]：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [0..1, 0..1] / icon 图标（pixel 精灵名或物品 id）/ sub 副标题"
+      },
+      {
+        "name": "frames",
+        "desc": "总帧数（默认随演示），结尾镜头自动拉远"
+      },
+      {
+        "name": "seed",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt / legFrames / pauseFrames",
+        "desc": "出发帧 / 每段用时（可传数组）/ 中途停站帧数"
+      },
+      {
+        "name": "followZ",
+        "desc": "跟随镜头的缩放，越大越近"
+      },
+      {
+        "name": "title / subtitle",
+        "desc": "左上角标题牌文字"
+      }
+    ],
+    "alpha": false
+  },
+  "map-route-minecart": {
+    "id": "map-route-minecart",
+    "name": "地图旅程 · 矿车铁轨",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "矿车",
+      "铁轨",
+      "火花",
+      "像素"
+    ],
+    "frames": 300,
+    "blurb": "铁轨在前方一段段铺开，头像坐在矿车里沿直角弯道飞驰，车轮溅出火花，车身抖动，到站冲击波。",
+    "usage": "矿洞/地铁/红石线路、矿车运输介绍、快速抵达某地。",
+    "params": [
+      {
+        "name": "nodes",
+        "desc": "MapNode[]：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [0..1, 0..1] / icon 图标（pixel 精灵名或物品 id）/ sub 副标题"
+      },
+      {
+        "name": "frames",
+        "desc": "总帧数（默认随演示），结尾镜头自动拉远"
+      },
+      {
+        "name": "seed",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt / legFrames / pauseFrames",
+        "desc": "出发帧 / 每段用时（可传数组）/ 中途停站帧数"
+      },
+      {
+        "name": "followZ",
+        "desc": "跟随镜头的缩放，越大越近"
+      },
+      {
+        "name": "title / subtitle",
+        "desc": "左上角标题牌文字"
+      }
+    ],
+    "alpha": false
+  },
+  "map-route-horse": {
+    "id": "map-route-horse",
+    "name": "地图旅程 · 骑马",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "骑马",
+      "蹄印",
+      "尘土",
+      "像素"
+    ],
+    "frames": 270,
+    "blurb": "头像骑着马飞奔，身后留下一串蹄印和滚滚尘土，镜头微微拉远营造速度感，到站勒马。",
+    "usage": "赶路、追逐、牧场到哨站的快速移动。",
+    "params": [
+      {
+        "name": "nodes",
+        "desc": "MapNode[]：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [0..1, 0..1] / icon 图标（pixel 精灵名或物品 id）/ sub 副标题"
+      },
+      {
+        "name": "frames",
+        "desc": "总帧数（默认随演示），结尾镜头自动拉远"
+      },
+      {
+        "name": "seed",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt / legFrames / pauseFrames",
+        "desc": "出发帧 / 每段用时（可传数组）/ 中途停站帧数"
+      },
+      {
+        "name": "followZ",
+        "desc": "跟随镜头的缩放，越大越近"
+      },
+      {
+        "name": "title / subtitle",
+        "desc": "左上角标题牌文字"
+      }
+    ],
+    "alpha": false
+  },
+  "map-route-pearl": {
+    "id": "map-route-pearl",
+    "name": "地图旅程 · 末影珍珠",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "末影珍珠",
+      "传送",
+      "抛物线",
+      "紫色"
+    ],
+    "frames": 240,
+    "blurb": "珍珠划出紫色抛物线飞越整张地图，拖着粒子尾迹，落点荡开传送波纹，头像在远端闪现。",
+    "usage": "传送、瞬移、“一秒到达”的转场式地点跳转。",
+    "params": [
+      {
+        "name": "nodes",
+        "desc": "MapNode[]：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [0..1, 0..1] / icon 图标（pixel 精灵名或物品 id）/ sub 副标题"
+      },
+      {
+        "name": "frames",
+        "desc": "总帧数（默认随演示），结尾镜头自动拉远"
+      },
+      {
+        "name": "seed",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt / legFrames / pauseFrames",
+        "desc": "出发帧 / 每段用时（可传数组）/ 中途停站帧数"
+      },
+      {
+        "name": "followZ",
+        "desc": "跟随镜头的缩放，越大越近"
+      },
+      {
+        "name": "title / subtitle",
+        "desc": "左上角标题牌文字"
+      }
+    ],
+    "alpha": false
+  },
+  "map-route-elytra": {
+    "id": "map-route-elytra",
+    "name": "地图旅程 · 鞘翅飞行",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "鞘翅",
+      "飞行",
+      "云层",
+      "穿环"
+    ],
+    "frames": 320,
+    "blurb": "俯视地图，镜头拉得更高，头像展翅滑翔、尾迹拖曳，穿过金色切角方框门，大朵云层从画面前方掠过。",
+    "usage": "远距离飞行、鞘翅竞速、跨地图探索、空中俯瞰。",
+    "params": [
+      {
+        "name": "nodes",
+        "desc": "MapNode[]：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [0..1, 0..1] / icon 图标（pixel 精灵名或物品 id）/ sub 副标题"
+      },
+      {
+        "name": "frames",
+        "desc": "总帧数（默认随演示），结尾镜头自动拉远"
+      },
+      {
+        "name": "seed",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt / legFrames / pauseFrames",
+        "desc": "出发帧 / 每段用时（可传数组）/ 中途停站帧数"
+      },
+      {
+        "name": "followZ",
+        "desc": "跟随镜头的缩放，越大越近"
+      },
+      {
+        "name": "title / subtitle",
+        "desc": "左上角标题牌文字"
+      }
+    ],
+    "alpha": false
+  },
+  "map-route-boat": {
+    "id": "map-route-boat",
+    "name": "地图旅程 · 乘船",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "乘船",
+      "海上",
+      "波纹",
+      "航线"
+    ],
+    "frames": 300,
+    "blurb": "海图上一条白色虚线航线，头像坐船破浪前行，船尾拖出 V 形浪花与扩散的水波纹，靠港抛锚。",
+    "usage": "跨海旅行、海洋神殿/海盗岛探险、群岛之间的航行。",
+    "params": [
+      {
+        "name": "nodes",
+        "desc": "MapNode[]：name 地名 / xz 游戏坐标 [x,z] / pos 地图位置 [0..1, 0..1] / icon 图标（pixel 精灵名或物品 id）/ sub 副标题"
+      },
+      {
+        "name": "frames",
+        "desc": "总帧数（默认随演示），结尾镜头自动拉远"
+      },
+      {
+        "name": "seed",
+        "desc": "地图与路径随机种子，换一个数得到另一张地图"
+      },
+      {
+        "name": "startAt / legFrames / pauseFrames",
+        "desc": "出发帧 / 每段用时（可传数组）/ 中途停站帧数"
+      },
+      {
+        "name": "followZ",
+        "desc": "跟随镜头的缩放，越大越近"
+      },
+      {
+        "name": "title / subtitle",
+        "desc": "左上角标题牌文字"
+      }
+    ],
+    "alpha": false
+  },
+  "map-home": {
+    "id": "map-home",
+    "name": "地图旅程 · 回家",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "回家",
+      "黄昏",
+      "温馨",
+      "小屋"
+    ],
+    "frames": 340,
+    "blurb": "黄昏的地图上头像从远方走回小屋，推门进屋，窗户亮灯，暖光扩散、爱心与萤火升起，挂牌弹出“欢迎回家”。",
+    "usage": "回到基地、新家展示、一集的温馨收尾、返回出生点。",
+    "params": [
+      {
+        "name": "houseName",
+        "desc": "小屋名称"
+      },
+      {
+        "name": "frames / seed",
+        "desc": "总帧数 / 地图种子"
+      },
+      {
+        "name": "nodes（MapJourney）",
+        "desc": "换用 MapJourney kind=\"home\" 可自定义出发地与家的坐标"
+      }
+    ],
+    "alpha": false
+  },
+  "map-respawn": {
+    "id": "map-respawn",
+    "name": "地图旅程 · 重生回床",
+    "category": "map",
+    "tags": [
+      "地图",
+      "重生",
+      "死亡",
+      "光柱",
+      "床",
+      "出生点"
+    ],
+    "frames": 300,
+    "blurb": "头像在骷髅标记处倒下（红叉、掉落物、血量清零），一道光柱把它托起，金色拖尾飞越地图落回出生点的床，血量重新填满。",
+    "usage": "死亡回放、重生/复活梗、回到出生点、生存挑战的“再来一次”。",
+    "params": [
+      {
+        "name": "seed",
+        "desc": "地图种子"
+      },
+      {
+        "name": "节点",
+        "desc": "死亡点与出生点在 scenes.tsx 的 Duv / Buv（0..1）中修改"
+      }
+    ],
+    "alpha": false
+  },
+  "map-pin-pop": {
+    "id": "map-pin-pop",
+    "name": "地点图钉弹出",
+    "category": "map",
+    "tags": [
+      "地图",
+      "图钉",
+      "地点",
+      "标记",
+      "小组件",
+      "叠加层"
+    ],
+    "frames": 150,
+    "blurb": "图钉从天而降扎进地图，像素十字闪光与碎片迸开，名称牌与坐标牌先后弹出，图钉之间用虚线依次连起来。",
+    "usage": "叠在任意画面上标注地点、坐标、基地位置；也可单独导出透明层。",
+    "params": [
+      {
+        "name": "pins",
+        "desc": "PinSpec[]：x,y 针尖屏幕坐标 / name 名称 / coord 坐标文字 / at 落下帧 / color 颜色"
+      },
+      {
+        "name": "connect",
+        "desc": "是否用虚线依次连接各图钉"
+      },
+      {
+        "name": "bg",
+        "desc": "Demo 带地图底板，Layer 为透明叠加层"
+      }
+    ],
+    "alpha": true
+  },
+  "map-flat-modern": {
+    "id": "map-flat-modern",
+    "name": "地图旅程 · 极简现代地图",
+    "category": "map",
+    "tags": [
+      "地图",
+      "旅程",
+      "极简",
+      "现代",
+      "导航",
+      "扁平"
+    ],
+    "frames": 270,
+    "blurb": "非像素风的几何色块城市地图：街区、公园、河流、干道，靛蓝路线沿街道生长，头像带脉冲光圈前进，顶部转向卡、底部 ETA 面板，到站珊瑚色图钉弹起。",
+    "usage": "想要干净现代的导航风格、与像素风格区分的路线展示，或“手机导航”式的地点说明。",
+    "params": [
+      {
+        "name": "nodes",
+        "desc": "MapNode[]：首尾两项为起终点，位置自动吸附到最近的路口"
+      },
+      {
+        "name": "seed",
+        "desc": "城市布局随机种子"
+      },
+      {
+        "name": "title / frames / startAt / legFrames",
+        "desc": "标题标签 / 总帧数 / 出发帧 / 行程帧数"
+      }
+    ],
+    "alpha": false
+  },
+  "dim-overworld-to-nether": {
+    "id": "dim-overworld-to-nether",
+    "name": "主世界 → 下界",
+    "category": "map",
+    "tags": [
+      "维度",
+      "下界",
+      "传送门",
+      "标题"
+    ],
+    "frames": 210,
+    "blurb": "镜头推进紫色传送门，画面扭曲、像素漩涡把一切吞没，紫色像素溶解后落在岩浆与灰烬的下界，边缘泛红，弹出“下界”大标题。",
+    "usage": "视频里玩家进入下界传送门的那一刻，或章节从主世界切到下界。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为完整演示（含两个世界底板）；省略则只输出传送门吞没+落地+标题图形，可叠到你自己的素材上"
+      },
+      {
+        "name": "SWAP1 / FX1",
+        "desc": "切换帧与传送门中心（源码常量），换素材时对齐"
+      }
+    ],
+    "alpha": true
+  },
+  "dim-nether-to-end": {
+    "id": "dim-nether-to-end",
+    "name": "下界 → 末地",
+    "category": "map",
+    "tags": [
+      "维度",
+      "末地",
+      "撕裂",
+      "标题"
+    ],
+    "frames": 204,
+    "blurb": "红色的下界画面出现白紫色裂纹并剧烈震动，随后被整个撕开、两半飞散，紫黑星空与末地岛屿涌出，弹出“末地”标题。",
+    "usage": "进入末地传送门/要塞，或剧情从下界跳到末地。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为完整演示；省略则只输出裂纹、光束、碎片与标题（撕开的两半依赖底板，Layer 里没有）"
+      },
+      {
+        "name": "TEAR",
+        "desc": "撕裂帧（源码常量）"
+      }
+    ],
+    "alpha": true
+  },
+  "dim-to-overworld": {
+    "id": "dim-to-overworld",
+    "name": "回到主世界",
+    "category": "map",
+    "tags": [
+      "维度",
+      "主世界",
+      "日出",
+      "标题"
+    ],
+    "frames": 196,
+    "blurb": "从紫色虚空的黑暗里，一道光线像睁眼一样展开，日出，天空蓝回来，草地与云出现，弹出“主世界”标题。",
+    "usage": "从下界/末地返回主世界，或作为“回家”“醒来”的开场。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为完整演示；省略则只输出光线、光晕、粒子与标题"
+      },
+      {
+        "name": "tod",
+        "desc": "日出时间区间（源码内 lerp(0.9, 1.1)）"
+      }
+    ],
+    "alpha": true
+  },
+  "dim-pearl-teleport": {
+    "id": "dim-pearl-teleport",
+    "name": "末影珍珠传送",
+    "category": "map",
+    "tags": [
+      "传送",
+      "末影珍珠",
+      "粒子",
+      "扭曲"
+    ],
+    "frames": 112,
+    "blurb": "史蒂夫甩出末影珍珠，原地故障闪烁、紫色粒子螺旋升起，被拉成细长光柱抽走，画面短暂挤压扭曲，随后在珍珠落点被粒子聚拢、挤压弹出，并受到摔落伤害。",
+    "usage": "展示末影珍珠、传送点、瞬移位置变化，或“一眨眼就到了”的剧情跳转。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为完整演示（世界+HUD）；省略则只有史蒂夫、珍珠与粒子的透明层"
+      },
+      {
+        "name": "AX / BX / S",
+        "desc": "起点、终点的横向位置（低分辨率单位）与人物缩放（源码常量）"
+      }
+    ],
+    "alpha": true
+  },
+  "loc-title-card": {
+    "id": "loc-title-card",
+    "name": "进入新地点标题卡",
+    "category": "map",
+    "tags": [
+      "地点",
+      "标题",
+      "坐标",
+      "暗角"
+    ],
+    "frames": 156,
+    "blurb": "画面上下降下砖纹装饰条与暗角，“下界要塞”大标题从两侧高速挤入、在中间撞出光效和冲击波，之后依次出现副标题、小图标、指南针和数字滚动的 X/Y/Z 坐标。",
+    "usage": "到达新地点、要塞、村庄、地标时的大字标题；可叠在任何实拍上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为带下界背景的完整演示；省略则输出透明叠加层"
+      },
+      {
+        "name": "left / right",
+        "desc": "标题左右两半的文字，默认“下界”“要塞”"
+      },
+      {
+        "name": "sub",
+        "desc": "副标题，默认 NETHER FORTRESS"
+      },
+      {
+        "name": "coords",
+        "desc": "[x, y, z] 坐标，数字会滚动到该值"
+      },
+      {
+        "name": "tone",
+        "desc": "标题配色：stone / nether / end / grass / gold / ice / pink"
+      }
+    ],
+    "alpha": true
+  },
+  "loc-biome-banner": {
+    "id": "loc-biome-banner",
+    "name": "群系横幅（华丽版）",
+    "category": "map",
+    "tags": [
+      "群系",
+      "横幅",
+      "Ore",
+      "樱花"
+    ],
+    "frames": 164,
+    "blurb": "一道亮线从中心展开成带金边、两翼和菱形铆钉的 Ore 横幅，逐字打出“樱花树林”，附气候标签、经验条和已发现群系数，花瓣不断飘落。",
+    "usage": "进入新群系、新区域时的提示条，比游戏原版的小字更华丽。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为带樱花林背景的完整演示；省略则输出透明叠加层"
+      },
+      {
+        "name": "文字",
+        "desc": "标题、英文名、标签、XP 都在组件内直接改"
+      }
+    ],
+    "alpha": true
+  },
+  "jump-chapter": {
+    "id": "jump-chapter",
+    "category": "transition",
+    "frames": 160,
+    "name": "章节跳转",
+    "tags": [
+      "章节",
+      "转场",
+      "大卡片",
+      "进度点"
+    ],
+    "blurb": "六条斜切色带（金、墨、橙交替）从左侧依次跑入，边靠边铺满整个画面；随后居中的章节卡砸在色带上：数字牌 02→03 翻滚、“深入矿洞”标题、副标题、三个物品格，上方章节条、下方七点进度条（光点从第 2 点滑到第 3 点）；最后色带按原顺序向右跑出并露出下一镜头，全程画面都是满的。",
+    "usage": "视频分章节时的转场卡；cut 类，覆盖在中间帧，自动带透明 Layer 可叠在任意素材上。",
+    "params": [
+      {
+        "name": "文字",
+        "desc": "章节号、标题、副标题、进度点数量在 chapter.tsx 的 ChapterOverlay 里直接修改（CH_T 为时长）"
+      },
+      {
+        "name": "BANDS",
+        "desc": "六条色带的颜色与纹理（源码常量）"
+      }
+    ],
+    "alpha": true
+  },
+  "jump-next-episode": {
+    "id": "jump-next-episode",
+    "name": "下集预告",
+    "category": "transition",
+    "tags": [
+      "下集预告",
+      "片尾",
+      "小窗",
+      "倒计时",
+      "按钮"
+    ],
+    "frames": 204,
+    "blurb": "本集画面缩进右下角变成小窗，紫色舞台上展开“下集预告”：下集预览大图、集数标签、简介、倒计时进度条和“立即观看”按钮；光标点击后预览图撑满全屏进入下一集。",
+    "usage": "每集结尾的“下集预告 / 自动连播”画面，也可只用来演示“切到下一集”。",
+    "params": [
+      {
+        "name": "HERO / WIN",
+        "desc": "预览图与小窗的矩形（源码常量）"
+      },
+      {
+        "name": "文字",
+        "desc": "集数、标题、简介、倒计时秒数在组件内直接改"
+      }
+    ],
+    "alpha": false
+  },
+  "jump-pip-expand": {
+    "id": "jump-pip-expand",
+    "name": "画中画展开",
+    "category": "transition",
+    "tags": [
+      "画中画",
+      "放大",
+      "全屏",
+      "光标"
+    ],
+    "frames": 132,
+    "blurb": "右下角带深色边框、投影和高光边的圆角小窗升起，光标移上展开键并点击，小窗轻按一下后缓动放大到全屏：位置、缩放同步变化，圆角收成直角，窗面掠过一道斜向反光；旧画面同时后退、压暗并模糊，最后旧画面以小窗留在右下角。",
+    "usage": "从小窗口画面切到主画面，或演示“点开放大”的交互。",
+    "params": [
+      {
+        "name": "PIP",
+        "desc": "小窗矩形（源码常量）"
+      },
+      {
+        "name": "画面",
+        "desc": "PlateA / PlateB 换成你自己的两段素材即可"
+      }
+    ],
+    "alpha": false
+  },
+  "jump-time-skip": {
+    "id": "jump-time-skip",
+    "name": "时间跳转（三天后）",
+    "category": "transition",
+    "tags": [
+      "时间跳转",
+      "三天后",
+      "昼夜",
+      "时钟"
+    ],
+    "frames": 160,
+    "blurb": "原版时钟飞速转动，日月交替、云层飞掠，“第 N 天”计数器翻页，两侧日夜色块滚动；快转三天后黑边猛地合上，“三天后”大字砸落并带冲击波，副标题与“第 4 天 · 正午”收尾。",
+    "usage": "“三天后 / 一个月后 / 第二天清晨”这类时间跳转，叠在任意镜头上也能用。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为带昼夜世界的完整演示；省略则只有时钟、计数器、大字与黑边"
+      },
+      {
+        "name": "big / sub / days",
+        "desc": "大字（如“一个月后”）、英文副标题、快转的天数"
+      }
+    ],
+    "alpha": true
+  },
+  "jump-countdown": {
+    "id": "jump-countdown",
+    "name": "倒计时 3-2-1-GO",
+    "category": "transition",
+    "tags": [
+      "倒计时",
+      "开始",
+      "节奏",
+      "像素数字"
+    ],
+    "frames": 168,
+    "blurb": "红、橙、黄三个方块像素数字依次砸在切角底板上：底板落地挤压、整屏压缩脉冲、像素十字与碎片飞溅、边缘色脉冲，底部十二格像素进度条随数字走满；最后绿色“GO”底板变宽，引爆原版爆炸帧与方块彩纸，进度条亮成彩虹。",
+    "usage": "比赛/挑战开始前、章节正式开始的倒计时；叠加层版本可直接盖在实拍上。数字与底板均按包围盒精确居中。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为带深色背景的完整演示；省略则只有底板、数字与特效"
+      },
+      {
+        "name": "START / BEAT",
+        "desc": "起始帧与每个数字的帧数（源码常量，默认 28 帧≈0.93 秒）"
+      },
+      {
+        "name": "GLYPHS / BEATS",
+        "desc": "5×7 像素字模与每一拍的配色（源码常量）"
+      }
+    ],
+    "alpha": true
+  },
+  "jump-meanwhile": {
+    "id": "jump-meanwhile",
+    "name": "与此同时（斜切分屏）",
+    "category": "transition",
+    "tags": [
+      "分屏",
+      "与此同时",
+      "双线叙事",
+      "斜切"
+    ],
+    "frames": 144,
+    "blurb": "一道白色斩线斜劈画面，两半向两侧滑开，黑色缎带“与此同时”砸在切口上并带冲击波，两个画面各带标签缓慢反向漂移；最后第二个画面沿斜线扫过整屏。",
+    "usage": "切换到另一条故事线 / 另一位玩家的视角（加送）。",
+    "params": [
+      {
+        "name": "SLOPE",
+        "desc": "斜切的倾斜度（源码常量）"
+      },
+      {
+        "name": "画面",
+        "desc": "PlateA / PlateB 换成实拍素材即可"
+      }
+    ],
+    "alpha": false
+  },
+  "jump-flashback": {
+    "id": "jump-flashback",
+    "name": "回忆闪回（老胶片）",
+    "category": "transition",
+    "tags": [
+      "闪回",
+      "回忆",
+      "胶片",
+      "褐色",
+      "颗粒"
+    ],
+    "frames": 156,
+    "blurb": "画面水波扭曲、闪白后变成褐色老胶片：齿孔边、颗粒、划痕、灰尘、放映机闪烁、边缘暗角与轻微抖动，不带任何文字；结束时再次水波闪白回到现实。",
+    "usage": "插入回忆片段、“很久以前”、历史回顾（加送）。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "Demo 内含两个底板；Layer 只输出暖色罩、暗角、胶片边、颗粒与划痕，可叠在你自己的回忆素材上"
+      },
+      {
+        "name": "IN / OUT",
+        "desc": "进入/退出回忆的帧（源码常量）"
+      }
+    ],
+    "alpha": true
+  },
+  "dim-end-portal-activate": {
+    "id": "dim-end-portal-activate",
+    "name": "末地传送门激活（加送）",
+    "category": "map",
+    "tags": [
+      "末地",
+      "传送门",
+      "末影之眼",
+      "要塞"
+    ],
+    "frames": 232,
+    "blurb": "昏暗要塞里，十二只末影之眼依次飞入地面的传送门框架，每次落下都绿光闪动、房间轻震；集齐后中心展开星空虚空，光柱冲天，“末地传送门”大标题砸下。",
+    "usage": "讲解/演示激活末地传送门、进入末地前的铺垫。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 为完整演示（含要塞房间）；省略则只输出眼睛飞入、光效、光柱、计数条与标题"
+      },
+      {
+        "name": "FIRST / GAP",
+        "desc": "第一只眼睛出发的帧与间隔（源码常量）"
+      }
+    ],
+    "alpha": true
+  },
+  "jump-respawn": {
+    "id": "jump-respawn",
+    "name": "死亡 → 重生（加送）",
+    "category": "transition",
+    "tags": [
+      "死亡",
+      "重生",
+      "复活",
+      "界面"
+    ],
+    "frames": 196,
+    "blurb": "受击红闪、镜头倾倒变灰泛红，弹出“你死了！”界面（得分滚动、重生/标题按钮）；光标点“重生”后整屏白光爆开，出生点画面由推近拉回，并弹出“已重生”提示。",
+    "usage": "失败/死亡后的重来，或把“死了又活了”作为剧情跳转。",
+    "params": [
+      {
+        "name": "RESPAWN_CLICK",
+        "desc": "点击重生的帧（源码常量）"
+      },
+      {
+        "name": "文字",
+        "desc": "死因、得分、按钮文字在组件内直接改"
+      }
+    ],
+    "alpha": false
+  },
+  "soc-like": {
+    "id": "soc-like",
+    "name": "点赞 · 爱心爆开",
+    "category": "social",
+    "tags": [
+      "点赞",
+      "爱心",
+      "互动",
+      "可爱",
+      "像素"
+    ],
+    "frames": 120,
+    "blurb": "小手点下大拇指按钮，按钮压扁再弹起，像素十字闪光加碎片飞溅，爱心、星星、彩块向四周炸开，计数 +1 滚动，画面四角冒出大爱心。",
+    "usage": "视频里提醒观众点赞的那一刻；演示带虚化的视频底板，Layer 透明背景可直接叠在素材上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景（Layer 为 false）"
+      },
+      {
+        "name": "count",
+        "desc": "点赞前的数字，点完显示 count+1"
+      },
+      {
+        "name": "tapAt",
+        "desc": "按下的帧（爆发时刻），默认 26"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-follow": {
+    "id": "soc-follow",
+    "name": "关注 · 已关注彩带",
+    "category": "social",
+    "tags": [
+      "关注",
+      "头像",
+      "彩带",
+      "互动",
+      "可爱"
+    ],
+    "frames": 150,
+    "blurb": "资料卡弹入，小手按下“关注”按钮，果冻般变成绿色“已关注”并打勾，彩带从两个底角喷出，头像上冒出徽章，星星散开，粉丝数 +1。",
+    "usage": "提醒观众关注 UP 主、介绍嘉宾/频道时；Layer 可直接叠在口播画面上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景"
+      },
+      {
+        "name": "name",
+        "desc": "昵称"
+      },
+      {
+        "name": "face",
+        "desc": "头像：steve | alex | creeper | pig | slime | sunny | zuri | kai"
+      },
+      {
+        "name": "fans",
+        "desc": "关注前的粉丝数"
+      },
+      {
+        "name": "tapAt",
+        "desc": "按下按钮的帧，默认 58"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-coin": {
+    "id": "soc-coin",
+    "name": "投币 · 连投入箱",
+    "category": "social",
+    "tags": [
+      "投币",
+      "绿宝石",
+      "金币",
+      "互动",
+      "抛物线"
+    ],
+    "frames": 135,
+    "blurb": "绿宝石和金币从画面四边抛着弧线飞来，带残影砸进大硬币按钮，每次落下按钮下沉果冻、边缘闪一下像素星光、计数 +1，最后一枚触发扫光、金币雨与环绕小金币。",
+    "usage": "提醒投币、打赏、感谢支持的时候；Layer 透明背景可叠在任意素材上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景"
+      },
+      {
+        "name": "count",
+        "desc": "投币前的硬币数"
+      },
+      {
+        "name": "throws",
+        "desc": "抛物线日程：[{id: emerald|coin|diamond, from:[x,y], land: 落点帧, h: 抛高}]"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-favorite": {
+    "id": "soc-favorite",
+    "name": "收藏 · 附魔书入箱",
+    "category": "social",
+    "tags": [
+      "收藏",
+      "附魔书",
+      "星星",
+      "互动",
+      "合上"
+    ],
+    "frames": 135,
+    "blurb": "附魔书、星星、钻石、经验瓶从四边飞进一只张着盖子的收藏箱，每接住一个就闪一下星光；盖子猛地合上，前面的星星亮成金色，闪光四溅，弹出“已收藏”。",
+    "usage": "提醒收藏、稍后再看、存档合集时；Layer 透明背景可直接叠在素材上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景（Ore 紫色虚化底）"
+      },
+      {
+        "name": "count",
+        "desc": "收藏数，合上后 +1"
+      },
+      {
+        "name": "closeAt",
+        "desc": "盖子合上的帧，默认 86"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-triple": {
+    "id": "soc-triple",
+    "name": "一键三连 · 终极爆发",
+    "category": "social",
+    "tags": [
+      "三连",
+      "点赞",
+      "投币",
+      "收藏",
+      "爆发",
+      "华丽",
+      "全屏"
+    ],
+    "frames": 240,
+    "blurb": "小手长按点赞，蓄力环涌满，点赞→投币→收藏三枚图标依次亮起，盘旋聚成能量球，随即全屏爆发：爆炸帧、旋转光芒、彩虹彩带写着“三连成功!”，四角喷彩带，爱心金币附魔书满屏飞。",
+    "usage": "视频结尾或关键节点的“一键三连”召唤；演示版是完整夜空背景，Layer 透明背景可直接叠在片尾画面上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景（夜空虚化）"
+      },
+      {
+        "name": "fireAt",
+        "desc": "第一个图标点亮的帧，默认 62（之后每 8 帧点亮下一个）"
+      },
+      {
+        "name": "boomAt",
+        "desc": "全屏爆发的帧，默认 118"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-bell": {
+    "id": "soc-bell",
+    "name": "订阅铃铛 · 已开启小铃铛",
+    "category": "social",
+    "tags": [
+      "订阅",
+      "铃铛",
+      "提示条",
+      "声波",
+      "Ore"
+    ],
+    "frames": 120,
+    "blurb": "MC 铃铛挂在木梁下被敲响，阻尼摆动，左右打出三道像素声波短条，音符和星星飞出，红色“1”角标弹出，底部滑上 Ore 风“已开启小铃铛”提示条，四角小铃铛跟着摇。",
+    "usage": "提示观众点小铃铛 / 开启动态通知；Layer 透明背景可直接叠加（提示条在画面下方）。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景"
+      },
+      {
+        "name": "kickAt",
+        "desc": "第一下敲响的帧，默认 24（第二下在 +62 帧）"
+      },
+      {
+        "name": "title",
+        "desc": "提示条标题"
+      },
+      {
+        "name": "sub",
+        "desc": "提示条副标题"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-danmaku": {
+    "id": "soc-danmaku",
+    "name": "弹幕评论 · 气泡堆叠",
+    "category": "social",
+    "tags": [
+      "弹幕",
+      "评论",
+      "气泡",
+      "头像",
+      "互动"
+    ],
+    "frames": 180,
+    "blurb": "一条条带头像和昵称的彩色评论气泡从右边飞来，过冲弹跳，落地果冻挤压，往上堆叠、挤走旧的；顶部三条弹幕车道横穿画面，右侧评论数滚动，气泡与爱心从底部飘起。",
+    "usage": "“看看大家怎么说”、评论区互动、反馈精选、热评展示；Layer 可直接叠在素材上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景"
+      },
+      {
+        "name": "comments",
+        "desc": "评论数组 [{nick, text, face, color, deep}]，face: steve|alex|creeper|pig|slime|sunny|zuri|kai"
+      },
+      {
+        "name": "gap",
+        "desc": "相邻气泡间隔帧数，默认 17"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-share": {
+    "id": "soc-share",
+    "name": "分享 · 纸飞机彩虹尾",
+    "category": "social",
+    "tags": [
+      "分享",
+      "纸飞机",
+      "彩虹拖尾",
+      "转发",
+      "互动"
+    ],
+    "frames": 135,
+    "blurb": "点下紫色分享按钮，像素纸飞机弹出并划过大弧线，彩虹拖尾从机尾连续发出、六色平行贴合飞行轨迹，并带着像素火花，俯冲落进底部一排社交图标；图标跳起打勾、爆出纸片与爱心，弹出“分享成功”，云朵与吉祥物围在画面边缘。",
+    "usage": "提醒观众转发/分享给朋友，或介绍“分享”入口；Layer 透明背景可叠在任意素材上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景"
+      },
+      {
+        "name": "target",
+        "desc": "落在第几个图标（0 聊天 / 1 动态 / 2 空间 / 3 链接 / 4 更多），默认 2"
+      },
+      {
+        "name": "launchAt",
+        "desc": "纸飞机出发的帧，默认 32"
+      },
+      {
+        "name": "flight",
+        "desc": "飞行帧数，默认 54"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-follow-corner": {
+    "id": "soc-follow-corner",
+    "name": "常驻关注角标 · 循环",
+    "category": "social",
+    "tags": [
+      "关注",
+      "角标",
+      "常驻",
+      "循环",
+      "Layer"
+    ],
+    "frames": 120,
+    "blurb": "画面角落滑出一张“关注”小卡片，轻轻呼吸、按钮角上闪几下像素星光，小手点一下按钮（果冻 + 爱心星星 + 扫光），再滑回角落；4 秒首尾相接可无缝循环。",
+    "usage": "整条视频里反复出现的关注提示，把 Layer 循环铺在时间线上即可；可换角落、昵称、头像、粉丝数。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景（Layer 为 false）"
+      },
+      {
+        "name": "corner",
+        "desc": "角落：'bl' 左下 | 'br' 右下 | 'tl' 左上 | 'tr' 右上"
+      },
+      {
+        "name": "name / fans / face",
+        "desc": "昵称 / 粉丝文案 / 头像（steve|alex|creeper|pig|slime|sunny|zuri|kai）"
+      },
+      {
+        "name": "scale / margin",
+        "desc": "卡片缩放 / 距边距离(px)"
+      }
+    ],
+    "alpha": true
+  },
+  "soc-milestone": {
+    "id": "soc-milestone",
+    "name": "粉丝里程碑 · 破万烟花",
+    "category": "social",
+    "tags": [
+      "粉丝",
+      "里程碑",
+      "数字滚动",
+      "烟花",
+      "彩带",
+      "感谢"
+    ],
+    "frames": 210,
+    "blurb": "紫色计数牌里数字飞快滚动，越接近一万越慢、逐位跳动，到 10000 猛地定住并爆出光芒与像素十字闪光、碎片飞溅；火箭从底部升起，在画面四周接连炸开烟花，彩带从两个底角喷出，“万粉达成！”横幅和“感谢大家!”贴纸弹出。",
+    "usage": "粉丝/订阅数破万、破十万等里程碑的庆祝与感谢；Layer 透明背景可叠在片头片尾画面上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "是否绘制演示背景（夜空虚化）"
+      },
+      {
+        "name": "target",
+        "desc": "目标数字，默认 10000（5 位数）"
+      },
+      {
+        "name": "fireworks",
+        "desc": "烟花日程 [{x, y, at(炸开帧), colors, n}]，默认 19 发"
+      }
+    ],
+    "alpha": true
+  },
+  "item-craft-table": {
+    "id": "item-craft-table",
+    "name": "合成台",
+    "category": "item",
+    "tags": [
+      "合成",
+      "配方",
+      "工坊",
+      "成品"
+    ],
+    "frames": 150,
+    "blurb": "木工坊里的 3×3 合成：材料从两侧材料堆飞入落进格子，箭头走满，材料汇聚后钻石镐砸出，带射线、冲击波和提示框。",
+    "usage": "讲合成配方、展示新物品的获得。",
+    "alpha": false
+  },
+  "item-furnace": {
+    "id": "item-furnace",
+    "name": "熔炉烧炼",
+    "category": "item",
+    "tags": [
+      "熔炉",
+      "烧炼",
+      "火焰",
+      "铁锭"
+    ],
+    "frames": 160,
+    "blurb": "石砖炉房里，生铁与煤炭落入熔炉，火焰点燃、进度箭头走满，铁锭带火星与经验球弹出，鼠标把它放进快捷栏。",
+    "usage": "讲烧炼、冶炼流程，或展示自动化前的手动步骤。",
+    "alpha": false
+  },
+  "item-smithing": {
+    "id": "item-smithing",
+    "name": "锻造台升级",
+    "category": "item",
+    "tags": [
+      "锻造",
+      "下界合金",
+      "铁砧",
+      "火花"
+    ],
+    "frames": 190,
+    "blurb": "模板、钻石剑、下界合金锭落入锻造台，铁锤三次砸在铁砧上火花四溅、箭头分段走满，三格合并炸出带火焰与紫光的下界合金剑。",
+    "usage": "讲下界合金升级、装备进化、铁匠与工坊主题。",
+    "alpha": false
+  },
+  "item-enchanting": {
+    "id": "item-enchanting",
+    "name": "附魔台",
+    "category": "item",
+    "tags": [
+      "附魔",
+      "符文",
+      "紫色",
+      "书架"
+    ],
+    "frames": 200,
+    "blurb": "书架满墙的魔法厅，符文从书架飘向附魔台；三个附魔选项悬停时符文翻转成文字，选中后符文旋入钻石剑，符文柱升起、紫光炸开。",
+    "usage": "讲附魔、神秘物品获得、魔法系内容。",
+    "alpha": false
+  },
+  "item-brewing": {
+    "id": "item-brewing",
+    "name": "酿造台",
+    "category": "item",
+    "tags": [
+      "酿造",
+      "药水",
+      "蒸汽",
+      "气泡"
+    ],
+    "frames": 240,
+    "blurb": "水瓶、烈焰粉、地狱疣依次放入，蒸汽与气泡升起，药水两轮由蓝变紫再变粉，成品三瓶合一，举起发光。",
+    "usage": "讲药水配方、炼药流程、魔法/生存教程。",
+    "alpha": false
+  },
+  "item-drop-bounce": {
+    "id": "item-drop-bounce",
+    "name": "物品掉落弹跳",
+    "category": "item",
+    "tags": [
+      "掉落",
+      "弹跳",
+      "战利品",
+      "粒子",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "十六件物品分三排从天而降，旋转、三次弹跳、落地扬尘并压扁回弹，地面有随高度变化的阴影，稀有物品拉起光柱并挂上名牌。",
+    "usage": "展示掉落物、战利品、奖励；透明层可叠在任意地面画面上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 时带黄昏天空与透视地面（Demo）；省略则透明（Layer）"
+      },
+      {
+        "name": "ITEMS",
+        "desc": "源码顶部数组：物品 id、x 位置、排（0 远 / 1 中 / 2 近）、掉落顺序、稀有度与名牌"
+      },
+      {
+        "name": "ROWS",
+        "desc": "三排的地面 y 与缩放"
+      },
+      {
+        "name": "BOUNCE / HEIGHT",
+        "desc": "三次弹跳的时长与高度"
+      }
+    ],
+    "alpha": true
+  },
+  "item-pickup": {
+    "id": "item-pickup",
+    "name": "拾取飞入",
+    "category": "item",
+    "tags": [
+      "拾取",
+      "物品栏",
+      "快捷栏",
+      "数量",
+      "透明层"
+    ],
+    "frames": 140,
+    "blurb": "地面上六件物品先后被吸向画面下方的快捷栏，拖着残影、噗地飞进槽位，槽位闪白弹跳、数量 +1，右侧拾取日志滚动。",
+    "usage": "展示获得物品、采集、掉落物回收；透明层可叠在实机画面上。",
+    "params": [
+      {
+        "name": "bg",
+        "desc": "true 时带白天天空与草地（Demo）；省略则透明（Layer）"
+      },
+      {
+        "name": "PICKS",
+        "desc": "源码顶部数组：物品、名称、地面位置、目标槽位、拾取帧"
+      },
+      {
+        "name": "BASE_SLOTS",
+        "desc": "快捷栏初始内容（数量会随拾取累加）"
+      },
+      {
+        "name": "PULL",
+        "desc": "飞入时长（帧）"
+      }
+    ],
+    "alpha": true
+  },
+  "item-upgrade-chain": {
+    "id": "item-upgrade-chain",
+    "name": "升级进化链",
+    "category": "item",
+    "tags": [
+      "升级",
+      "进化",
+      "剑",
+      "等级条",
+      "炫光"
+    ],
+    "frames": 215,
+    "blurb": "木、石、铁、金、钻石、下界合金六把剑依次进化：材料飞入、像素十字闪光与碎片飞溅、背景换色、属性条与等级条推进，最后全屏炫光。",
+    "usage": "讲装备进阶、工具升级路线、版本/等级成长。",
+    "params": [
+      {
+        "name": "TIERS",
+        "desc": "源码顶部数组：每级的剑、材料、名称、主题色、伤害与耐久"
+      },
+      {
+        "name": "T",
+        "desc": "每级进化发生的帧"
+      }
+    ],
+    "alpha": false
+  },
+  "item-rarity-showcase": {
+    "id": "item-rarity-showcase",
+    "name": "稀有度展示",
+    "category": "item",
+    "tags": [
+      "稀有度",
+      "卡片",
+      "翻牌",
+      "史诗",
+      "符文"
+    ],
+    "frames": 200,
+    "blurb": "普通、罕见、稀有、史诗四张物品卡依次翻出，光效逐级加码：边框脉冲、光晕光柱，到史诗卡的紫色射线、两侧升腾的符文柱与上升粒子。",
+    "usage": "介绍物品分级、战利品品质、抽奖/掉落结果。",
+    "params": [
+      {
+        "name": "CARDS",
+        "desc": "源码顶部数组：每张卡的稀有度、物品、名称、说明行、星级"
+      },
+      {
+        "name": "TF",
+        "desc": "每张卡开始翻转的帧"
+      }
+    ],
+    "alpha": false
+  },
+  "item-chest-loot": {
+    "id": "item-chest-loot",
+    "name": "开箱战利品",
+    "category": "item",
+    "tags": [
+      "开箱",
+      "战利品",
+      "宝箱",
+      "稀有",
+      "网格"
+    ],
+    "frames": 200,
+    "blurb": "火把照亮的地牢里宝箱抖动、掀盖、金光炸开，二十一件物品按弧线喷出落入战利品网格，稀有物品逐个放大高亮并挂名牌。",
+    "usage": "开箱、宝藏、副本奖励、抽奖结果展示。",
+    "params": [
+      {
+        "name": "LOOT",
+        "desc": "源码顶部数组：物品 id、网格位置、数量、稀有度与名牌"
+      },
+      {
+        "name": "T_OPEN / T_SPEW / T_HI",
+        "desc": "开盖、喷出、稀有高亮的起始帧"
+      }
+    ],
+    "alpha": false
+  },
+  "item-inventory-sort": {
+    "id": "item-inventory-sort",
+    "name": "物品栏整理",
+    "category": "item",
+    "tags": [
+      "整理",
+      "背包",
+      "分类",
+      "合并堆叠",
+      "数字"
+    ],
+    "frames": 190,
+    "blurb": "杂乱的 9×4 背包里，鼠标按下“整理”：所有堆叠升起并沿弧线飞向各自位置，同类合并、数量相加，工具/方块/食物/材料四行依次亮起归类。",
+    "usage": "讲背包管理、自动整理模组、物品栏优化。",
+    "params": [
+      {
+        "name": "ROWS",
+        "desc": "源码顶部数组：每行的分类、物品、列位置、数量或要合并的两堆数量"
+      },
+      {
+        "name": "T_CLICK / T_FLY",
+        "desc": "点击与开始飞行的帧"
+      }
+    ],
+    "alpha": false
+  },
+  "info-chapter-ore": {
+    "id": "info-chapter-ore",
+    "name": "章节标题卡 · Ore 风",
+    "category": "info",
+    "tags": [
+      "章节",
+      "标题",
+      "Ore",
+      "分段"
+    ],
+    "frames": 150,
+    "blurb": "上下黑条滑入，Ore 大面板竖向展开，图标框发光，标题逐字砸落，进度段依次点亮，黄黑警示带铺满左右。",
+    "usage": "每期视频的章节切换，叠在素材上；章节号、标题、提示、图标均可换。",
+    "params": [
+      {
+        "name": "no / total",
+        "desc": "当前章节号 / 总章节数（进度段）"
+      },
+      {
+        "name": "title",
+        "desc": "章节标题，建议 ≤ 7 字"
+      },
+      {
+        "name": "hint",
+        "desc": "提示一行"
+      },
+      {
+        "name": "icon / items",
+        "desc": "主图标物品 id；右侧 3 个材料格的物品 id"
+      },
+      {
+        "name": "series / next",
+        "desc": "顶部系列名、底部下一章"
+      }
+    ],
+    "alpha": true
+  },
+  "info-chapter-stone": {
+    "id": "info-chapter-stone",
+    "name": "章节标题卡 · 石质厚重风",
+    "category": "info",
+    "tags": [
+      "章节",
+      "标题",
+      "石质",
+      "厚重",
+      "粒子"
+    ],
+    "frames": 150,
+    "blurb": "石砖横幅从中央展开，石质大字砸落带震屏、裂纹、碎石粉尘，火把摇曳，随后一道光扫过字面。",
+    "usage": "重头章节、关键转折、Boss 与副本入口；字多时调小 size。",
+    "params": [
+      {
+        "name": "no / tag",
+        "desc": "章节号，或直接替换上方小牌文字"
+      },
+      {
+        "name": "title",
+        "desc": "石质大字，建议 ≤ 6 字"
+      },
+      {
+        "name": "sub",
+        "desc": "下方副标题"
+      },
+      {
+        "name": "size",
+        "desc": "大字字号（12 的倍数，默认 240）"
+      }
+    ],
+    "alpha": true
+  },
+  "info-chapter-flat": {
+    "id": "info-chapter-flat",
+    "name": "章节标题卡 · 可爱扁平风",
+    "category": "info",
+    "tags": [
+      "章节",
+      "标题",
+      "可爱",
+      "贴纸",
+      "扁平"
+    ],
+    "frames": 150,
+    "blurb": "五条糖果色斜带扫过，纸片横幅挤压弹入，贴纸大字逐个弹跳，圆章徽标摇摆，史莱姆、小猪、苦力怕从草丘冒出，云朵星星点缀。",
+    "usage": "轻松向、儿童向、生存日常视频的章节切换。",
+    "params": [
+      {
+        "name": "no",
+        "desc": "章节号（圆章）"
+      },
+      {
+        "name": "title",
+        "desc": "贴纸大字，建议 ≤ 6 字"
+      },
+      {
+        "name": "sub",
+        "desc": "红色丝带副标题"
+      },
+      {
+        "name": "accent",
+        "desc": "偶数位字母的颜色"
+      }
+    ],
+    "alpha": true
+  },
+  "info-lower-third-ore": {
+    "id": "info-lower-third-ore",
+    "name": "下三分之一字幕条 · Ore 风",
+    "category": "info",
+    "tags": [
+      "字幕条",
+      "人名条",
+      "Ore",
+      "头像"
+    ],
+    "frames": 135,
+    "blurb": "头像框弹出，Ore 名牌从头像后展开，姓名逐字打出，身份标签滑入，光扫掠过，账号小牌掉落，右上角频道角标下滑；结束时名牌卷回头像再离场。",
+    "usage": "嘉宾、角色、主播出场介绍；叠在人物镜头的左下方。",
+    "params": [
+      {
+        "name": "name",
+        "desc": "姓名，建议 ≤ 6 字"
+      },
+      {
+        "name": "role",
+        "desc": "身份/头衔"
+      },
+      {
+        "name": "handle",
+        "desc": "账号小牌"
+      },
+      {
+        "name": "skin",
+        "desc": "头像皮肤路径，如 entity/player/wide/alex.png"
+      },
+      {
+        "name": "tag / icon",
+        "desc": "右上角频道角标文字与物品 id"
+      }
+    ],
+    "alpha": true
+  },
+  "info-lower-third-cute": {
+    "id": "info-lower-third-cute",
+    "name": "下三分之一字幕条 · 可爱风",
+    "category": "info",
+    "tags": [
+      "字幕条",
+      "人名条",
+      "可爱",
+      "贴纸"
+    ],
+    "frames": 135,
+    "blurb": "圆形吉祥物头像带虚线转圈弹出，黄色贴纸名牌叠在蓝色底卡上展开，粉色身份丝带翻出，爱心星星漂浮，底部一排云朵，右上角“关注我”胶囊。",
+    "usage": "轻松向视频的人物/角色介绍，也可作字幕署名条。",
+    "params": [
+      {
+        "name": "name / role",
+        "desc": "姓名、身份丝带"
+      },
+      {
+        "name": "mascot",
+        "desc": "头像精灵：slime | pig | creeper"
+      },
+      {
+        "name": "tag",
+        "desc": "右上角胶囊文字"
+      }
+    ],
+    "alpha": true
+  },
+  "info-toast-advancement": {
+    "id": "info-toast-advancement",
+    "name": "成就弹窗（任务 / 目标 / 挑战）",
+    "category": "info",
+    "tags": [
+      "成就",
+      "进度",
+      "弹窗",
+      "挑战",
+      "金色"
+    ],
+    "frames": 240,
+    "blurb": "三张成就依次从右侧弹入：钢色方框的任务、绿色切角的目标、金边尖刺紫光的挑战；挑战触发粒子爆发、金色彩屑漫天、屏幕边缘金光和光线。",
+    "usage": "达成里程碑、拿到关键物品、通关节点；可只传一张。",
+    "params": [
+      {
+        "name": "toasts",
+        "desc": "数组：{kind: task|goal|challenge, title, desc, icon, head?}，可传 1~3 项"
+      },
+      {
+        "name": "counter",
+        "desc": "底部计数条文字"
+      }
+    ],
+    "alpha": true
+  },
+  "info-stat-bars": {
+    "id": "info-stat-bars",
+    "name": "血量 / 饥饿 / 经验条变化",
+    "category": "info",
+    "tags": [
+      "HUD",
+      "血量",
+      "饥饿",
+      "经验",
+      "受伤",
+      "回复",
+      "数字"
+    ],
+    "frames": 240,
+    "blurb": "三条 HUD 条滑入：受伤时血条骤降、苍白残影缓缓追上、整行闪红、屏幕边缘泛红并弹出“-12”；回血时亮绿残影先冲上去、主条追赶、绿光与火花；经验条满格后升级金光、等级数字跳变。",
+    "usage": "讲生存、战斗、食物机制时展示数值变化；可叠在第一人称画面上。",
+    "params": [
+      {
+        "name": "scale",
+        "desc": "整块 HUD 的缩放（默认 1）"
+      },
+      {
+        "name": "时间轴",
+        "desc": "事件时间写在 statBars.tsx 顶部的 HEALTH / HUNGER 数组中"
+      }
+    ],
+    "alpha": true
+  },
+  "info-compare-bars": {
+    "id": "info-compare-bars",
+    "name": "属性对比条",
+    "category": "info",
+    "tags": [
+      "对比",
+      "属性",
+      "条形图",
+      "胜出",
+      "数字滚动"
+    ],
+    "frames": 230,
+    "blurb": "两件物品卡从上方落下，VS 徽章砸中，四行属性条从中线向两侧生长、数字滚动，胜出方变金并闪光、落败方变灰，最后弹出胜负横幅与彩屑。",
+    "usage": "装备、武器、方块、生物的属性对比；评测类视频的核心图表。",
+    "params": [
+      {
+        "name": "left / right",
+        "desc": "{id 物品 id, name, tag, color}"
+      },
+      {
+        "name": "rows",
+        "desc": "[{label, l, r, max, dec?}] 数值与满格值，相等视为平手"
+      },
+      {
+        "name": "title",
+        "desc": "面板标题"
+      }
+    ],
+    "alpha": true
+  },
+  "info-leaderboard": {
+    "id": "info-leaderboard",
+    "name": "排行榜 Top5",
+    "category": "info",
+    "tags": [
+      "排行榜",
+      "排名",
+      "榜单",
+      "皇冠",
+      "名次变动"
+    ],
+    "frames": 280,
+    "blurb": "两侧挂旗垂下，五行按名次依次从右滑入；分数刷新后行与行互相超越、交换位置，上升者闪绿并标出名次变化，皇冠沿弧线飞向新的第一名，伴随光芒与粒子。",
+    "usage": "击杀榜、建造榜、竞速榜、投票结果等；一次展示榜单变动。",
+    "params": [
+      {
+        "name": "players",
+        "desc": "[{name, skin 路径, a 更新前分数, b 更新后分数}]，名次由分数自动计算"
+      },
+      {
+        "name": "title / unit",
+        "desc": "标题；右上角周期标签前缀"
+      }
+    ],
+    "alpha": true
+  },
+  "info-countdown-big": {
+    "id": "info-countdown-big",
+    "name": "大数字倒计时 5-4-3-2-1",
+    "category": "info",
+    "tags": [
+      "倒计时",
+      "数字",
+      "开始",
+      "冲击",
+      "粒子"
+    ],
+    "frames": 230,
+    "blurb": "五个方块像素大数字依次砸在切角方块底板上：整屏压缩脉冲、像素碎片飞溅、短震屏，底板下的分段计时条逐格耗尽，两侧色块计数；最后“开始!”底板展宽、金色闪光与彩屑。",
+    "usage": "比赛开始、挑战开局、发布会/抽奖倒数、视频开场卡点。",
+    "params": [
+      {
+        "name": "from",
+        "desc": "起始数字（默认 5）"
+      },
+      {
+        "name": "go",
+        "desc": "结尾文字（默认“开始!”）"
+      },
+      {
+        "name": "colors",
+        "desc": "每个数字的填充色数组（取自 Ore 色板）"
+      }
+    ],
+    "alpha": true
+  },
+  "info-coord-tag": {
+    "id": "info-coord-tag",
+    "name": "坐标标签",
+    "category": "info",
+    "tags": [
+      "坐标",
+      "标签",
+      "指针",
+      "地名",
+      "定位"
+    ],
+    "frames": 200,
+    "blurb": "地面像素碎片闪光标出位置，细杆升起，带指针的 Ore 标签果冻般弹出，X/Y/Z 数字滚动、微微浮动；顶部罗盘条同步标出方位，结束时标签收回成小钉。",
+    "usage": "标注基地、矿洞、村庄、传送门等位置；可叠多个。把 x、y 对准画面里的目标点即可。",
+    "params": [
+      {
+        "name": "tags",
+        "desc": "[{x, y 目标点屏幕坐标, name, xyz:[X,Y,Z], color, at 起始帧, dist?, icon?}]"
+      }
+    ],
+    "alpha": true
+  },
+  "info-ingredient-list": {
+    "id": "info-ingredient-list",
+    "name": "材料清单卡",
+    "category": "info",
+    "tags": [
+      "材料",
+      "清单",
+      "合成",
+      "勾选",
+      "出处"
+    ],
+    "frames": 250,
+    "blurb": "清单面板从左滑入，五行（图标 + 名称 + 出处 + 数量）逐行弹入，随后逐行打钩、行底泛绿；齐全时盖“材料齐全！”章，右侧成品卡从剪影点亮并爆出光芒与彩屑。",
+    "usage": "合成/建造/红石教程开头交代需要准备什么；也可只用清单部分。",
+    "params": [
+      {
+        "name": "title",
+        "desc": "面板标题"
+      },
+      {
+        "name": "rows",
+        "desc": "[{id 物品 id, name, count, src 出处}]（建议 4~5 行）"
+      },
+      {
+        "name": "result",
+        "desc": "{id, name, line} 右侧成品卡"
+      }
+    ],
+    "alpha": true
+  },
+  "info-subtitle-dialog": {
+    "id": "info-subtitle-dialog",
+    "name": "对话字幕",
+    "category": "info",
+    "tags": [
+      "对话",
+      "字幕",
+      "头像",
+      "气泡",
+      "逐字"
+    ],
+    "frames": 300,
+    "blurb": "左右两位角色头像，说话者发亮并上下弹跳，气泡带指针指向说话者；文字逐字打出并轻微抖动，感叹号 / 问号 / 省略号 / 音符弹出，打完出现继续箭头。",
+    "usage": "角色对话、剧情小短剧、双人解说的字幕；换人说话自动切换气泡方向。",
+    "params": [
+      {
+        "name": "speakers",
+        "desc": "[{name, skin 路径, color}]，0 在左、1 在右"
+      },
+      {
+        "name": "lines",
+        "desc": "[{who: 0|1, text, tone: shout|ask|dots|happy}]，每句约 62 帧"
+      }
+    ],
+    "alpha": true
+  },
+  "info-sponsor-credit": {
+    "id": "info-sponsor-credit",
+    "name": "片尾鸣谢滚动",
+    "category": "info",
+    "tags": [
+      "片尾",
+      "鸣谢",
+      "字幕滚动",
+      "制作名单",
+      "赞助"
+    ],
+    "frames": 480,
+    "blurb": "深色星空底，三层星点与流星视差漂移，两侧像素物品列反向滚动；职位与名字两栏向上滚，经过中线的一行被聚光放大，赞助分档着色，最后减速停在“谢谢观看”。",
+    "usage": "视频片尾；叠在最后一个镜头上，自带暗化底，也可去掉 bg 单独导出。",
+    "params": [
+      {
+        "name": "sections",
+        "desc": "[{title, rows: [[职位, 名字]] | names: string[] | tiers: [{label, icon, color, names}]}]"
+      },
+      {
+        "name": "closing",
+        "desc": "收尾大字（默认“谢谢观看”）"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-vignette-close": {
+    "id": "atm-vignette-close",
+    "name": "暗角收紧",
+    "category": "atmosphere",
+    "tags": [
+      "暗角",
+      "聚焦",
+      "氛围",
+      "透明层",
+      "色偏"
+    ],
+    "frames": 150,
+    "blurb": "画面四周由外向内慢慢收紧，边缘带冷色渐变到暖色的色偏，画面随之微推，视线被拉向中心。",
+    "usage": "镜头聚焦主体、进入紧张/回忆段落、强调中心信息时叠加。",
+    "params": [
+      {
+        "name": "tint / tintTo",
+        "desc": "暗角色偏：'neutral' | 'cold' | 'warm' | 'blood'；给 tintTo 则在收紧过程中渐变"
+      },
+      {
+        "name": "from / to",
+        "desc": "起始 / 结束的收紧程度（0..1）"
+      },
+      {
+        "name": "start / dur",
+        "desc": "开始帧与收紧时长（帧）"
+      },
+      {
+        "name": "cx / cy",
+        "desc": "焦点位置（0..1，默认画面中心）"
+      },
+      {
+        "name": "ringAmount",
+        "desc": "色环强度"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-vignette-breathe": {
+    "id": "atm-vignette-breathe",
+    "name": "暗角呼吸",
+    "category": "atmosphere",
+    "tags": [
+      "暗角",
+      "心跳",
+      "紧张",
+      "低血量",
+      "透明层"
+    ],
+    "frames": 180,
+    "blurb": "暗红色暗角随“咚-咚”心跳明暗起伏，心跳逐渐加快，同步心形血条抖动。",
+    "usage": "低血量、被追杀、Boss 战前的紧张氛围；也可去掉红色换成冷色做心理压迫。",
+    "params": [
+      {
+        "name": "bpm0 / bpm1",
+        "desc": "起始 / 结束心率（次/分钟）"
+      },
+      {
+        "name": "base / depth",
+        "desc": "静息暗角程度 / 每次心跳增加的幅度"
+      },
+      {
+        "name": "tint",
+        "desc": "暗角色偏，默认 'blood'"
+      },
+      {
+        "name": "frames",
+        "desc": "总帧数（决定心率渐变速度）"
+      },
+      {
+        "name": "sound",
+        "desc": "是否带心跳低频音"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-vignette-spotlight": {
+    "id": "atm-vignette-spotlight",
+    "name": "聚光灯",
+    "category": "atmosphere",
+    "tags": [
+      "聚光灯",
+      "暗角",
+      "引导视线",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "画面压暗，只剩一个边缘柔和的圆形聚光，依次滑向标题、字幕条、物品栏；移动时被拉成椭圆，落点轻微回弹。",
+    "usage": "讲解画面时依次指出重点位置、悬疑/舞台式介绍。",
+    "params": [
+      {
+        "name": "points",
+        "desc": "[{x, y, r 半径, at 到达帧}]，第一个点是起点"
+      },
+      {
+        "name": "travel",
+        "desc": "每段移动所用帧数"
+      },
+      {
+        "name": "dark / soft",
+        "desc": "外部暗度 / 边缘柔和度"
+      },
+      {
+        "name": "warm",
+        "desc": "边缘暖色光晕强度"
+      },
+      {
+        "name": "dust",
+        "desc": "光束内是否有漂浮尘埃"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-letterbox": {
+    "id": "atm-letterbox",
+    "name": "电影黑边",
+    "category": "atmosphere",
+    "tags": [
+      "黑边",
+      "电影感",
+      "字幕",
+      "胶片",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "上下黑边滑入，带内侧柔影、轻微暗角和胶片颗粒，黑边内逐字打出字幕，结尾滑出。",
+    "usage": "剧情/预告片段、过场电影感；黑边内可直接放字幕。",
+    "params": [
+      {
+        "name": "size",
+        "desc": "黑边高度 px（140 约等于 2.4:1）"
+      },
+      {
+        "name": "inAt / outAt",
+        "desc": "滑入 / 滑出的开始帧（不填 outAt 则常驻）"
+      },
+      {
+        "name": "subtitle / subtitleAt",
+        "desc": "字幕文字与出现帧"
+      },
+      {
+        "name": "grain / vignette",
+        "desc": "颗粒与暗角强度 0..1"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-shake": {
+    "id": "atm-shake",
+    "name": "震屏",
+    "category": "atmosphere",
+    "tags": [
+      "震屏",
+      "相机抖动",
+      "爆炸",
+      "冲击",
+      "包裹组件"
+    ],
+    "frames": 150,
+    "blurb": "轻/中/重三档镜头抖动：首帧猛踢、随后衰减，带方向模糊和残影；中/重档从顶部落下尘土碎石。界面（左上档位）保持稳定，只有画面在抖。",
+    "usage": "爆炸、重击、落地、Boss 出场。用 <Shake hits={[{at, level}]}> 包住镜头画面（世界层），字幕/血条放在外面。",
+    "params": [
+      {
+        "name": "hits",
+        "desc": "[{at 帧, level 'light'|'medium'|'heavy', scale 0..1+}]，可多次触发、叠加"
+      },
+      {
+        "name": "blur",
+        "desc": "方向模糊强度 0..1，0 关闭"
+      },
+      {
+        "name": "ghost",
+        "desc": "是否叠一份上一帧的残影（会重复渲染 children，含 Audio 时请关掉）"
+      },
+      {
+        "name": "ShakeDust hits",
+        "desc": "配套透明层：尘土/碎石，可单独叠在任何素材上"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-flash": {
+    "id": "atm-flash",
+    "name": "闪白 / 闪色",
+    "category": "atmosphere",
+    "tags": [
+      "闪白",
+      "闪光",
+      "金闪",
+      "红闪",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "白闪、金闪、红闪三种：一帧到峰值，白热核心 + 外扩光晕 + 带色余辉依次衰减，金/白闪伴随像素火星。",
+    "usage": "爆炸、升级、获得稀有物品（金）、受击/危险（红）、镜头硬切前的转场闪光。",
+    "params": [
+      {
+        "name": "kind",
+        "desc": "'white' | 'gold' | 'red'"
+      },
+      {
+        "name": "at / life",
+        "desc": "触发帧 / 衰减帧数（每种有默认值）"
+      },
+      {
+        "name": "peak",
+        "desc": "峰值强度 0..1"
+      },
+      {
+        "name": "x / y",
+        "desc": "光源位置 0..1"
+      },
+      {
+        "name": "sparks",
+        "desc": "是否有像素火星"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-hurt": {
+    "id": "atm-hurt",
+    "name": "受伤红边",
+    "category": "atmosphere",
+    "tags": [
+      "受伤",
+      "血量",
+      "红边",
+      "血丝",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "受击瞬间红色边缘脉冲，血丝由边缘向内生长并带轻微抖动；血量见底后红边持续缓慢呼吸。",
+    "usage": "玩家受伤、低血量警示、剧情中的危险时刻。",
+    "params": [
+      {
+        "name": "hits",
+        "desc": "[{at 帧, power 0..1}] 受击时刻与力度"
+      },
+      {
+        "name": "lowFrom / lowBpm / low",
+        "desc": "低血量呼吸开始帧 / 呼吸频率 / 强度；不想要就设 lowFrom={undefined}"
+      },
+      {
+        "name": "veins",
+        "desc": "血丝根数"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-day-night": {
+    "id": "atm-day-night",
+    "name": "昼夜切换",
+    "category": "atmosphere",
+    "tags": [
+      "昼夜",
+      "天色",
+      "日落",
+      "星空",
+      "时间流逝",
+      "透明层"
+    ],
+    "frames": 180,
+    "blurb": "时钟从深夜走到黎明、正午、黄昏、再入夜：画面叠加随时间变化的色调、天顶色偏与地平线霞光，太阳与月亮沿弧线划过，夜里星星闪烁并有流星。",
+    "usage": "时间流逝、“第N天”转场、从白天跳到夜晚的叙事；只叠色调，不替换背景。",
+    "params": [
+      {
+        "name": "from / to",
+        "desc": "起止小时（0..24），例如 from=17 to=22 只做日落到夜晚"
+      },
+      {
+        "name": "start / dur",
+        "desc": "时钟开始帧与时长（帧）"
+      },
+      {
+        "name": "hour",
+        "desc": "直接指定固定时刻（静态调色用，忽略 from/to）"
+      },
+      {
+        "name": "showBodies",
+        "desc": "是否绘制太阳、月亮、星星"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-rain": {
+    "id": "atm-rain",
+    "name": "雨",
+    "category": "atmosphere",
+    "tags": [
+      "雨",
+      "天气",
+      "氛围",
+      "水花",
+      "雾",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "三层斜雨（远细/中/近粗长拖尾），雨滴落在地面带贴地飞散的像素水线和飞溅水花，整体偏冷暗化，底部漂着低雾。",
+    "usage": "阴雨天、悲伤/压抑段落、雷暴前奏、赶路镜头。",
+    "params": [
+      {
+        "name": "intensity",
+        "desc": "雨量密度 0..1.4"
+      },
+      {
+        "name": "wind",
+        "desc": "斜度（度）"
+      },
+      {
+        "name": "groundY",
+        "desc": "地面带起点 y(px)，决定落地水花出现的范围"
+      },
+      {
+        "name": "fog / dim",
+        "desc": "雾气 / 暗化程度 0..1"
+      },
+      {
+        "name": "lit / fade",
+        "desc": "额外提亮（雷暴用）/ 淡入帧数"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-snow": {
+    "id": "atm-snow",
+    "name": "雪",
+    "category": "atmosphere",
+    "tags": [
+      "雪",
+      "天气",
+      "冬天",
+      "氛围",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "远处像素雪点、中景十字雪花、近景虚化大雪团三层飘落，风向忽强忽弱地摆动；落地的小雪粒淡出，画面底边慢慢堆起像素雪层。",
+    "usage": "冬季/雪山/圣诞主题、冷清安静的氛围段落。",
+    "params": [
+      {
+        "name": "intensity",
+        "desc": "雪量密度 0..1.4"
+      },
+      {
+        "name": "wind",
+        "desc": "风速（px/帧，负数向左）"
+      },
+      {
+        "name": "groundY",
+        "desc": "落地雪粒出现的区域起点 y"
+      },
+      {
+        "name": "pile",
+        "desc": "底边积雪最终高度 0..1，0 关闭"
+      },
+      {
+        "name": "fog / fade / frames",
+        "desc": "雾气 / 淡入帧数 / 积雪生长总帧数"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-thunder": {
+    "id": "atm-thunder",
+    "name": "雷暴",
+    "category": "atmosphere",
+    "tags": [
+      "雷",
+      "闪电",
+      "暴雨",
+      "天气",
+      "音效",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "暴雨中天色先压暗，随后分叉的像素闪电劈下：多段闪烁、全屏闪白、云层和雨线被照亮、落点溅出电火花，雷声稍后滚到。",
+    "usage": "恶劣天气、Boss 出场、恐怖/惊吓节点、剧情转折。",
+    "params": [
+      {
+        "name": "strikes",
+        "desc": "[{at 帧, x0 顶端x, x1/y1 落点, seed 闪电形状, power 0..1}]"
+      },
+      {
+        "name": "intensity",
+        "desc": "雨量密度"
+      },
+      {
+        "name": "sound",
+        "desc": "是否带雷声"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-particles-blocks": {
+    "id": "atm-particles-blocks",
+    "name": "方块碎屑",
+    "category": "atmosphere",
+    "tags": [
+      "方块",
+      "碎屑",
+      "尘土",
+      "粒子",
+      "坍塌",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "石头、泥土、苔藓、橡木板、圆石、沙砾的 4×4 材质碎块从上方翻滚落下，近大远小、近处虚化带投影；顶部与四角弥漫尘土，漂浮的尘埃云与细小灰尘。",
+    "usage": "挖掘、坍塌、地震、矿洞与废墟镜头、破坏建筑的片段。",
+    "params": [
+      {
+        "name": "density",
+        "desc": "碎块密度 0..1.3"
+      },
+      {
+        "name": "wind",
+        "desc": "横向风速（px/帧）"
+      },
+      {
+        "name": "dust",
+        "desc": "尘土浓度 0..1"
+      },
+      {
+        "name": "textures",
+        "desc": "方块贴图 id 数组，默认石/土/苔/木/圆石/沙砾，例如 ['netherrack','obsidian']"
+      },
+      {
+        "name": "start / prewarm",
+        "desc": "开始下落的帧 / 预热帧数（让第 0 帧就已有碎块在空中）"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-particles-xp": {
+    "id": "atm-particles-xp",
+    "name": "经验球",
+    "category": "atmosphere",
+    "tags": [
+      "经验",
+      "升级",
+      "粒子",
+      "收集",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "满屏绿色经验球冒出、漂浮闪烁，随后沿弧线加速涌向经验条，每颗到达溅出火花，最后一颗落下触发升级星爆，经验条与等级数字同步变化。",
+    "usage": "升级前后、击杀怪物、刷经验、获得成就的收尾。",
+    "params": [
+      {
+        "name": "count",
+        "desc": "经验球数量"
+      },
+      {
+        "name": "gather",
+        "desc": "开始飞向目标的帧"
+      },
+      {
+        "name": "tx / ty",
+        "desc": "汇聚目标位置 px（默认经验条中心）"
+      },
+      {
+        "name": "seed",
+        "desc": "随机种子，换分布"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-fireflies": {
+    "id": "atm-fireflies",
+    "name": "萤火虫 / 余烬",
+    "category": "atmosphere",
+    "tags": [
+      "萤火虫",
+      "余烬",
+      "火星",
+      "夜景",
+      "粒子",
+      "透明层"
+    ],
+    "frames": 180,
+    "blurb": "夜晚黄绿萤火虫三层景深漂浮闪烁；中途切换成橙红火星余烬，由白黄冷却到暗红向上飘，底部带暖色火光。",
+    "usage": "夜景、森林营地、篝火余烬、战后废墟、下界氛围。",
+    "params": [
+      {
+        "name": "fireflies",
+        "desc": "萤火虫数量 0..1"
+      },
+      {
+        "name": "embers",
+        "desc": "火星余烬数量 0..1（两者可同时动画实现交叉渐变）"
+      },
+      {
+        "name": "seed",
+        "desc": "随机分布种子"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-lens-flare": {
+    "id": "atm-lens-flare",
+    "name": "镜头光斑",
+    "category": "atmosphere",
+    "tags": [
+      "光斑",
+      "镜头",
+      "太阳",
+      "星芒",
+      "电影感",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "太阳从画面左上滑向右侧，沿镜头光轴拖出方块感光斑（青/洋红/金的空心与实心块、阶梯光晕）、十字星芒、横向变形拉丝、环形光晕和暖色眩光。",
+    "usage": "日出日落、仰拍太阳、英雄镜头、片头片尾的电影感点缀。",
+    "params": [
+      {
+        "name": "from / to",
+        "desc": "太阳路径的起点与终点 {x, y} px"
+      },
+      {
+        "name": "start / dur / frames",
+        "desc": "开始帧 / 滑动帧数 / 总帧数（决定淡入淡出）"
+      },
+      {
+        "name": "strength",
+        "desc": "整体强度 0..1"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-retro-film": {
+    "id": "atm-retro-film",
+    "name": "复古胶片",
+    "category": "atmosphere",
+    "tags": [
+      "胶片",
+      "复古",
+      "颗粒",
+      "扫描线",
+      "色散",
+      "怀旧",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "老胶片质感：颗粒、扫描线与缓慢滚动的亮带、暖褐边缘暗角、红青边缘色散、漏光、灰尘划痕与闪烁；包裹画面时再加画面抖动和 RGB 色散。",
+    "usage": "回忆、老录像、历史片段、怀旧风格；也可低强度全程使用增加质感。",
+    "params": [
+      {
+        "name": "grain / scan / vignette",
+        "desc": "颗粒 / 扫描线 / 暗角强度 0..1"
+      },
+      {
+        "name": "leaks / dirt / flicker",
+        "desc": "漏光 / 灰尘划痕 / 闪烁强度 0..1"
+      },
+      {
+        "name": "RetroFilmWrap amount",
+        "desc": "包住画面的色散 + 抖动 + 暖调强度（Layer 本身无法位移画面）"
+      }
+    ],
+    "alpha": true
+  },
+  "atm-speed-lines": {
+    "id": "atm-speed-lines",
+    "name": "速度线",
+    "category": "atmosphere",
+    "tags": [
+      "速度线",
+      "漫画",
+      "冲刺",
+      "高潮",
+      "放射线",
+      "透明层"
+    ],
+    "frames": 150,
+    "blurb": "漫画式放射速度线：从中心空环向外扩散的锐利楔形长线加发丝细线，每两帧重绘产生“沸腾”感，边缘带白色爆光；Demo 里画面同时推近。",
+    "usage": "冲刺、高速移动、爆发瞬间、搞笑夸张的高潮点。",
+    "params": [
+      {
+        "name": "intensity",
+        "desc": "强度 0..1，随时间动画即可做冲入/冲出"
+      },
+      {
+        "name": "cx / cy",
+        "desc": "放射中心（0..1）"
+      },
+      {
+        "name": "inner",
+        "desc": "中心空白半径 px"
+      },
+      {
+        "name": "color",
+        "desc": "线条颜色 [r,g,b]，默认白；深色背景可用 [255,230,120]"
+      },
+      {
+        "name": "lines",
+        "desc": "基础线条数量"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-kit-hud": {
+    "id": "mcd-kit-hud",
+    "name": "地下城套件·底部 HUD",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "HUD",
+      "血量",
+      "药水冷却",
+      "界面套件"
+    ],
+    "frames": 210,
+    "blurb": "底部居中的斜切底座从下方升起，神器槽、大红心、药水/地图槽、六边形箭袋与绿宝石依次弹出；随后灵魂与绿宝石拾取跳字、神器冷却遮罩、受伤闪白与屏幕猩红晕影、喝药回血、射箭减数、经验条满格升级。",
+    "usage": "做地下城/动作游戏实录的\"游戏内画面\"、讲解 HUD 元素或给实景素材叠一层界面时用；Layer 版是透明 HUD，可直接盖在录屏上。",
+    "params": [
+      {
+        "name": "hp",
+        "desc": "血量 0..1，红心从下往上填充（受伤时配合 hurt 闪白）"
+      },
+      {
+        "name": "hurt",
+        "desc": "受伤闪白强度 0..1，带小幅抖动"
+      },
+      {
+        "name": "cd",
+        "desc": "各槽冷却 {x,y,b,potion,dodge}，1=刚使用，自上而下的遮罩"
+      },
+      {
+        "name": "appear",
+        "desc": "出现进度 0..1（底座升起 + 槽位错开弹出）"
+      },
+      {
+        "name": "scale",
+        "desc": "整体缩放，默认 0.9 约 1300px 宽"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-kit-inventory": {
+    "id": "mcd-kit-inventory",
+    "name": "地下城套件·物品栏页",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "物品栏",
+      "装备",
+      "附魔",
+      "界面套件"
+    ],
+    "frames": 210,
+    "blurb": "红棕晕光 + 马赛克噪声背景上的三栏物品页：左侧角色与三件装备槽、LEVEL/POWER 六边形、药水槽；中间分类标签与带对角线的空格网格；右侧详情（稀有度标签、粗像素物品名、菱形属性行、3D 物品大图、属性条、附魔菱形）。选中框移到弓后详情整体换成 UNIQUE，附魔菱形依次点亮。",
+    "usage": "讲装备/战利品/附魔系统、展示一件新武器或做\"打开背包\"的转场画面。",
+    "params": [
+      {
+        "name": "GRID",
+        "desc": "格子内容数组（物品贴图、稀有度、等级、新物品角标）"
+      },
+      {
+        "name": "swapAt",
+        "desc": "选中框跳到第三格、详情切换的帧"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-kit-results-cards": {
+    "id": "mcd-kit-results-cards",
+    "name": "地下城套件·结算页与统计卡",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "结算",
+      "月桂",
+      "统计卡",
+      "界面套件"
+    ],
+    "frames": 240,
+    "blurb": "先黑场再整页淡入：金色小标题 + 白色任务名，镀金菱形框头像配银灰月桂和紫边 LEVEL 六边形，击杀数滚动计数，橙红 AP 进度条，四张深色统计卡依次升起，右下角金框菱形里的宝箱抖动并带出金色火星。",
+    "usage": "关卡/任务/Boss 战结束后的数据总结、章节通关画面。",
+    "params": [
+      {
+        "name": "kills",
+        "desc": "countUp 的目标数字与时长"
+      },
+      {
+        "name": "StatCard",
+        "desc": "label/value/reveal，可自行摆 2–6 张"
+      },
+      {
+        "name": "Laurel tone",
+        "desc": "silver/gold/orange/green 对应名次配色"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-kit-badges": {
+    "id": "mcd-kit-badges",
+    "name": "地下城套件·六边形与菱形徽章",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "徽章",
+      "六边形",
+      "菱形",
+      "难度",
+      "界面套件"
+    ],
+    "frames": 150,
+    "blurb": "菱形金框五档（镀金/独特/稀有/普通/附魔/空槽）、LEVEL 与 POWER 六边形、金色骷髅地图节点（普通/锁定/空/选中带书签尾）、COMMON/RARE/UNIQUE/GILDED 标签、绿宝石与灵魂计数器，以及 I–VII 难度条（绿到橙轨道、选中节点逐级跳升）和三色月桂。",
+    "usage": "需要地下城风徽章、难度/等级/稀有度指示时，作为素材一览或直接截取。",
+    "params": [
+      {
+        "name": "DiamondFrame tier",
+        "desc": "gilded | unique | rare | common | enchant | empty"
+      },
+      {
+        "name": "DifficultyBar level/locked",
+        "desc": "选中级别与被锁的节点数"
+      },
+      {
+        "name": "HexBadge ring/fill",
+        "desc": "自定义环色/填充，做新的六边形徽章"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-kit-buttons": {
+    "id": "mcd-kit-buttons",
+    "name": "地下城套件·按钮与键帽",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "按钮",
+      "键帽",
+      "界面套件"
+    ],
+    "frames": 180,
+    "blurb": "三段式斜面绿按钮的待机/悬停/按下/长按填充/禁用/金色六态，SALVAGE 弹窗里的白框 CANCEL + 绿按钮按下，RANDOM 卡片的 VIEW [F]，粉红 UNDO 与绿 ACCEPT，以及 A/B/X/Y、LB/RB/RT、键盘键帽。",
+    "usage": "做\"点击确认/购买/开始任务\"的交互演示，或在任何地下城风界面里放按钮与按键提示。",
+    "params": [
+      {
+        "name": "tone",
+        "desc": "green | red | ghost | disabled | gold"
+      },
+      {
+        "name": "press",
+        "desc": "0..1 按下深度（顶亮边收缩、文字下沉）"
+      },
+      {
+        "name": "hold",
+        "desc": "0..1 长按填充"
+      },
+      {
+        "name": "keycap",
+        "desc": "右侧键帽文字"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-kit-enchant": {
+    "id": "mcd-kit-enchant",
+    "name": "地下城套件·附魔槽与卷轴",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "附魔",
+      "菱形",
+      "卷轴",
+      "界面套件"
+    ],
+    "frames": 180,
+    "blurb": "紫色标题 + 三组\"灵魂点菱形 + 三个图标菱形\"的附魔簇逐个点亮（紫光、罗马数字角标），下方三枚大菱形从 Empty Slot 点亮为 Burning / Fire Focus，右侧羊皮纸卷轴展开出 BURNING 升级页：大菱形、三档伤害勾选、MAX TIER 灰框，紫色火星上飘。",
+    "usage": "讲附魔、技能升级或装备词条时使用。",
+    "params": [
+      {
+        "name": "EnchantSlot lit/tier/icon",
+        "desc": "点亮状态、罗马数字、像素图标"
+      },
+      {
+        "name": "ParchmentScroll reveal",
+        "desc": "卷轴展开进度 0..1"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-kit-title-text": {
+    "id": "mcd-kit-title-text",
+    "name": "地下城套件·标题字出现方式",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "标题字",
+      "像素字",
+      "界面套件"
+    ],
+    "frames": 240,
+    "blurb": "六格示范粗像素标题字：压黑后硬切出现、像素错位 4 帧再拼合成金字（带火星）、逐字下落、数字滚动逐位锁定、中文标题阴影由远及近砸实、以及带中线参考的精确居中（拉丁/中文/混排）。",
+    "usage": "章节标题、任务名、数字与中文字幕的出现动画参考；也是 PxText/PxChars/GlitchTitle 的用法示例。",
+    "params": [
+      {
+        "name": "px",
+        "desc": "每个像素的屏幕尺寸（整数），大写字母高约 9×px"
+      },
+      {
+        "name": "shadow/shadowColor",
+        "desc": "右下硬阴影像素数与颜色"
+      },
+      {
+        "name": "rowShift",
+        "desc": "逐行偏移函数，做错位拼字"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-kit-item3d": {
+    "id": "mcd-kit-item3d",
+    "name": "地下城套件·物品 3D 渲染图标",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "物品",
+      "3D",
+      "稀有度",
+      "界面套件"
+    ],
+    "frames": 180,
+    "blurb": "用 MC 真实物品贴图做体素挤出的伪 3D 图标：叠层厚度 + 左上边缘亮光 + 柔和投影；左侧巨大的钻石剑详情渲染轻微摇摆，右上平面贴图与 3D 对比，下方 4×3 稀有度槽位（普通灰/稀有绿/独特橙/镀金满填）里选中框逐格跳动。",
+    "usage": "展示武器/装备/道具时代替平面贴图；做战利品掉落、背包、商店画面。",
+    "params": [
+      {
+        "name": "src",
+        "desc": "MC 物品贴图路径，如 itemTex(\"bow\")"
+      },
+      {
+        "name": "depth",
+        "desc": "挤出层数（厚度）"
+      },
+      {
+        "name": "rot/glow",
+        "desc": "旋转角度 / 外发光颜色"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-kit-mission-panel": {
+    "id": "mcd-kit-mission-panel",
+    "name": "地下城套件·任务面板与世界地图",
+    "category": "uiref",
+    "tags": [
+      "地下城",
+      "任务",
+      "难度",
+      "地图",
+      "界面套件"
+    ],
+    "frames": 180,
+    "blurb": "左侧竖向任务详情（场景头图 + 红描边敌人、ADVENTURE 标签、粗像素任务名、I–VII 难度条逐级选中、推荐战力/你的战力、掉落格、BELOW MINIMUM 灰框随难度达标变成绿色 START MISSION）；右侧米色羊皮纸体素沙盘地图与金色骷髅节点、传送菜单与英雄选择卡。",
+    "usage": "做\"选择关卡/选难度/进入下一章\"的画面，或世界地图旅程开场。",
+    "params": [
+      {
+        "name": "DifficultyBar level/locked",
+        "desc": "选中级别和锁定数"
+      },
+      {
+        "name": "ISLANDS/NODES",
+        "desc": "沙盘地块与节点坐标（demoMission.tsx）"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-scene-forest-day": {
+    "id": "mcd-scene-forest-day",
+    "name": "场景·森林白天",
+    "category": "rpg",
+    "tags": [
+      "3D场景",
+      "地下城",
+      "森林",
+      "白天"
+    ],
+    "frames": 2400,
+    "blurb": "斜俯视体素森林：草叶交叉面片、纹素投影、云影、金色斜射光，80 秒无缝循环：镜头沿闭合小圆轨道缓慢漂移并微微推拉，云影与阳光随时间起伏。",
+    "usage": "白天关卡/加载界面的背景板，或转场前后的实景底。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "<ScenePlate biome=\"forest-day\" /> 取这个群系的场景底板"
+      },
+      {
+        "name": "seed",
+        "desc": "地形种子，换一个就是另一块地形"
+      },
+      {
+        "name": "loop",
+        "desc": "循环帧数，默认 2400（80 秒）。每种运动保持自己的自然周期（火焰/粒子/水波/光柱），镜头走一条闭合小轨道，首尾帧完全一致可无缝循环；push/pull 预设默认 192"
+      },
+      {
+        "name": "camera",
+        "desc": "覆盖镜头：from/to/mode(loop|ease|linear)/persp/tilt/sway"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-scene-forest-night": {
+    "id": "mcd-scene-forest-night",
+    "name": "场景·夜丛林",
+    "category": "rpg",
+    "tags": [
+      "3D场景",
+      "地下城",
+      "森林",
+      "夜晚",
+      "闪电",
+      "萤火"
+    ],
+    "frames": 2400,
+    "blurb": "青蓝夜林配橘色篝火与萤火，阶梯折线闪电照亮地面，白色小鬼灵魂飘升。",
+    "usage": "夜间关卡、灵魂收集、战斗前的氛围背景。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "<ScenePlate biome=\"forest-night\" /> 取这个群系的场景底板"
+      },
+      {
+        "name": "seed",
+        "desc": "地形种子，换一个就是另一块地形"
+      },
+      {
+        "name": "loop",
+        "desc": "循环帧数，默认 2400（80 秒）。每种运动保持自己的自然周期（火焰/粒子/水波/光柱），镜头走一条闭合小轨道，首尾帧完全一致可无缝循环；push/pull 预设默认 192"
+      },
+      {
+        "name": "camera",
+        "desc": "覆盖镜头：from/to/mode(loop|ease|linear)/persp/tilt/sway"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-scene-desert": {
+    "id": "mcd-scene-desert",
+    "name": "场景·沙漠神殿",
+    "category": "rpg",
+    "tags": [
+      "3D场景",
+      "地下城",
+      "沙漠",
+      "神殿",
+      "暖雾"
+    ],
+    "frames": 2400,
+    "blurb": "红土层岩峡谷与砂岩神殿，暖黄雾、金色斜射光柱、尘埃与旋转绿宝石。",
+    "usage": "沙漠关卡、宝藏/奖励类转场的背景。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "<ScenePlate biome=\"desert\" /> 取这个群系的场景底板"
+      },
+      {
+        "name": "seed",
+        "desc": "地形种子，换一个就是另一块地形"
+      },
+      {
+        "name": "loop",
+        "desc": "循环帧数，默认 2400（80 秒）。每种运动保持自己的自然周期（火焰/粒子/水波/光柱），镜头走一条闭合小轨道，首尾帧完全一致可无缝循环；push/pull 预设默认 192"
+      },
+      {
+        "name": "camera",
+        "desc": "覆盖镜头：from/to/mode(loop|ease|linear)/persp/tilt/sway"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-scene-nether": {
+    "id": "mcd-scene-nether",
+    "name": "场景·下界熔岩",
+    "category": "rpg",
+    "tags": [
+      "3D场景",
+      "地下城",
+      "下界",
+      "熔岩",
+      "灰烬"
+    ],
+    "frames": 2400,
+    "blurb": "深红下界：熔岩湖照亮岩壁与要塞桥，紫色传送门，灰烬与金色火星上升。",
+    "usage": "下界关卡、Boss 登场前的压迫感背景。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "<ScenePlate biome=\"nether\" /> 取这个群系的场景底板"
+      },
+      {
+        "name": "seed",
+        "desc": "地形种子，换一个就是另一块地形"
+      },
+      {
+        "name": "loop",
+        "desc": "循环帧数，默认 2400（80 秒）。每种运动保持自己的自然周期（火焰/粒子/水波/光柱），镜头走一条闭合小轨道，首尾帧完全一致可无缝循环；push/pull 预设默认 192"
+      },
+      {
+        "name": "camera",
+        "desc": "覆盖镜头：from/to/mode(loop|ease|linear)/persp/tilt/sway"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-scene-end": {
+    "id": "mcd-scene-end",
+    "name": "场景·末地",
+    "category": "rpg",
+    "tags": [
+      "3D场景",
+      "地下城",
+      "末地",
+      "紫色",
+      "粉光"
+    ],
+    "frames": 2400,
+    "blurb": "紫色虚空中的悬浮石砖平台，粉白发光立方与上升的方形粒子。",
+    "usage": "末地关卡、魔法/附魔类转场背景。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "<ScenePlate biome=\"end\" /> 取这个群系的场景底板"
+      },
+      {
+        "name": "seed",
+        "desc": "地形种子，换一个就是另一块地形"
+      },
+      {
+        "name": "loop",
+        "desc": "循环帧数，默认 2400（80 秒）。每种运动保持自己的自然周期（火焰/粒子/水波/光柱），镜头走一条闭合小轨道，首尾帧完全一致可无缝循环；push/pull 预设默认 192"
+      },
+      {
+        "name": "camera",
+        "desc": "覆盖镜头：from/to/mode(loop|ease|linear)/persp/tilt/sway"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-scene-snow": {
+    "id": "mcd-scene-snow",
+    "name": "场景·雪地村落",
+    "category": "rpg",
+    "tags": [
+      "3D场景",
+      "地下城",
+      "雪地",
+      "冰蓝",
+      "灯笼"
+    ],
+    "frames": 2400,
+    "blurb": "冰蓝暮色中的雪地村庄，暖色灯笼与篝火对比，十字雪花飘落。",
+    "usage": "冬季关卡、冰雪主题加载画面。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "<ScenePlate biome=\"snow\" /> 取这个群系的场景底板"
+      },
+      {
+        "name": "seed",
+        "desc": "地形种子，换一个就是另一块地形"
+      },
+      {
+        "name": "loop",
+        "desc": "循环帧数，默认 2400（80 秒）。每种运动保持自己的自然周期（火焰/粒子/水波/光柱），镜头走一条闭合小轨道，首尾帧完全一致可无缝循环；push/pull 预设默认 192"
+      },
+      {
+        "name": "camera",
+        "desc": "覆盖镜头：from/to/mode(loop|ease|linear)/persp/tilt/sway"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-scene-world-map": {
+    "id": "mcd-scene-world-map",
+    "name": "场景·世界地图沙盘",
+    "category": "rpg",
+    "tags": [
+      "3D场景",
+      "地下城",
+      "世界地图",
+      "悬浮岛",
+      "沙盘"
+    ],
+    "frames": 2400,
+    "blurb": "米色羊皮纸上的等距悬浮岛：剖面、瀑布、熔岩、红蘑菇、方块云与柔和偏移投影，80 秒无缝循环：镜头绕岛缓慢漂移并微微呼吸，云影掠过。",
+    "usage": "选关/章节地图、旅程类转场（可叠加金色六边形节点）。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "<ScenePlate biome=\"world-map\" /> 取这个群系的场景底板"
+      },
+      {
+        "name": "seed",
+        "desc": "地形种子，换一个就是另一块地形"
+      },
+      {
+        "name": "loop",
+        "desc": "循环帧数，默认 2400（80 秒）。每种运动保持自己的自然周期（火焰/粒子/水波/光柱），镜头走一条闭合小轨道，首尾帧完全一致可无缝循环；push/pull 预设默认 192"
+      },
+      {
+        "name": "camera",
+        "desc": "覆盖镜头：from/to/mode(loop|ease|linear)/persp/tilt/sway"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-scene-camp": {
+    "id": "mcd-scene-camp",
+    "name": "场景·营地与传送门",
+    "category": "rpg",
+    "tags": [
+      "3D场景",
+      "地下城",
+      "营地",
+      "传送门",
+      "光柱"
+    ],
+    "frames": 2400,
+    "blurb": "靛紫夜营地：篝火、帐篷、石砖墙；黑曜石传送门照亮周围黑石，宝箱喷出品红光柱，绿宝石旋转。",
+    "usage": "回营地/开箱/传送类转场的背景板。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "<ScenePlate biome=\"camp\" /> 取这个群系的场景底板"
+      },
+      {
+        "name": "seed",
+        "desc": "地形种子，换一个就是另一块地形"
+      },
+      {
+        "name": "loop",
+        "desc": "循环帧数，默认 2400（80 秒）。每种运动保持自己的自然周期（火焰/粒子/水波/光柱），镜头走一条闭合小轨道，首尾帧完全一致可无缝循环；push/pull 预设默认 192"
+      },
+      {
+        "name": "camera",
+        "desc": "覆盖镜头：from/to/mode(loop|ease|linear)/persp/tilt/sway"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-s-victory-banner": {
+    "id": "mcd-s-victory-banner",
+    "name": "胜利横幅 · 月桂倒计时",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "胜利",
+      "横幅",
+      "倒计时",
+      "月桂"
+    ],
+    "frames": 160,
+    "blurb": "屏幕上方居中：金色“胜利！”从大到小砸入，银灰月桂向两侧展开，白色像素数字逐秒倒数，顶部压暗渐变托住字，结尾整体淡出。",
+    "usage": "视频里打赢一关/完成一个阶段的收尾点；倒计时数字可换成任意章节编号、剩余秒数或“第 N 期”。Layer 版直接叠在素材上。",
+    "params": [
+      {
+        "name": "from",
+        "desc": "倒计时起始数字，默认 5"
+      },
+      {
+        "name": "title / sub",
+        "desc": "主标题与下方小字，默认“胜利！”“任务结束…”"
+      },
+      {
+        "name": "tick",
+        "desc": "每个数字停留的帧数，默认 26"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景（Demo 开，Layer 关）"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-results": {
+    "id": "mcd-s-results",
+    "name": "结算页 · 压黑转场",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "结算",
+      "黑场",
+      "统计",
+      "宝箱"
+    ],
+    "frames": 180,
+    "blurb": "关卡画面压黑 0.5s、黑场停 0.5s，整页淡入：金色菱形框头像+月桂+等级徽章，击败数滚动，四格深色统计卡逐个数字滚动，右下金框宝箱抖动并闪星，最后淡黑收尾。",
+    "usage": "视频结尾的数据总结（时长、素材数、版本号）；或一个关卡/阶段完成后的“成绩单”。Layer 版自带压黑与暗色蒙版，叠在素材上即可。",
+    "params": [
+      {
+        "name": "level / name / kills / unit",
+        "desc": "等级、玩家名、主数字及其说明"
+      },
+      {
+        "name": "stage / mission",
+        "desc": "顶部小标题与大标题"
+      },
+      {
+        "name": "stats",
+        "desc": "四格统计 [标签, 数值, 后缀]"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制模糊的 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-chest-reveal": {
+    "id": "mcd-s-chest-reveal",
+    "name": "开箱展示 · 品红光柱",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "开箱",
+      "宝箱",
+      "光柱",
+      "物品卡"
+    ],
+    "frames": 180,
+    "blurb": "紫眼金属宝箱落地后抖动蓄力，箱盖翻开的 4 帧内品红光柱（白核）冲天、像素粒子上喷，约 1.2s 后深色面板里的稀有度菱形框物品卡弹出。",
+    "usage": "揭晓“新功能/新素材/成品图”的悬念节点；把物品换成视频里要展示的东西，名称与稀有度可改。Layer 版去掉背景直接叠在录屏上。",
+    "params": [
+      {
+        "name": "item",
+        "desc": "物品贴图 id（如 trident、bow、diamond_sword）"
+      },
+      {
+        "name": "name / desc / power",
+        "desc": "物品名、描述、数值"
+      },
+      {
+        "name": "rarity",
+        "desc": "common 白 / rare 绿 / unique 橙，决定菱形框与光效颜色"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-loot-rarity": {
+    "id": "mcd-s-loot-rarity",
+    "name": "稀有度光柱 · 白绿橙",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "掉落",
+      "稀有度",
+      "光柱",
+      "名称卡"
+    ],
+    "frames": 180,
+    "blurb": "白、绿、橙三件掉落物依次落地：同色光柱 4 帧冲起，地面光斑与像素尘土，物品悬浮摇摆，下方深色名称卡带 COMMON / RARE / UNIQUE 标签。",
+    "usage": "展示“获得了什么”：战利品盘点、素材分级（普通/精选/珍藏）、版本更新里的新物品列表。可换 items 里的物品、名称、稀有度。",
+    "params": [
+      {
+        "name": "items",
+        "desc": "[{item 贴图 id, name 名称, rarity common|rare|unique, power 数值}] 共三件"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景（Demo 开，Layer 关）"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-boss-intro": {
+    "id": "mcd-s-boss-intro",
+    "name": "Boss 登场 · 血条拉满",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "Boss",
+      "登场",
+      "血条",
+      "目标"
+    ],
+    "frames": 180,
+    "blurb": "紫色能量向中心聚拢，金色像素十字闪光 + 十字碎片炸开（无圆环），真实傀儡贴图的 Boss 现身；顶部居中细红条从左拉满、白尾缓冲，中上出现金色“新目标”与白字目标，随后一次受击白尾追赶。",
+    "usage": "介绍“最终 Boss/大魔王/核心难点”的登场；血条可当作进度条、下载条的出场动画；目标文字换成视频里的任务点。",
+    "params": [
+      {
+        "name": "name",
+        "desc": "血条上方的 Boss 名字"
+      },
+      {
+        "name": "objective",
+        "desc": "“新目标”下面的目标文字"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-boss-defeat": {
+    "id": "mcd-s-boss-defeat",
+    "name": "Boss 被击败 · 光柱白闪",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "Boss",
+      "击败",
+      "光柱",
+      "白闪",
+      "转场"
+    ],
+    "frames": 160,
+    "blurb": "Boss 闪白爆散，品红光柱在原地升起并带虚线菱形符文；金色火星沿弧线铺出“跟随小路”，主角沿小路走进光柱，约 0.7s 画面泛白至全白后淡出。",
+    "usage": "章节结束、通关、解锁下一部分的转场：白闪那一刻可以直接切到下一镜头。",
+    "params": [
+      {
+        "name": "objective",
+        "desc": "“新目标”文字，默认“跟随小路”"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-death": {
+    "id": "mcd-s-death",
+    "name": "死亡画面 · 猩红晕影",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "死亡",
+      "失败",
+      "红晕",
+      "骷髅"
+    ],
+    "frames": 150,
+    "blurb": "先是边缘红晕随心跳脉动，一击后猩红径向晕影合拢、场景褪成蓝灰，暗色菱形框的白色像素骷髅砸下，白字“你死了”，右上“剩余生命 ×3→×2”跳减，结尾复活淡回。",
+    "usage": "搞笑翻车/失败/Bug 的反转镜头，或“这个 Mod 崩了”“做死了”的梗；cause 一行可改成吐槽文案。",
+    "params": [
+      {
+        "name": "text",
+        "desc": "主文字，默认“你死了”"
+      },
+      {
+        "name": "cause",
+        "desc": "下方小字（死因/吐槽）"
+      },
+      {
+        "name": "lives",
+        "desc": "起始剩余生命，会在 1.5 秒时减 1"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景（Demo 开，Layer 关）"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-level-up": {
+    "id": "mcd-s-level-up",
+    "name": "升级特效 · 紫色螺旋光",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "升级",
+      "螺旋",
+      "紫色",
+      "等级徽章"
+    ],
+    "frames": 150,
+    "blurb": "经验条满格闪白，英雄脚下十字闪光，紫白方块粒子沿双螺旋缠绕上升、紫色光柱托起，金色“升级！”砸下，右侧紫边六边形等级徽章翻牌 6→7 并迸出金紫火花。",
+    "usage": "版本号/等级/订阅数里程碑、技能解锁、“成长了一级”的节点；level 改成要展示的数字，title/sub 改文案。",
+    "params": [
+      {
+        "name": "level",
+        "desc": "翻牌前的等级，翻牌后显示 level+1"
+      },
+      {
+        "name": "title / sub",
+        "desc": "金色主标题与灰色小字"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-souls-collect": {
+    "id": "mcd-s-souls-collect",
+    "name": "灵魂吸取 · 计数跳动",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "灵魂",
+      "吸取",
+      "计数",
+      "击杀"
+    ],
+    "frames": 150,
+    "blurb": "三只怪物（真实苦力怕/骷髅/僵尸贴图，红色描边）被击杀后迸出白色小鬼脸灵魂，拖着青蓝像素尾迹沿弧线飞向右上角，每抵达一只计数加一并弹跳闪光。",
+    "usage": "统计数字递增的叙事：订阅数、下载量、击杀数、收集进度；怪物位置对应画面里的“来源”，计数器放在“去处”。",
+    "params": [
+      {
+        "name": "kind",
+        "desc": "'soul' 灵魂（默认）"
+      },
+      {
+        "name": "start",
+        "desc": "计数器起始值"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-emerald-collect": {
+    "id": "mcd-s-emerald-collect",
+    "name": "绿宝石吸取 · 计数跳动",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "绿宝石",
+      "吸取",
+      "计数",
+      "奖励"
+    ],
+    "frames": 150,
+    "blurb": "怪物倒下后真实绿宝石贴图弹出落地、旋转，再带着绿色像素尾迹成串飞向右上角的绿宝石计数器，每颗抵达计数跳动并闪光。",
+    "usage": "金币/积分/打赏/奖励到账的视觉；计数器的图标和数字可作为“收入/积分”展示。",
+    "params": [
+      {
+        "name": "start",
+        "desc": "计数器起始值"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-objective": {
+    "id": "mcd-s-objective",
+    "name": "目标更新 · 划掉旧目标",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "目标",
+      "任务",
+      "字幕",
+      "提示"
+    ],
+    "frames": 140,
+    "blurb": "右上角压暗渐变从顶部落下，金色区域名 + 白色旧目标；旧目标被白线划掉、打绿色对勾后上滑退出，新目标从下方升入原位，同时画面上方居中浮出金色“新目标”与白色大字。",
+    "usage": "视频里的“步骤/章节/任务点”更新字幕：教程步骤切换、挑战下一阶段提示。右上角槽位与居中公告可单独使用。",
+    "params": [
+      {
+        "name": "area",
+        "desc": "金色副标（区域/章节名）"
+      },
+      {
+        "name": "oldText / newText",
+        "desc": "旧目标与新目标文字"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-location-card": {
+    "id": "mcd-s-location-card",
+    "name": "地名标签 · 正在前往",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "地名",
+      "加载",
+      "标签",
+      "叠加层"
+    ],
+    "frames": 150,
+    "blurb": "左下角方块图标框（石头→圆石→岩浆→红石块循环换贴图）+ “正在前往”小字 + 金橙色地名，右上角金色骷髅难度徽章；自下而上淡入，结尾淡出。",
+    "usage": "每个新场景/章节/地图开头的“我们现在在哪”小标签，叠在转场后的第一个镜头上。图标贴图可换成该地点的代表方块。",
+    "params": [
+      {
+        "name": "place / sub",
+        "desc": "地名与上方小字"
+      },
+      {
+        "name": "blocks",
+        "desc": "循环的方块贴图 id 列表"
+      },
+      {
+        "name": "swap",
+        "desc": "换图标的间隔帧数，默认 18"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制带景深的 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-location-card-big": {
+    "id": "mcd-s-location-card-big",
+    "name": "大字地名卡",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "地名",
+      "标题卡",
+      "章节",
+      "金字"
+    ],
+    "frames": 150,
+    "blurb": "黑色横带从中线展开，两侧金线，金字地名先像素错位 3 帧再拼成清晰金字（四角像素括号，金色火星上飘），下方骷髅徽章与章节难度，结尾横带收拢。",
+    "usage": "章节标题卡、地图/维度切换、“第 N 期”片头；比小标签更强调仪式感。",
+    "params": [
+      {
+        "name": "place / sub / tag",
+        "desc": "大字地名、上方小字、下方章节难度"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 场景背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-item-showcase": {
+    "id": "mcd-s-item-showcase",
+    "name": "物品展示 · 旋转体素大图",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "物品",
+      "3D",
+      "附魔",
+      "稀有度",
+      "详情"
+    ],
+    "frames": 180,
+    "blurb": "真实物品贴图叠成体素厚片，在稀有度色菱形舞台上快速自转后减速停住并轻摆悬浮；右侧等级+稀有度标签、大字名称、伤害行、三条属性条依次升起，三个附魔菱形槽逐个点亮。",
+    "usage": "展示武器/新物品/打赏礼物/周边的详情页：左侧大图 + 右侧参数。item、name、rarity 可换，附魔图标可换成别的像素图标。",
+    "params": [
+      {
+        "name": "item",
+        "desc": "物品贴图 id（diamond_sword、bow、netherite_axe…）"
+      },
+      {
+        "name": "name / desc / damage / level",
+        "desc": "名称、描述、伤害行、等级数字"
+      },
+      {
+        "name": "rarity",
+        "desc": "common | rare | unique，决定菱形舞台、光效和标签颜色"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制红棕界面底（Demo 开，Layer 关）"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-s-world-map-select": {
+    "id": "mcd-s-world-map-select",
+    "name": "世界地图选关",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "世界地图",
+      "选关",
+      "节点",
+      "难度",
+      "羊皮纸"
+    ],
+    "frames": 180,
+    "blurb": "硬切到米色羊皮纸上的等距悬浮岛沙盘，金色六边形骷髅节点逐个弹出、虚线小路在节点间生长，选中节点放大并推近镜头，右侧弹出任务威胁面板（I–VII 难度条逐级点亮、战力、战利品槽、开始按钮）。",
+    "usage": "路线图/章节目录/功能规划：用节点表示阶段，选中节点展开详情。Layer 版只含节点、小路和面板，可叠在你自己的地图图片上。",
+    "params": [
+      {
+        "name": "places",
+        "desc": "六个节点的名称"
+      },
+      {
+        "name": "selected",
+        "desc": "被选中的节点序号（0 起）"
+      },
+      {
+        "name": "panelTitle",
+        "desc": "面板标题，默认取选中节点名"
+      },
+      {
+        "name": "bg",
+        "desc": "是否绘制 3D 沙盘背景"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-forest": {
+    "id": "mcd-l-grade-forest",
+    "name": "地下城调色·森林夜",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾",
+      "暗角"
+    ],
+    "frames": 210,
+    "blurb": "原版白天森林被压成青蓝夜色：中心留一块被光托住的亮区，四周深青暗角，蓝灰体积雾沉在地面。",
+    "usage": "叠在真实录屏上：正片叠底 100% + 同色系 mcd-l-bloom-fog（滤色 70–80%），再把素材饱和度 +15~20、对比度 +8。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "forest | nether | end | snow | desert"
+      },
+      {
+        "name": "intensity",
+        "desc": "0–1，整张光影图向中性白淡出"
+      },
+      {
+        "name": "lights",
+        "desc": "额外亮区 [{x,y,r,color,a}]（0–1 屏幕坐标），在贴图里“挖”出光源照亮的地方"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-forest-glow": {
+    "id": "mcd-l-grade-forest-glow",
+    "name": "地下城调色·森林夜 · 雾光层",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾"
+    ],
+    "frames": 210,
+    "blurb": "地下城调色·森林夜 的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（滤色）。",
+    "usage": "与同群系调色层叠用：滤色 70–80%。",
+    "params": [
+      {
+        "name": "tone",
+        "desc": "cool | forest | nether | end | snow | desert"
+      },
+      {
+        "name": "strength",
+        "desc": "强度倍率"
+      },
+      {
+        "name": "lights",
+        "desc": "[{x,y,color,size,a}] 给素材里的光源加双层泛光"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-nether": {
+    "id": "mcd-l-grade-nether",
+    "name": "地下城调色·下界",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾",
+      "暗角"
+    ],
+    "frames": 210,
+    "blurb": "深红压暗配金橙雾，熔岩一侧的亮区被托起，暗角带红。",
+    "usage": "叠在真实录屏上：正片叠底 100% + 同色系 mcd-l-bloom-fog（滤色 70–80%），再把素材饱和度 +15~20、对比度 +8。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "forest | nether | end | snow | desert"
+      },
+      {
+        "name": "intensity",
+        "desc": "0–1，整张光影图向中性白淡出"
+      },
+      {
+        "name": "lights",
+        "desc": "额外亮区 [{x,y,r,color,a}]（0–1 屏幕坐标），在贴图里“挖”出光源照亮的地方"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-nether-glow": {
+    "id": "mcd-l-grade-nether-glow",
+    "name": "地下城调色·下界 · 雾光层",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾"
+    ],
+    "frames": 210,
+    "blurb": "地下城调色·下界 的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（滤色）。",
+    "usage": "与同群系调色层叠用：滤色 70–80%。",
+    "params": [
+      {
+        "name": "tone",
+        "desc": "cool | forest | nether | end | snow | desert"
+      },
+      {
+        "name": "strength",
+        "desc": "强度倍率"
+      },
+      {
+        "name": "lights",
+        "desc": "[{x,y,color,size,a}] 给素材里的光源加双层泛光"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-end": {
+    "id": "mcd-l-grade-end",
+    "name": "地下城调色·末地",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾",
+      "暗角"
+    ],
+    "frames": 210,
+    "blurb": "紫色虚空光影：深紫暗部、粉白亮区、紫雾。",
+    "usage": "叠在真实录屏上：正片叠底 100% + 同色系 mcd-l-bloom-fog（滤色 70–80%），再把素材饱和度 +15~20、对比度 +8。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "forest | nether | end | snow | desert"
+      },
+      {
+        "name": "intensity",
+        "desc": "0–1，整张光影图向中性白淡出"
+      },
+      {
+        "name": "lights",
+        "desc": "额外亮区 [{x,y,r,color,a}]（0–1 屏幕坐标），在贴图里“挖”出光源照亮的地方"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-end-glow": {
+    "id": "mcd-l-grade-end-glow",
+    "name": "地下城调色·末地 · 雾光层",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾"
+    ],
+    "frames": 210,
+    "blurb": "地下城调色·末地 的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（滤色）。",
+    "usage": "与同群系调色层叠用：滤色 70–80%。",
+    "params": [
+      {
+        "name": "tone",
+        "desc": "cool | forest | nether | end | snow | desert"
+      },
+      {
+        "name": "strength",
+        "desc": "强度倍率"
+      },
+      {
+        "name": "lights",
+        "desc": "[{x,y,color,size,a}] 给素材里的光源加双层泛光"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-snow": {
+    "id": "mcd-l-grade-snow",
+    "name": "地下城调色·雪地",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾",
+      "暗角"
+    ],
+    "frames": 210,
+    "blurb": "冰蓝夜雪：压低色温，亮区偏白蓝，暗角钴蓝。",
+    "usage": "叠在真实录屏上：正片叠底 100% + 同色系 mcd-l-bloom-fog（滤色 70–80%），再把素材饱和度 +15~20、对比度 +8。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "forest | nether | end | snow | desert"
+      },
+      {
+        "name": "intensity",
+        "desc": "0–1，整张光影图向中性白淡出"
+      },
+      {
+        "name": "lights",
+        "desc": "额外亮区 [{x,y,r,color,a}]（0–1 屏幕坐标），在贴图里“挖”出光源照亮的地方"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-snow-glow": {
+    "id": "mcd-l-grade-snow-glow",
+    "name": "地下城调色·雪地 · 雾光层",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾"
+    ],
+    "frames": 210,
+    "blurb": "地下城调色·雪地 的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（滤色）。",
+    "usage": "与同群系调色层叠用：滤色 70–80%。",
+    "params": [
+      {
+        "name": "tone",
+        "desc": "cool | forest | nether | end | snow | desert"
+      },
+      {
+        "name": "strength",
+        "desc": "强度倍率"
+      },
+      {
+        "name": "lights",
+        "desc": "[{x,y,color,size,a}] 给素材里的光源加双层泛光"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-desert": {
+    "id": "mcd-l-grade-desert",
+    "name": "地下城调色·沙漠",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾",
+      "暗角"
+    ],
+    "frames": 210,
+    "blurb": "暖黄尘雾：整体偏金，暗角焦褐，亮区发白。",
+    "usage": "叠在真实录屏上：正片叠底 100% + 同色系 mcd-l-bloom-fog（滤色 70–80%），再把素材饱和度 +15~20、对比度 +8。",
+    "params": [
+      {
+        "name": "biome",
+        "desc": "forest | nether | end | snow | desert"
+      },
+      {
+        "name": "intensity",
+        "desc": "0–1，整张光影图向中性白淡出"
+      },
+      {
+        "name": "lights",
+        "desc": "额外亮区 [{x,y,r,color,a}]（0–1 屏幕坐标），在贴图里“挖”出光源照亮的地方"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-grade-desert-glow": {
+    "id": "mcd-l-grade-desert-glow",
+    "name": "地下城调色·沙漠 · 雾光层",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "调色",
+      "泛光",
+      "体积雾"
+    ],
+    "frames": 210,
+    "blurb": "地下城调色·沙漠 的搭档层：黑位染色、地面缓雾、屏外主光的双层泛光（滤色）。",
+    "usage": "与同群系调色层叠用：滤色 70–80%。",
+    "params": [
+      {
+        "name": "tone",
+        "desc": "cool | forest | nether | end | snow | desert"
+      },
+      {
+        "name": "strength",
+        "desc": "强度倍率"
+      },
+      {
+        "name": "lights",
+        "desc": "[{x,y,color,size,a}] 给素材里的光源加双层泛光"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-bloom-fog": {
+    "id": "mcd-l-bloom-fog",
+    "name": "泛光 + 体积雾",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "泛光",
+      "雾",
+      "黑位抬升"
+    ],
+    "frames": 180,
+    "blurb": "给黑位染上群系色相，地面沉一层缓慢飘动的雾，光源周围套紧(1%)和宽(5%)两层泛光。",
+    "usage": "滤色 60–100%；光源位置用 lights 对准素材里的火把/灯笼/熔岩。",
+    "params": [
+      {
+        "name": "tone",
+        "desc": "cool | forest | nether | end | snow | desert"
+      },
+      {
+        "name": "strength",
+        "desc": "整体强度倍率"
+      },
+      {
+        "name": "lights",
+        "desc": "[{x,y,color,size,a}]，0–1 屏幕坐标；默认只有左上角一盏屏外主光"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-god-rays": {
+    "id": "mcd-l-god-rays",
+    "name": "金色 God Rays",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "光束",
+      "尘埃"
+    ],
+    "frames": 210,
+    "blurb": "#e2ae4b 金色斜射光柱缓慢摆动，光柱里浮着方形尘埃。",
+    "usage": "滤色 70–100%，素材里有树荫/窗洞/洞口时最合适。",
+    "params": [
+      {
+        "name": "n",
+        "desc": "光柱数量，默认 6"
+      },
+      {
+        "name": "angle",
+        "desc": "倾斜角度（度），默认 15"
+      },
+      {
+        "name": "strength",
+        "desc": "强度"
+      },
+      {
+        "name": "color",
+        "desc": "光柱主色，默认 #e2ae4b"
+      },
+      {
+        "name": "dust",
+        "desc": "是否带尘埃"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-tiltshift": {
+    "id": "mcd-l-tiltshift",
+    "name": "移轴浅景深",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "移轴",
+      "特写"
+    ],
+    "frames": 180,
+    "blurb": "上下边缘渐隐模糊 + 冷色雾化 + 轻微暗角，把大场景压成“小积木世界”。",
+    "usage": "特写/过场镜头；Remotion 里用 <TiltShift> 包裹素材得到真模糊，导出层只含雾化与暗角（正常 100%）。",
+    "params": [
+      {
+        "name": "blur",
+        "desc": "最大模糊像素，默认 7"
+      },
+      {
+        "name": "top / bottom",
+        "desc": "上下模糊带占画面高度比例"
+      },
+      {
+        "name": "strength",
+        "desc": "雾化与暗角强度"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-loot-beams": {
+    "id": "mcd-l-loot-beams",
+    "name": "稀有度光柱",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "光柱",
+      "战利品",
+      "稀有度"
+    ],
+    "frames": 180,
+    "blurb": "白 / 绿 / 橙 / 品红光柱 4 帧冲出，白核硬边，底部光斑，细十字粒子上喷。",
+    "usage": "滤色 100%；beams 指定屏幕位置与颜色，at 指定冲出帧。",
+    "params": [
+      {
+        "name": "beams",
+        "desc": "[{x,y,kind:white|green|orange|magenta,at,end,width}]，x/y 为光柱落地点像素坐标（1920×1080）"
+      },
+      {
+        "name": "fadeOut",
+        "desc": "消失渐隐帧数"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-souls-drift": {
+    "id": "mcd-l-souls-drift",
+    "name": "灵魂飘浮",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "灵魂",
+      "飘过"
+    ],
+    "frames": 240,
+    "blurb": "白色小鬼脸带青蓝拖尾，沿弧线缓慢飘过画面，远近两条通道。",
+    "usage": "滤色 100%；夜景、击败敌人、墓地/下界类镜头。",
+    "params": [
+      {
+        "name": "loop",
+        "desc": "循环帧数（灵魂按它严格循环）"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-embers": {
+    "id": "mcd-l-embers",
+    "name": "下界灰烬火星",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "火星",
+      "灰烬",
+      "下界"
+    ],
+    "frames": 180,
+    "blurb": "红橙火星与灰红碎屑三层景深上飘，小方块、细长片，大颗带光晕。",
+    "usage": "滤色 100%；下界、熔炉、Boss 战。",
+    "params": [
+      {
+        "name": "variant",
+        "desc": "nether | gold"
+      },
+      {
+        "name": "density",
+        "desc": "粒子密度倍率"
+      },
+      {
+        "name": "wind",
+        "desc": "横向风，默认 0.22"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-embers-gold": {
+    "id": "mcd-l-embers-gold",
+    "name": "金色火星",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "火星",
+      "金色",
+      "标题"
+    ],
+    "frames": 180,
+    "blurb": "金色火星上飘（同一套粒子，金色色带）。",
+    "usage": "滤色 100%；标题卡、胜利结算、营地篝火。",
+    "params": [
+      {
+        "name": "variant",
+        "desc": "gold"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-lightning-storm": {
+    "id": "mcd-l-lightning-storm",
+    "name": "夜丛林闪电",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "闪电",
+      "泛闪",
+      "雷暴"
+    ],
+    "frames": 240,
+    "blurb": "阶梯折线闪电、双次泛闪、远处地平线泛光，间隔不规则。",
+    "usage": "滤色 100%；夜丛林/暴风雨/Boss 登场。",
+    "params": [
+      {
+        "name": "strikes",
+        "desc": "[{frame,x,y,seed,kind:bolt|far}]，x/y 为 0–1 落点"
+      },
+      {
+        "name": "flash",
+        "desc": "泛闪强度倍率"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-hurt-vignette": {
+    "id": "mcd-l-hurt-vignette",
+    "name": "受伤/低血量晕影",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "受伤",
+      "血量",
+      "晕影"
+    ],
+    "frames": 180,
+    "blurb": "四周猩红径向晕影随心跳（双搏）脉动，开头一次受击重闪。",
+    "usage": "正常 100%；低血量/受击段落。",
+    "params": [
+      {
+        "name": "hp",
+        "desc": "危险度 0–1（越大晕影越深）"
+      },
+      {
+        "name": "beats",
+        "desc": "一个循环内心跳次数"
+      },
+      {
+        "name": "hitAt",
+        "desc": "受击闪烁发生的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-dust-motes": {
+    "id": "mcd-l-dust-motes",
+    "name": "空气尘埃光斑",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "尘埃",
+      "光斑"
+    ],
+    "frames": 210,
+    "blurb": "三层景深的方形尘埃缓慢漂浮，前景是柔和的六边形光斑。",
+    "usage": "滤色 60–100%；沙漠神殿、矿洞、光束下。",
+    "params": [
+      {
+        "name": "color",
+        "desc": "尘埃主色，默认 #f6d98a"
+      },
+      {
+        "name": "strength",
+        "desc": "强度"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-l-torch-glow": {
+    "id": "mcd-l-torch-glow",
+    "name": "火把/篝火暖光",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "氛围层",
+      "火把",
+      "篝火",
+      "暖光"
+    ],
+    "frames": 180,
+    "blurb": "台阶状方块光斑（菱形光域）+ 柔和暖光 + 白热核心 + 上飘火星，摇曳闪烁。",
+    "usage": "滤色 100%；torches 对准素材中的火把/篝火。",
+    "params": [
+      {
+        "name": "torches",
+        "desc": "[{x,y,size,kind:torch|camp|soul|lava}]，x/y 为火焰像素位置（1920×1080）"
+      },
+      {
+        "name": "strength",
+        "desc": "强度倍率"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-title-scramble": {
+    "id": "mcd-c-title-scramble",
+    "name": "预告片标题卡·像素错位",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "标题卡",
+      "预告片",
+      "金字",
+      "火星"
+    ],
+    "frames": 150,
+    "blurb": "硬切纯黑，金色大字先以像素错位乱码出现 3 帧，随即拼合，伴随火星与碎屑方块喷出，慢速推近，最后分级压暗收尾。",
+    "usage": "每期视频开头/章节开头的标题卡；Layer 版可叠在素材上。",
+    "params": [
+      {
+        "name": "title",
+        "desc": "标题文字（中英文均可，自动按宽度取整数像素字号）"
+      },
+      {
+        "name": "subtitle",
+        "desc": "标题下的小字"
+      },
+      {
+        "name": "look",
+        "desc": "字面材质：'gold'|'logo'|'stone'|'white'"
+      },
+      {
+        "name": "maxW",
+        "desc": "标题最大宽度"
+      },
+      {
+        "name": "at",
+        "desc": "标题出现的帧（默认 4）"
+      },
+      {
+        "name": "hold",
+        "desc": "开始压暗的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-title-voxel-assemble": {
+    "id": "mcd-c-title-voxel-assemble",
+    "name": "方块拼合 Logo",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "logo",
+      "体素",
+      "片头",
+      "拼合"
+    ],
+    "frames": 180,
+    "blurb": "标题由一堆真实金块贴图的方块从四面翻滚飞来，逐个锁进字形并轻微挤压回弹，随后一道光扫掠过；Logo 带轻微 3D 摇摆，正面/底面/侧面明暗各异，最后方块散落。",
+    "usage": "频道/系列/整合包 Logo 的片头出场；换 tint 可变成石砖或熔岩质感。",
+    "params": [
+      {
+        "name": "text",
+        "desc": "Logo 文字"
+      },
+      {
+        "name": "sub",
+        "desc": "Logo 下方的小字"
+      },
+      {
+        "name": "cube",
+        "desc": "方块最大边长（自动按宽度缩小）"
+      },
+      {
+        "name": "tint",
+        "desc": "'gold' | 'stone' | 'ember' 方块材质组"
+      },
+      {
+        "name": "start / exit",
+        "desc": "开始飞入 / 开始散落的帧"
+      },
+      {
+        "name": "cjkRows",
+        "desc": "中文字形网格行数（越小方块越大越像体素）"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-end-card": {
+    "id": "mcd-c-end-card",
+    "name": "终卡·四角括号",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "终卡",
+      "片尾",
+      "感谢观看",
+      "火星"
+    ],
+    "frames": 210,
+    "blurb": "暗底马赛克 + 底部暖光，四角像素括号与细框线从角落生长；灰石小标题、橙金 Logo 两侧带花括号、金字「感谢观看」、链接与制作组一行，火星持续上飘，最后分级压暗。",
+    "usage": "每期视频最后 5–7 秒的终卡，也可放在片尾滚动之后；Layer 版可直接叠在画面上。",
+    "params": [
+      {
+        "name": "kicker",
+        "desc": "灰石小标题（Logo 上方）"
+      },
+      {
+        "name": "title",
+        "desc": "Logo 文字"
+      },
+      {
+        "name": "thanks",
+        "desc": "金字感谢语"
+      },
+      {
+        "name": "link",
+        "desc": "感谢语下的链接/号召文案"
+      },
+      {
+        "name": "studios",
+        "desc": "底部制作组名称数组"
+      },
+      {
+        "name": "note",
+        "desc": "最底部免责/版权小字"
+      },
+      {
+        "name": "exit",
+        "desc": "开始压暗的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-chapter-card": {
+    "id": "mcd-c-chapter-card",
+    "name": "章节卡·六边形翻牌",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "章节卡",
+      "六边形",
+      "翻牌",
+      "标题"
+    ],
+    "frames": 240,
+    "blurb": "场景被压暗，中间一条黑色横幅（金色上下边线）：六边形背面翻过来露出「第 N 章」序号，章节名硬阴影大字、金色分割线、一行副标题依次出现。前半段硬切进出，后半段 45° 斜边横向划入再向右划出。",
+    "usage": "视频分章节时的章节标题；cut 适合紧凑快节奏，slide 适合更舒展的过渡。Layer 版只含压暗和横幅，可直接叠在素材上。",
+    "params": [
+      {
+        "name": "n",
+        "desc": "章节序号"
+      },
+      {
+        "name": "name",
+        "desc": "章节名"
+      },
+      {
+        "name": "sub",
+        "desc": "副标题一行"
+      },
+      {
+        "name": "mode",
+        "desc": "'cut' 硬切 | 'slide' 横向划入"
+      },
+      {
+        "name": "biome",
+        "desc": "Demo 背景场景（ScenePlate 群系）"
+      },
+      {
+        "name": "label",
+        "desc": "六边形内的小字（默认 CHAPTER）"
+      },
+      {
+        "name": "exit",
+        "desc": "横幅离场的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-new-mission": {
+    "id": "mcd-c-new-mission",
+    "name": "新任务解锁面板",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "任务",
+      "解锁",
+      "世界地图",
+      "面板"
+    ],
+    "frames": 150,
+    "blurb": "地图右下角弹出斜切深色面板，金色「新任务解锁」；三个灰色上锁的六边形节点依次点亮成金色并带像素十字闪光，数字滚动到 3，绿色「查看下一个」按钮被按下后面板收走。Demo 里同时在地图上冒出一个金色任务节点。",
+    "usage": "展示整合包/地图的新内容、新关卡、新章节解锁；pos=\"center\" 变成画面中间的大号版本。Layer 版为透明面板，叠在任意素材上。",
+    "params": [
+      {
+        "name": "title",
+        "desc": "面板标题（金字）"
+      },
+      {
+        "name": "icons",
+        "desc": "解锁节点里的物品贴图 id 数组（节点数 = 任务数）"
+      },
+      {
+        "name": "countLabel",
+        "desc": "数字后面的文字，如「个新任务」"
+      },
+      {
+        "name": "button",
+        "desc": "绿色按钮文字"
+      },
+      {
+        "name": "pos",
+        "desc": "'corner' 右下角 | 'center' 画面中间"
+      },
+      {
+        "name": "exit",
+        "desc": "面板离场的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-new-mission-center": {
+    "id": "mcd-c-new-mission-center",
+    "name": "新任务解锁面板·居中",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "任务",
+      "解锁",
+      "居中",
+      "面板"
+    ],
+    "frames": 150,
+    "blurb": "画面压暗，中间弹出放大的新任务面板，节点依次解锁、数字滚动、按钮按下后收起。",
+    "usage": "需要强调「这是重点新内容」时用居中版；右下角版见 mcd-c-new-mission。",
+    "params": [
+      {
+        "name": "pos",
+        "desc": "'center'"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-presents": {
+    "id": "mcd-c-presents",
+    "name": "制作组呈现开场",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "出品",
+      "开场",
+      "Logo",
+      "预告片"
+    ],
+    "frames": 150,
+    "blurb": "黑场里一行白色小字以像素乱码逐字拼出「某某出品」，随后龟裂灰石大 Logo 硬切出现（两帧微闪、碎石火星迸出），慢速推近，分级压暗。",
+    "usage": "视频最开头的制作组署名 + 系列 Logo；节奏像官方预告片的 FROM THE CREATORS OF。",
+    "params": [
+      {
+        "name": "lead",
+        "desc": "上方小字，如「某某工作室 出品」"
+      },
+      {
+        "name": "logo",
+        "desc": "灰石大 Logo 文字"
+      },
+      {
+        "name": "tagline",
+        "desc": "Logo 下的一行银灰小字"
+      },
+      {
+        "name": "logoAt",
+        "desc": "Logo 硬切出现的帧"
+      },
+      {
+        "name": "exit",
+        "desc": "开始压暗的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-series-title": {
+    "id": "mcd-c-series-title",
+    "name": "系列标题·第 N 期",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "系列标题",
+      "期数",
+      "左上角",
+      "字幕叠层"
+    ],
+    "frames": 150,
+    "blurb": "左上角压暗渐变上，金色六边形期数徽章弹出，金色分割线从徽章长出，大标题从左划入（硬阴影粗字），副标题淡入；停留时分割线上每 2 秒有一道光掠过，最后向左滑出。",
+    "usage": "每期视频开头在画面上方放系列名+期数，Layer 版直接叠在实机画面上；exit=-1 可一直停留（带循环光掠）。",
+    "params": [
+      {
+        "name": "ep",
+        "desc": "期数（自动补成两位）"
+      },
+      {
+        "name": "epLabel",
+        "desc": "徽章里的小字，默认 EP"
+      },
+      {
+        "name": "kicker",
+        "desc": "标题上方的金色小字（系列名/季）"
+      },
+      {
+        "name": "title",
+        "desc": "大标题"
+      },
+      {
+        "name": "subtitle",
+        "desc": "副标题"
+      },
+      {
+        "name": "exit",
+        "desc": "离场帧；-1 = 一直停留"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-subtitle-bar": {
+    "id": "mcd-c-subtitle-bar",
+    "name": "底部字幕条·说话人名牌",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "字幕",
+      "对话",
+      "旁白",
+      "名牌"
+    ],
+    "frames": 180,
+    "blurb": "底部升起斜切黑色字幕条；每句逐字打出白色粗字+硬阴影，左侧六边形头像（真实皮肤/村民/苦力怕）和彩色名牌，旁白句无头像；句末金色三角闪烁，句间 4 级淡切。",
+    "usage": "做剧情向/解说向视频的对话和旁白字幕；Layer 版直接叠在素材上。",
+    "params": [
+      {
+        "name": "lines",
+        "desc": "字幕数组 [{who, text, skin, tone}]，skin 可为 steve/alex/villager/creeper/enderman，tone 决定名牌和头像框的颜色"
+      },
+      {
+        "name": "perLine",
+        "desc": "每句占用的帧数（含打字、停留和淡切）"
+      },
+      {
+        "name": "first",
+        "desc": "第一句开始的帧"
+      },
+      {
+        "name": "size",
+        "desc": "字幕字号"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-credits": {
+    "id": "mcd-c-credits",
+    "name": "片尾滚动·金职位白名字",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "片尾",
+      "制作名单",
+      "滚动",
+      "终卡"
+    ],
+    "frames": 240,
+    "blurb": "夜林航拍背景缓慢推进，中间一条暗带上自下而上滚动制作名单：金色分组标题 + 金色分割线，职位金色小字（右对齐）与名字白字（左对齐）分居中线两侧；名单淡出、场景压暗后四角括号终卡拼出金字「感谢观看」，火星上飘。",
+    "usage": "视频最后的制作人员名单；换 groups 即可用到自己的团队；Layer 版没有场景，可叠在任意画面。",
+    "params": [
+      {
+        "name": "groups",
+        "desc": "[{head, rows:[[职位, 名字], ...]}] 名单分组"
+      },
+      {
+        "name": "speed",
+        "desc": "滚动速度（px/帧），默认 6"
+      },
+      {
+        "name": "startY",
+        "desc": "第一组标题起始 y"
+      },
+      {
+        "name": "thanks / thanksSub",
+        "desc": "终卡金字与小字"
+      },
+      {
+        "name": "endAt",
+        "desc": "名单让位给终卡的帧"
+      },
+      {
+        "name": "biome",
+        "desc": "背景 ScenePlate 群系"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-c-day-title": {
+    "id": "mcd-c-day-title",
+    "name": "日期标题·第 N 天 · 黄昏",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "生存",
+      "天数",
+      "黄昏",
+      "日出日落"
+    ],
+    "frames": 150,
+    "blurb": "场景被分级天空色罩住，方块太阳缓缓落向黑色地平线，金色斜射光束与一条横向光带扫开；六边形天数徽章像翻页日历一样从 2 翻到 3，「第 3 天」白色大字从左划入，右侧金线 + 太阳图标 + 橙色「黄昏」滑入。",
+    "usage": "生存/整合包系列每天开头的日期标题；time 可切 dawn/noon/dusk/night（月亮），Layer 版只有光带与文字，叠在实机画面上。",
+    "params": [
+      {
+        "name": "day",
+        "desc": "天数（徽章从 day-1 翻到 day）"
+      },
+      {
+        "name": "dayWord",
+        "desc": "大字，默认「第 N 天」"
+      },
+      {
+        "name": "time",
+        "desc": "'dawn' | 'noon' | 'dusk' | 'night' 决定天空色、太阳/月亮和时段词"
+      },
+      {
+        "name": "timeWord",
+        "desc": "自定义时段词"
+      },
+      {
+        "name": "dayLabel",
+        "desc": "徽章里的小字"
+      },
+      {
+        "name": "exit",
+        "desc": "开始淡出的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-modpack-brief": {
+    "id": "mcd-v-modpack-brief",
+    "name": "整合包简报卡",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "整合包",
+      "简报",
+      "难度",
+      "片头"
+    ],
+    "frames": 150,
+    "blurb": "红棕晕光上的斜切暗面板：场景头图与标签、硬阴影包名逐字砸下，模组数滚动、推荐配置、I–VII 六边形难度条上选中节点逐级跳升并挂上书签尾，奖励物品槽依次弹出，最后绿色「出发」按钮点亮。",
+    "usage": "整合包/冒险地图视频开场介绍配置、难度和奖励；Layer 版只有面板（透明背景），可叠在任何画面上。",
+    "params": [
+      {
+        "name": "name / tagline / version",
+        "desc": "包名、一句话简介、版本号"
+      },
+      {
+        "name": "mods / spec / gameVer",
+        "desc": "模组数量(会滚动)、推荐配置、游戏版本与加载器"
+      },
+      {
+        "name": "difficulty",
+        "desc": "1..7，难度条选中的节点"
+      },
+      {
+        "name": "rewards",
+        "desc": "奖励物品 id 数组(item 贴图名)，最多 5–6 个"
+      },
+      {
+        "name": "biome / button / tag",
+        "desc": "头图场景群系、按钮文字、左上标签"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-episode-list": {
+    "id": "mcd-v-episode-list",
+    "name": "本期目录",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "章节",
+      "目录",
+      "片头",
+      "六边形"
+    ],
+    "frames": 150,
+    "blurb": "左侧斜切暗面板里的章节列表：六边形序号沿竖向进度轨道逐项点亮，已完成的变绿打勾，当前章节金色高亮并扫光、标 NOW，其余变暗；右侧金框菱形显示当前章节的物品预览。",
+    "usage": "视频开头的章节预览，或中途「我们现在到第几章」的进度提示；Layer 版透明，可直接盖在素材上。",
+    "params": [
+      {
+        "name": "title / episode",
+        "desc": "标题「本期目录」与期数标签"
+      },
+      {
+        "name": "items",
+        "desc": "章节数组 [{title, time}]，建议 4–6 项"
+      },
+      {
+        "name": "current",
+        "desc": "当前章节序号(0 起)，之前的打勾，之后的变暗"
+      },
+      {
+        "name": "preview / biome",
+        "desc": "右侧菱形里的物品 id、演示背景群系"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-objectives": {
+    "id": "mcd-v-objectives",
+    "name": "目标清单",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "任务目标",
+      "HUD",
+      "右上角",
+      "叠加层"
+    ],
+    "frames": 180,
+    "blurb": "屏幕右上角的任务目标：金色章节行加骷髅六边形，目标条目逐条从右侧滑入，完成时方框变绿打勾并划线置灰；新增一条目标时整行金色闪烁、迸出火星，同时画面上方居中浮出「新目标」大字再淡出。",
+    "usage": "冒险/整合包视频里提示「现在要做什么」：叠在录屏右上角即可，Layer 透明；用 items 的 appear/done 帧号对齐剧情。",
+    "params": [
+      {
+        "name": "chapter",
+        "desc": "金色章节/地点行"
+      },
+      {
+        "name": "items",
+        "desc": "目标数组 [{text, appear, done?}]，帧号决定出现与打勾时间，appear 最晚的一条视为新增并触发金闪与居中提示"
+      },
+      {
+        "name": "announceLabel",
+        "desc": "居中提示的金色小标题，默认「新目标」"
+      },
+      {
+        "name": "hud / biome",
+        "desc": "Demo 是否画底部 HUD、背景群系"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-stats-tally": {
+    "id": "mcd-v-stats-tally",
+    "name": "本期数据结算",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "结算",
+      "数据",
+      "评级",
+      "片尾"
+    ],
+    "frames": 190,
+    "blurb": "黑场淡入后金色「本期完成」+白色标题，左右各两张深色统计卡（死亡次数、击杀数、用时、探索度）逐张滚动计数并金边闪一下；中间灰色菱形框里是玩家头像，计数结束后评级 S/A/B 带白闪、像素十字光与碎屑砸落，菱形变金、月桂展开；底部橙色总评条、绿宝石/灵魂计数与右下金框宝箱收尾。",
+    "usage": "一期视频/一次挑战的结尾结算：死亡、击杀、用时、探索度一目了然；做挑战类视频的片尾最合适。",
+    "params": [
+      {
+        "name": "title / subtitle / player / skin / level",
+        "desc": "金色小标题、白色大标题、玩家名、皮肤 id(steve/efe/zuri…)、等级徽章"
+      },
+      {
+        "name": "stats",
+        "desc": "{deaths, kills, seconds, explore} 四个统计目标值，按顺序滚动"
+      },
+      {
+        "name": "rank",
+        "desc": "'S' | 'A' | 'B' | 'C'：金/橙/绿/银 菱形与月桂"
+      },
+      {
+        "name": "biome",
+        "desc": "Demo 背景场景群系（压暗蒙蓝）"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-mob-card": {
+    "id": "mcd-v-mob-card",
+    "name": "生物/Boss介绍卡",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "怪物",
+      "Boss",
+      "介绍",
+      "属性",
+      "弱点"
+    ],
+    "frames": 168,
+    "blurb": "左侧红描边黑色剪影被四角括号锁定、红光脉动，随后真实 Minecraft 贴图自脚底向上分格扫出（末影人眼睛亮紫光）；右侧斜切卡片滑入：红色类别标签、硬阴影名牌逐字落下、简介、生命/伤害/速度三个六边形自底向上填充并滚数，最后是橙框弱点物品槽。",
+    "usage": "视频里第一次出现某个怪物或 Boss 时的介绍：苦力怕、僵尸、骷髅、末影人、凋灵骷髅等；boss=true 会在顶部加 Boss 血条。",
+    "params": [
+      {
+        "name": "mob",
+        "desc": "'creeper' | 'zombie' | 'husk' | 'skeleton' | 'wither_skeleton' | 'enderman'，决定使用哪张真实贴图和默认文案"
+      },
+      {
+        "name": "name / en / kind / desc",
+        "desc": "中文名、英文小标题、类别标签、一句简介"
+      },
+      {
+        "name": "stats",
+        "desc": "[{label, value, ratio(0..1 填充高度), color, icon}] 三个六边形属性"
+      },
+      {
+        "name": "weak",
+        "desc": "弱点物品 id 数组（item 贴图名）"
+      },
+      {
+        "name": "boss / biome",
+        "desc": "是否画顶部 Boss 血条；演示背景群系"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-compare": {
+    "id": "mcd-v-compare",
+    "name": "对比卡 A 对 B",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "对比",
+      "装备",
+      "模组",
+      "属性条",
+      "评测"
+    ],
+    "frames": 180,
+    "blurb": "两块斜切面板夹着中间的 VS 六边形：两个装备/模组的菱形稀有度框与名字，攻击/速度/范围三条属性条从中线向外逐行增长并滚动数字，每行胜出的一方变金并挂菱形标记；最后综合分滚动，胜者菱形框变鎏金、弹出 WINNER 标签、十字光与碎屑，败者压暗。",
+    "usage": "评测、选择类视频：模组 A vs 模组 B、两把武器、两套护甲谁更强，一屏讲清楚。",
+    "params": [
+      {
+        "name": "a / b",
+        "desc": "{name, item(物品贴图 id), rarity: common|rare|unique, stats: number[](0..100), tag?}"
+      },
+      {
+        "name": "labels",
+        "desc": "三行属性名，默认 攻击/速度/范围（行数跟 stats 长度走，建议 3 行）"
+      },
+      {
+        "name": "title",
+        "desc": "顶部金色小标题"
+      },
+      {
+        "name": "winner",
+        "desc": "'a' | 'b'，不传则按综合分自动判定"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-day-counter": {
+    "id": "mcd-v-day-counter",
+    "name": "生存第 N 天",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "生存",
+      "天数",
+      "日出",
+      "六边形",
+      "叠加层"
+    ],
+    "frames": 120,
+    "blurb": "夜色里的大六边形显示前一天的数字，日出的金色斜射光从右上角铺开；数字像翻牌一样分三格滚出、新天数滚入，六边形外圈由钢灰变金，像素十字闪光与金色碎屑爆开，下方升起一行字幕和三个小数据。Demo 里夜景渐变成白天并升起方块太阳。",
+    "usage": "生存/整合包系列视频换天时的标题：「生存第 42 天」；Layer 版只有光效、六边形和字，透明，可叠在任意日出镜头上。",
+    "params": [
+      {
+        "name": "day",
+        "desc": "新的天数（自动按位数缩放字号），旧数字为 day-1"
+      },
+      {
+        "name": "label",
+        "desc": "六边形里数字上方的小字，默认 DAY"
+      },
+      {
+        "name": "caption / facts",
+        "desc": "大字幕和下方三条小数据"
+      },
+      {
+        "name": "flipAt",
+        "desc": "翻牌发生的帧（默认 44），其余动画跟随它"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-player-join": {
+    "id": "mcd-v-player-join",
+    "name": "玩家加入/离开提示",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "联机",
+      "加入",
+      "离开",
+      "提示条",
+      "叠加层"
+    ],
+    "frames": 150,
+    "blurb": "屏幕左上角斜切暗条从边缘滑入：玩家色竖条、六边形里是真实皮肤头像、金色「加入了冒险」或红色「离开了冒险」加粗体像素名字、右端 +/- 菱形；加入时头像处迸出金色火花与十字光，条上扫过高光，停留后滑出；离开的条头像发灰并掉下灰红碎屑。三条依次错开叠放。",
+    "usage": "联机冒险/整合包合作视频里有人进出时的提示；Layer 透明，叠在录屏左上角即可，可配合真实时间点逐个添加事件。",
+    "params": [
+      {
+        "name": "events",
+        "desc": "[{kind:'join'|'leave', name, skin(steve/alex/kai/zuri/efe…), color(玩家色), at(出现帧), hold(停留帧)}]，按顺序占用上下槽位"
+      },
+      {
+        "name": "joinText / leaveText",
+        "desc": "提示文案，默认「加入了冒险」「离开了冒险」"
+      },
+      {
+        "name": "hud / biome",
+        "desc": "Demo 是否画底部 HUD、背景群系"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-waypoint": {
+    "id": "mcd-v-waypoint",
+    "name": "路标/坐标标记",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "路标",
+      "坐标",
+      "光柱",
+      "标注",
+      "叠加层"
+    ],
+    "frames": 150,
+    "blurb": "地面上竖起一道光柱（白/绿/橙/品红），脚下是发光的扁平六边形底座，光柱中段浮着稀有度菱形标记和像素图标，上方是地名牌，下方是实时递减的距离数字和小号坐标；整套随镜头缓慢左右漂移，标记按步进上下浮动，光柱里有上升的光点。",
+    "usage": "在录屏上标注基地、村庄、传送门、Boss 巢穴等地点；Layer 透明，按画面里地点的位置设 x/ground 即可，可同时放多个不同颜色。",
+    "params": [
+      {
+        "name": "waypoints",
+        "desc": "[{x, ground(地面点 y), kind:'white'|'green'|'orange'|'magenta', name, dist(起始米数，会递减), coords, icon:'base'|'flag'|'portal'|'skull', size(1 大/0.7 小), delay}]"
+      },
+      {
+        "name": "fadeOutFrames / totalFrames",
+        "desc": "结尾淡出的帧数（0 为不淡出）与总帧数，默认 12 / 150"
+      },
+      {
+        "name": "biome",
+        "desc": "Demo 背景场景群系"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-like-chest": {
+    "id": "mcd-v-like-chest",
+    "name": "点赞解锁宝箱",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "三连",
+      "点赞",
+      "投币",
+      "收藏",
+      "宝箱",
+      "光柱",
+      "互动"
+    ],
+    "frames": 190,
+    "blurb": "顶部三个六边形（点赞 / 投币 / 收藏）依次自下而上填满金色并带十字光；末影宝箱先轻跳、随进度发紫光，三连完成后剧烈抖动，然后品红光柱 4 帧内冲出、白闪加像素喷泉，约 1 秒后深色物品卡弹出：鎏金菱形框里的物品、「感谢支持」硬阴影大字、斜体说明和绿色按钮。",
+    "usage": "视频中途或结尾的「一键三连」互动：比普通的关注提示更有仪式感；也可只截开箱部分作为奖励展示。",
+    "params": [
+      {
+        "name": "labels / headline",
+        "desc": "三个节点文字与顶部标题"
+      },
+      {
+        "name": "thanks / note / tag / button",
+        "desc": "物品卡的主标题「感谢支持」、斜体说明、金色标签、绿色按钮文字"
+      },
+      {
+        "name": "item",
+        "desc": "金框里的物品 id（item 贴图名），默认 nether_star"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-toast": {
+    "id": "mcd-v-toast",
+    "name": "成就/提示弹条",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "成就",
+      "提示",
+      "弹条",
+      "跳过",
+      "叠加层"
+    ],
+    "frames": 150,
+    "blurb": "右侧屏幕边缘滑入斜切暗条：金框菱形物品图标 + 金色「成就解锁!」+ 成就名 + 紫色 XP，带扫光与像素十字闪；下面再叠一条紫色「提示 按 M 打开地图」；右下角「按住 E 跳过」提示条，按键帽自下而上被金色填满，填满时白闪并收起。各自有入场过冲、停留、滑出。",
+    "usage": "剧情过场、解锁新内容、教学提示：成就和提示条叠在录屏右侧，「按住跳过」放在过场右下角；Layer 透明可直接叠加。",
+    "params": [
+      {
+        "name": "title / name / xp / item",
+        "desc": "成就条的金色标题、成就名、经验文字、菱形里的物品 id"
+      },
+      {
+        "name": "tag / tip / keyLabel",
+        "desc": "提示条的紫色标签、前半句、按键帽字母（后半句固定「打开地图」，可在源码改）"
+      },
+      {
+        "name": "skipHint / skipKey / skipText",
+        "desc": "跳过提示的「按住」「E」「跳过」"
+      },
+      {
+        "name": "bg / biome",
+        "desc": "Demo 是否带过场黑边与背景群系"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-black-cut": {
+    "category": "rpg",
+    "frames": 85,
+    "id": "mcd-t-black-cut",
+    "name": "地下城·压黑硬切",
+    "tags": [
+      "地下城",
+      "转场",
+      "压黑",
+      "硬切",
+      "电影感"
+    ],
+    "blurb": "画面推近 5% 并褪色，暗角收紧压成纯黑，停顿 6 帧后硬切到下一镜；新画面从黑里带着曝光回升与推近落定。",
+    "usage": "章节切换、进入关卡、\"开始任务\"式的镜头衔接；最克制也最像地下城的转场，几乎任何画面之间都能用。",
+    "params": [
+      {
+        "name": "A / B",
+        "desc": "转场前后两个画面（任意 FC）；Layer 导出时只有黑场与暗角包络，叠在真实素材上使用"
+      },
+      {
+        "name": "DARK / CUT / SETTLE",
+        "desc": "blackCut.tsx 顶部常量：压黑帧数 16、硬切帧 21、落定帧数 24"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-loading-label": {
+    "category": "rpg",
+    "frames": 139,
+    "id": "mcd-t-loading-label",
+    "name": "地下城·目的地加载转场",
+    "tags": [
+      "地下城",
+      "转场",
+      "加载画面",
+      "地名",
+      "难度徽章"
+    ],
+    "blurb": "A 压黑后切入一段实景加载画面（浅景深+缓推），左下角方块图标每 0.6 秒换贴图，配\"正在前往\"小字与金橙地名，右上金色骷髅难度徽章，再压黑硬切到 B。",
+    "usage": "前往新地图/新章节/新关卡的衔接，把地名与难度交代给观众；换 place 即可复用。",
+    "params": [
+      {
+        "name": "place",
+        "desc": "地名（金橙大字），默认\"苦力怕森林\""
+      },
+      {
+        "name": "caption",
+        "desc": "小字，默认\"正在前往\""
+      },
+      {
+        "name": "difficulty",
+        "desc": "难度徽章罗马数字，默认 I"
+      },
+      {
+        "name": "biome / plateSeed",
+        "desc": "加载实景用哪个 ScenePlate 群系与地形种子"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-portal-whiteout": {
+    "category": "rpg",
+    "frames": 118,
+    "id": "mcd-t-portal-whiteout",
+    "name": "地下城·传送门白闪",
+    "tags": [
+      "地下城",
+      "转场",
+      "传送门",
+      "白闪",
+      "章节切换"
+    ],
+    "blurb": "营地的黑曜石传送门亮起，紫色像素涡旋从门里涌出、照亮周围黑石并越转越亮，镜头推进、轻微震动，最后整屏白闪，B 从白里分 7 级淡出。",
+    "usage": "进入下一章/下一关、片头到正片、\"穿越\"类梗；A 画面里最好有传送门或光源（可改 px/py 指定涡旋出发点）。",
+    "params": [
+      {
+        "name": "PX / PY",
+        "desc": "portalWhiteout.tsx 顶部：涡旋出发点在 A 画面里的屏幕坐标"
+      },
+      {
+        "name": "FILL / CUT / FADE0",
+        "desc": "涡旋铺满帧、切到 B 的帧、白色开始退去的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-chest-beam": {
+    "category": "rpg",
+    "frames": 100,
+    "id": "mcd-t-chest-beam",
+    "name": "地下城·品红光柱冲屏",
+    "tags": [
+      "地下城",
+      "转场",
+      "宝箱",
+      "光柱",
+      "白闪",
+      "开箱"
+    ],
+    "blurb": "背景虚化压暗，紫色宝箱抖动后掀盖，品红光柱(#CD2ECD、白核)在 6 帧内冲出并扩满屏幕，转白后硬切到 B，B 从白里分 7 级淡出。",
+    "usage": "\"揭晓/开箱/获得新东西\"之前的转场，把观众的视线引到下一镜；重磅内容公布、抽奖、成品展示。",
+    "params": [
+      {
+        "name": "CHEST_S / CX / CH_BOTTOM",
+        "desc": "chestBeam.tsx 顶部：宝箱贴图缩放、水平位置、脚底 y"
+      },
+      {
+        "name": "POP / WHITE / FADE0",
+        "desc": "掀盖冲光帧、全白切换帧、开始退白帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-title-scramble": {
+    "category": "rpg",
+    "frames": 114,
+    "id": "mcd-t-title-scramble",
+    "name": "地下城·像素错位拼字标题",
+    "tags": [
+      "地下城",
+      "转场",
+      "标题卡",
+      "预告片",
+      "章节标题",
+      "火星"
+    ],
+    "blurb": "画面 2 帧硬切成纯黑 #060307，金色大字先以像素错位、缺块的状态闪 2 帧再拼合，带挤出的立体边；火星上飘、缓慢推近，最后碎散并硬切到 B。",
+    "usage": "章节标题、\"第 N 期\"、新版本名；预告片式的黑场标题卡，也可只导出透明层压在素材上。",
+    "params": [
+      {
+        "name": "title",
+        "desc": "标题文字，默认\"下一章\"（makeTitleDef({title, sub})）"
+      },
+      {
+        "name": "sub",
+        "desc": "标题下方的小号字母/说明，默认不显示"
+      },
+      {
+        "name": "GLITCH0 / SNAP / EXIT0 / CUT",
+        "desc": "错位开始、拼合、碎散开始、切到 B 的帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-god-rays": {
+    "category": "rpg",
+    "frames": 96,
+    "id": "mcd-t-god-rays",
+    "name": "地下城·金色体积光扫过",
+    "tags": [
+      "地下城",
+      "转场",
+      "体积光",
+      "god rays",
+      "泛光",
+      "暖光"
+    ],
+    "blurb": "一道斜 12 度的金色光墙带着体积光束、泛光与暖雾从左向右扫过，光墙的前沿就是切换线，光里升起金色尘粒；B 从强光里带着推近落定。",
+    "usage": "进入神殿/日出/\"光明降临\"类场景、从冷色画面切到暖色画面；Layer 导出后可只叠光，在光最亮的那几帧手动剪切。",
+    "params": [
+      {
+        "name": "T / LEAN",
+        "desc": "godRays.tsx 顶部：扫过帧数 56、光束倾角 12°"
+      },
+      {
+        "name": "GOLD / HI",
+        "desc": "光束主色 #e2ae4b 与高光色"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-haze-push": {
+    "category": "rpg",
+    "frames": 104,
+    "id": "mcd-t-haze-push",
+    "name": "地下城·薄雾推过",
+    "tags": [
+      "地下城",
+      "转场",
+      "体积雾",
+      "薄雾",
+      "氛围"
+    ],
+    "blurb": "一团两层视差的体积雾带从右侧推过画面，越近地面越浓，雾最厚处把切换完全藏住；雾中飘着细小光尘，A/B 在雾里褪色并带一点虚化，雾散后 B 缓缓落定。",
+    "usage": "时间流逝、天亮/入夜、潜入/穿越山谷等\"悄悄换景\"的衔接；比黑场更柔和，适合氛围向镜头。",
+    "params": [
+      {
+        "name": "color",
+        "desc": "makeHazeDef([r,g,b]) 雾色，默认冷灰蓝 [176,196,218]；下界可用暖红灰，末地可用紫粉"
+      },
+      {
+        "name": "T / CUT",
+        "desc": "总帧数 64、雾最厚的切换帧 33"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-iso-blocks": {
+    "category": "rpg",
+    "frames": 101,
+    "id": "mcd-t-iso-blocks",
+    "name": "地下城·等距方块升起",
+    "tags": [
+      "地下城",
+      "转场",
+      "体素",
+      "等距方块",
+      "方块贴图"
+    ],
+    "blurb": "一根根等距体素方块柱（深板岩砖/石砖/圆石/黑曜石，带顶 1.0·左 0.78·右 0.60 的面明暗与顶边亮线）从地面升起，沿对角线铺满画面，落地时闪一下并轻震；停顿后再从另一个对角被拆去，露出 B。",
+    "usage": "章节/场景切换、\"搭建/建造\"主题的衔接、模组方块类视频；Layer 导出后可叠在任何素材上。",
+    "params": [
+      {
+        "name": "W",
+        "desc": "方块宽度（默认 192px；越小方块越密、绘制越多）"
+      },
+      {
+        "name": "PALETTE",
+        "desc": "方块贴图名单，可换成自己想要的方块"
+      },
+      {
+        "name": "RISE_SPREAD / CUT / OUT_SPREAD",
+        "desc": "升起波次长度、全覆盖切换帧、拆除波次长度"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-map-zoom": {
+    "category": "rpg",
+    "frames": 140,
+    "id": "mcd-t-map-zoom",
+    "name": "地下城·世界地图推近",
+    "tags": [
+      "地下城",
+      "转场",
+      "世界地图",
+      "六边形节点",
+      "旅程"
+    ],
+    "blurb": "A 画面被切成六边形缩进米色羊皮纸世界地图（体素沙盘）上的起点节点，镜头沿金色虚线飞向目的地的金色六边形骷髅节点，推近后节点放大，B 从六边形里长成整个画面。",
+    "usage": "\"前往下一站/下一个地点\"的旅程转场、功能路线图、章节总览；换 from / to 即可标注地名。",
+    "params": [
+      {
+        "name": "from / to",
+        "desc": "makeMapZoomDef({from, to}) 两个节点的地名，默认\"营地\"→\"苦力怕森林\""
+      },
+      {
+        "name": "N1 / N2",
+        "desc": "两个节点在地图底板上的位置（mapZoom.tsx 顶部），要与沙盘上的岛屿对齐"
+      },
+      {
+        "name": "FINAL_M / HEXW",
+        "desc": "终点放大倍数 2.4、节点宽度 135px"
+      }
+    ],
+    "alpha": false
+  },
+  "mcd-t-souls-sweep": {
+    "category": "rpg",
+    "frames": 102,
+    "id": "mcd-t-souls-sweep",
+    "name": "地下城·灵魂群扫过",
+    "tags": [
+      "地下城",
+      "转场",
+      "灵魂",
+      "冷色调",
+      "像素拖尾"
+    ],
+    "blurb": "一群白色小鬼脸灵魂拖着青蓝像素拖尾沿对角线飞过画面，台阶状的像素波前把 A 换成 B，波带里两边画面都被冷青色调染过，前沿有一条灵魂青的细光。",
+    "usage": "灵魂/亡灵/幽冥主题的衔接、从暖色场景切到冷色场景、\"回忆/往生\"类段落。",
+    "params": [
+      {
+        "name": "N_SOULS",
+        "desc": "灵魂数量，默认 34"
+      },
+      {
+        "name": "ANG",
+        "desc": "飞行方向角度，默认 -25°（向右上）"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-lightning-flash": {
+    "category": "rpg",
+    "frames": 92,
+    "id": "mcd-t-lightning-flash",
+    "name": "地下城·闪电白闪",
+    "tags": [
+      "地下城",
+      "转场",
+      "闪电",
+      "白闪",
+      "雷鸣",
+      "夜景"
+    ],
+    "blurb": "夜雨里先落下一道小闪电（双闪+震屏），紧接着第二道更粗的阶梯折线闪电劈下，整屏白闪，B 在白光里接手并按台阶状闪烁退去；雷鸣音效跟随。",
+    "usage": "夜战/风暴/恐怖氛围的镜头切换、Boss 登场、惊吓点；也可只导出 Layer 叠在素材上。",
+    "params": [
+      {
+        "name": "BOLT1 / BOLT2",
+        "desc": "两道闪电的落点 x、y 与种子（lightningFlash.tsx 顶部）"
+      },
+      {
+        "name": "S1 / S2 / CUT",
+        "desc": "第一道、第二道闪电与切换帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-ember-curtain": {
+    "category": "rpg",
+    "frames": 106,
+    "id": "mcd-t-ember-curtain",
+    "name": "地下城·下界灰烬幕",
+    "tags": [
+      "地下城",
+      "转场",
+      "下界",
+      "灰烬",
+      "火星",
+      "红橙"
+    ],
+    "blurb": "灰烬与火星从画面底部密集升起，形成一整面由暗灰、绯红、橙、金白逐层过渡的体素色块幕，幕完全盖住画面时切到 B，再带着火星继续向上升走，留下 B；两个镜头在幕里都被染上热浪色。",
+    "usage": "进入下界/熔岩/火焰类场景、爆炸后的清场、\"炼狱\"主题的章节切换。",
+    "params": [
+      {
+        "name": "CELL / TH",
+        "desc": "色块大小 24px、幕的厚度 1560px"
+      },
+      {
+        "name": "调色",
+        "desc": "emberCurtain.tsx 顶部 ASH / RED / ORANGE / GOLD 四组色"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-t-top-gradient": {
+    "category": "rpg",
+    "frames": 112,
+    "id": "mcd-t-top-gradient",
+    "name": "地下城·顶部压暗大字标题",
+    "tags": [
+      "地下城",
+      "转场",
+      "胜利横幅",
+      "标题",
+      "月桂",
+      "章节完成"
+    ],
+    "blurb": "画面顶部落下一层压暗渐变（不挡主体），银灰月桂展开、金色大字逐字弹入并带小字说明，金色火星在横幅里上飘；停留后画面压暗一下硬切到 B，横幅在 B 上方收起。",
+    "usage": "\"任务/章节完成\"的节点、章节标题卡、胜利结算前后的衔接；title / sub 都是可改文字。",
+    "params": [
+      {
+        "name": "title",
+        "desc": "makeTopDef({title, sub}) 大字标题，默认\"章节完成\""
+      },
+      {
+        "name": "sub",
+        "desc": "月桂下的小字说明，默认\"准备前往下一站\""
+      },
+      {
+        "name": "count",
+        "desc": "月桂里的白色像素大字（章节序号），默认 \"3\"，传空字符串则不显示"
+      },
+      {
+        "name": "DIP / CUT / OUT0",
+        "desc": "压暗开始帧、切换帧、横幅收起开始帧"
+      }
+    ],
+    "alpha": true
+  },
+  "mcd-v-gilded-forge": {
+    "id": "mcd-v-gilded-forge",
+    "name": "远古锻台 · 镀金神兵觉醒",
+    "category": "rpg",
+    "tags": [
+      "地下城",
+      "锻造",
+      "镀金",
+      "附魔",
+      "3D",
+      "展示"
+    ],
+    "frames": 180,
+    "blurb": "三枚催化圣物菱形环绕真实 3D 铁砧共鸣蓄力，重击瞬间像素十字冲击波与双色光柱冲天，16 层体素神兵旋转升起；右侧斜切面板展开 UNIQUE + GILDED 双标签、逐字硬阴影标题、内置镀金词条、三属性条与三枚附魔菱形连环觉醒，左下角玩家角色卡同步换装。",
+    "usage": "展示整合包终极神器合成、重大版本核心功能发布或毕业装备成型的高潮镜头；Layer 版透明，可直接叠在实机画面上。",
+    "params": [
+      {
+        "name": "item / name / desc",
+        "desc": "锻造出的物品贴图 id、神兵名称、简介"
+      },
+      {
+        "name": "player / skin / level",
+        "desc": "左下角色卡的玩家名（默认「云诺羲Rinorsi」）、皮肤与等级"
+      },
+      {
+        "name": "basePower / power",
+        "desc": "锻造前后的战力滚动区间（默认 108 → 260）"
+      },
+      {
+        "name": "catalysts / traits / stats / enchants",
+        "desc": "三件催化物品、三条词条、三项属性条与三枚附魔槽配置"
+      }
+    ],
+    "alpha": true
+  }
+}
