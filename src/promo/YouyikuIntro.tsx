@@ -296,7 +296,7 @@ const Plate: FC<{f: number}> = ({f}) => {
   );
 };
 
-const Channel: FC<{f: number}> = ({f}) => {
+const Channel: FC<{f: number; text?: string}> = ({f, text = CHANNEL}) => {
   const p = prog(f, T.channel, 7, back);
   if (p <= 0) return null;
   return (
@@ -304,7 +304,7 @@ const Channel: FC<{f: number}> = ({f}) => {
       <div style={{boxShadow: `0 0 0 ${U}px #0c1f4d, 0 0 0 ${2 * U}px #ffffff`, transform: `scale(${p}) rotate(${(1 - p) * -25}deg)`}}>
         <PlayerFace size={14 * U} />
       </div>
-      <BlockChars text={CHANNEL} font={BLACK_FONT} rows={16} cell={3} depth={2} spacing={3} style={SUB_BLOCK} glyph={riseGlyph(f, T.channel + 2, 1)} />
+      <BlockChars text={text} font={BLACK_FONT} rows={16} cell={3} depth={2} spacing={3} style={SUB_BLOCK} glyph={riseGlyph(f, T.channel + 2, 1)} />
     </>
   );
 };
@@ -334,7 +334,7 @@ const LensBlocks: FC<{f: number}> = ({f}) => {
 
 const centred = (top: number): CSSProperties => ({position: 'absolute', top, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4 * U});
 
-export const YouyikuIntro: FC<{time?: TimeOfDay}> = ({time = 'noon'}) => {
+export const YouyikuIntro: FC<{time?: TimeOfDay; channel?: string}> = ({time = 'noon', channel}) => {
   const f = useCurrentFrame();
   const fx = useFx();
   const cam = camera(f);
@@ -368,7 +368,7 @@ export const YouyikuIntro: FC<{time?: TimeOfDay}> = ({time = 'noon'}) => {
             <Lines f={f} />
           </div>
           <div style={centred(187 * U)}>
-            <Channel f={f} />
+            <Channel f={f} text={channel} />
           </div>
         </AbsoluteFill>
         <AbsoluteFill style={layer(cam, 1.4)}>

@@ -12,8 +12,9 @@ import {StyleFrames} from './story/StyleFrames';
 import {Intro, INTRO_FRAMES} from './story/Intro';
 import {BackdropLoop, LOOP, type TimeOfDay} from './mg/DayCycle';
 import {REEL_FRAMES, Reel} from './reel/Reel';
+import {PROMO_FRAMES, Promo} from './promo/Promo';
 import {PROMO2_FRAMES, Promo2} from './promo/Promo2';
-import {Cover} from './promo/Cover';
+import {Cover, Cover43} from './promo/Cover';
 import {INTRO_FRAMES as Y_INTRO_FRAMES, YouyikuIntro} from './promo/YouyikuIntro';
 
 const demoRecipe: RecipeProps = {
@@ -46,9 +47,11 @@ const PoseSheet = () => (
 export const Root = () => (
   <>
     <Composition id="NetheriteSword" component={NetheriteSword} durationInFrames={TOTAL} fps={FPS} width={WIDTH} height={HEIGHT} defaultProps={{withBgm: true}} />
+    <Composition id="Cover43" component={withFonts(Cover43)} durationInFrames={1} fps={FPS} width={WIDTH} height={1440} />
     <Composition id="Cover" component={withFonts(Cover)} durationInFrames={1} fps={FPS} width={WIDTH} height={HEIGHT} />
     <Composition id="Promo2" component={withFonts(Promo2)} durationInFrames={PROMO2_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} />
     <Composition id="Y-Intro" component={withFonts(YouyikuIntro)} durationInFrames={Y_INTRO_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} defaultProps={{time: 'dawn' as const}} />
+    <Composition id="Promo" component={withFonts(Promo)} durationInFrames={PROMO_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} />
     <Composition id="Reel" component={withFonts(Reel)} durationInFrames={REEL_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} />
     <Folder name="Clips">
       <Composition id="Intro-Noon" component={withFonts(Intro)} durationInFrames={INTRO_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} defaultProps={{time: 'noon' as TimeOfDay}} />
